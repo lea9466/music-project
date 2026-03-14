@@ -1,0 +1,134 @@
+/* כל ההגדרות בתוך הדיב העוטף כדי למנוע התנגשויות */
+.songListFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    direction: rtl;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.songListFlex .songList {
+    display: flex;
+    flex-direction: row;
+    height: 110px;
+    width: 100%;
+    padding: 0 35px;
+    justify-content: space-between;
+    background-color: white;
+    /* רקע לבן נקי */
+    align-items: center;
+    border-radius: 15px;
+    border-right: 6px solid #cc30d1;
+    /* הפס הסגול בצד */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.songListFlex .songList:hover {
+    transform: translateY(-2px);
+    background-color: #f7e6f0;
+    /* הכהיה עדינה של השורה */
+    box-shadow: 0 5px 15px rgba(204, 48, 209, 0.15);
+}
+
+/* טקסטים ברשימה */
+.songListFlex .songList .songNameDiv,
+.songListFlex .songList .artistDiv,
+.songListFlex .songList .publishDate,
+.songListFlex .songList .categoryName {
+    display: flex;
+    flex-direction: column;
+    width: 18%;
+}
+
+.songListFlex .songList .bold {
+    color: #6d1b70;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 4px;
+}
+
+.songListFlex .songList div:not(.bold):not(.divider):not(.tochordsbtn):not(.chordBtn) {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* הכפתור ברשימה - סגנון שקוף שמתמלא */
+.songListFlex .tochordsbtn {
+    background-color: transparent !important;
+    /* מתחיל שקוף */
+    color: #cc30d1 !important;
+    /* טקסט סגול */
+    border: 2px solid #cc30d1 !important;
+    /* מסגרת סגולה */
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* אפקט המילוי בריחוף */
+.songListFlex .tochordsbtn:hover {
+    background-color: #cc30d1 !important;
+    /* מתמלא בסגול */
+    color: white !important;
+    /* טקסט הופך ללבן */
+}
+
+/* טיפול באייקון בתוך הכפתור */
+.songListFlex .tochordsbtn img {
+    width: 22px;
+    filter: none;
+    /* צבע מקורי */
+    transition: all 0.3s ease;
+}
+
+.songListFlex .tochordsbtn:hover img {
+    filter: brightness(0) invert(1);
+    /* הופך ללבן כשהכפתור מתמלא */
+}
+
+/* רספונסיביות */
+@media(max-width:1000px) {
+    .songListFlex .songList .publishDate {
+        display: none;
+    }
+
+    .songListFlex .tochordsbtn .chordBtn {
+        display: none;
+    }
+
+    .songListFlex .tochordsbtn {
+        padding: 0;
+        width: 48px;
+        height: 48px;
+        justify-content: center;
+        /* הופך לעיגול קטן */
+    }
+}
+
+@media(max-width: 600px) {
+    .songListFlex .tochordsbtn {
+        display: none;
+    }
+
+    .songListFlex .songList {
+        height: 85px;
+        padding: 0 20px;
+    }
+
+    .songListFlex .songList .artistDiv ,.songListFlex .songList .categoryName{
+        display: none;
+    }
+
+    .songListFlex .songList .songNameDiv {
+        width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+}

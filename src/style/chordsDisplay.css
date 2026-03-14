@@ -1,0 +1,28 @@
+
+
+
+.displayBtns {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.display {
+    width: 100%;
+    /* padding: 5%; */
+}
+
+@media (max-width:1000px) {
+   
+}
+
+@media (max-width:360px) {
+    .chordsList.cards {
+        grid-template-columns: repeat(1, 100%);
+        /* חלוקה ל-3 עמודות */
+        gap: 20px;
+
+
+    }
+}

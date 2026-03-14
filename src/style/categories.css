@@ -1,0 +1,176 @@
+/* קונטיינר ראשי */
+.catDisplay1 {
+    width: 100%;
+    padding: 40px 10%;
+    direction: rtl;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.catDisplay1 h3 {
+    color: #6d1b70;
+    font-size: 2.2rem;
+    border-bottom: 3px solid #cc30d1;
+    display: inline-block;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+}
+
+/* רשימת הקטגוריות - הפכנו מגריד לפלקס טורי */
+.categories-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* שורת קטגוריה בודדת */
+.cat-row {
+    background: white;
+    border-radius: 15px;
+    padding: 25px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-right: 6px solid #cc30d1;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.cat-row:hover {
+    background-color: #f7e6f0;
+    transform: translateX(-5px);
+}
+
+.cat-main-content {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.cat-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1e272e;
+}
+
+.cat-count {
+    font-size: 1rem;
+    color: #6d1b70;
+    background: #fdf5f9;
+    padding: 5px 15px;
+    border-radius: 50px;
+}
+
+/* המגירה (Accordion Drawer) */
+.category-drawer {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #fdfcff;
+    border-radius: 0 0 15px 15px;
+    margin-top: -10px;
+    padding: 0 40px; /* מתחיל בלי פאדינג אנכי */
+    border: 1px solid rgba(237, 242, 247, 0.8);
+    border-top: none;
+}
+
+.category-drawer.expanded {
+    max-height: 1000px; /* גובה מקסימלי לפתיחה */
+    padding: 30px 40px;
+    box-shadow: inset 0 4px 12px rgba(0,0,0,0.03);
+}
+
+/* שורת שיר בתוך המגירה - מרווחת ויוקרתית */
+.drawer-song-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(204, 48, 209, 0.1);
+    text-align: right;
+}
+
+.drawer-song-row:last-child {
+    border-bottom: none;
+}
+
+.drawer-song-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.drawer-song-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #6d1b70;
+}
+
+.drawer-song-artist {
+    font-size: 1rem;
+    color: #888;
+}
+
+/* כפתור אקורדים מעוצב */
+.drawer-chords-btn {
+    background: transparent;
+    color: #cc30d1;
+    border: 2px solid #cc30d1;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.drawer-chords-btn:hover {
+    background: #cc30d1;
+    color: white;
+}
+
+.arrow-icon {
+    font-size: 1.2rem;
+}
+/* עיצוב החץ של הקטגוריה */
+.cat-arrow-icon {
+    font-size: 1.2rem;
+    color: #cc30d1;
+    transition: transform 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+/* סיבוב החץ כשהקטגוריה פתוחה */
+.cat-arrow-icon.rotate {
+    transform: rotate(180deg);
+}
+
+/* עיצוב החץ בתוך הכפתור הקטן */
+.arrow-left {
+    font-size: 1.2rem;
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.drawer-chords-btn:hover .arrow-left {
+    transform: translateX(-5px); /* תנועה קטנה שמאלה בריחוף */
+}
+
+/* כל שאר ה-CSS ששלחתי קודם נשאר אותו דבר */
+.drawer-loader, .no-songs {
+    padding: 20px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+/* מוודא שהמגירה תמיד תהיה מוצמדת לימין */
+.drawer-song-row {
+    direction: rtl; 
+}

@@ -1,0 +1,183 @@
+:root {
+    --bg: #f5dfdf5b;
+    --color: #cc30d1a7;
+
+}
+
+.wrappwr {
+    position: relative;
+    min-height: 100vh;
+    /* תוקן מ-vw ל-vh */
+    display: flex;
+    padding: 100px;
+    flex-direction: row;
+    justify-content: flex-end;
+    /* עדיף על right בתוך flex */
+    width: 100%;
+}
+
+.chordsOfSong {
+    /* width: 90%; */
+    /* height: 80vh; */
+    /* גובה מוגדר - חובה בשביל הגלילה! */
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 50px;
+    /* הוספתי גבול קטן רק כדי שתראי שהאזור הזה הוא זה שגולל */
+    border: 1px solid transparent;
+}
+
+.chords {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* height: 500px; */
+    direction: ltr;
+
+}
+
+.char {
+    background-color: var(--bg);
+    color: var(--color);
+    padding: 3px;
+}
+
+.chartrue {
+    background-color: rgb(182, 221, 234);
+    color: lightseagreen;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+}
+
+/* העיצוב של הבלון */
+.custom-tooltip {
+    z-index: 9999;
+    visibility: hidden;
+    /* width: 200px; */
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 100;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    z-index: 10000 !important;
+    direction: rtl;
+}
+
+/* משולש קטן בתחתית הבלון */
+.custom-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* הצגה בריחוף */
+.chartrue:hover .custom-tooltip {
+    visibility: visible;
+    opacity: 1;
+    z-index: 10000
+}
+
+/* בונוס: עיצוב מיוחד לאקורד שהגיע מה-AI */
+.chartrue.from-ai {
+    color: #8e44ad;
+    /* סגול "בינה מלאכותית" */
+    font-weight: bold;
+    border-bottom: 1px dashed #8e44ad;
+    /* קו תחתון מקווקו */
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.utubLink {
+    width: 600px;
+    height: 338px;
+}
+
+.modolationDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.plus,
+.minus {
+    /* background-color: var(--bg); */
+    /* color: var(--color); */
+    width: 50px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.img {
+    width: 50px;
+    height: 40px;
+}
+
+.scale {
+    font-size: larger;
+    font-weight: bold;
+}
+
+@media(max-width:700px) {
+    .chordsOfSong {
+        padding: 2%;
+    }
+
+    .utubLink {
+        width: 80%;
+        height: 300px;
+    }
+
+}
+
+h3 {
+    direction: rtl;
+}
+
+h5 {
+    padding: 0;
+    margin: 0;
+}
+
+.like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.likeImg {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}

@@ -1,0 +1,113 @@
+/* בידוד תצוגת הכרטיסים - חלוקה ל-3 בשורה */
+.songListGrid {
+    display: grid;
+    gap: 30px; /* רווח מעט גדול יותר בין הכרטיסים */
+    padding: 30px;
+    direction: rtl;
+    /* התחלה מ-3 כרטיסים ברוחב מלא */
+    grid-template-columns: repeat(3, 1fr); 
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.songListGrid .songCard {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    background-color: white; 
+    border-radius: 15px;
+    padding: 25px;
+    min-height: 220px;
+    /* הפס הסגול המזוהה */
+    border-right: 6px solid #cc30d1; 
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-left: 1px solid rgba(0,0,0,0.05);
+    
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    justify-content: space-around;
+    align-items: center;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.songListGrid .songCard:hover {
+    transform: translateY(-5px);
+    background-color: #f7e6f0; 
+    box-shadow: 0 8px 20px rgba(204, 48, 209, 0.15);
+}
+
+/* טקסטים - כשיש 3 בשורה הם נראים הרבה יותר טוב ב-50% רוחב */
+.songListGrid .songCard .songNameDiv, 
+.songListGrid .songCard .artistDiv, 
+.songListGrid .songCard .categoryName, 
+.songListGrid .songCard .puclishDate {
+    width: 48%; /* נותן מקום לשני טורים נוחים */
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.songListGrid .songCard .bold {
+    color: #6d1b70; 
+    font-weight: bold;
+    font-size: 1.25rem; /* הגדלתי מעט כי עכשיו יש מקום */
+    margin-top: 4px;
+}
+
+.songListGrid .songCard div:not(.bold):not(button) {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* כפתור - סטייל ריק שמתמלא */
+.songListGrid .songCard button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: transparent;
+    color: #cc30d1;
+    border: 2px solid #cc30d1;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.songListGrid .songCard button:hover {
+    background-color: #cc30d1;
+    color: white;
+}
+
+.songListGrid .songCard button img {
+    width: 20px;
+    transition: filter 0.3s ease;
+}
+
+.songListGrid .songCard button:hover img {
+    filter: brightness(0) invert(1);
+}
+
+/* רספונסיביות מעודכנת */
+@media (max-width: 1300px) {
+    .songListGrid { 
+        grid-template-columns: repeat(2, 1fr); /* מעבר ל-2 במסכים בינוניים */
+    }
+}
+
+@media (max-width: 750px) {
+    .songListGrid { 
+        grid-template-columns: 1fr; /* כרטיס אחד במסך קטן */
+        padding: 15px;
+    }
+    
+    .songListGrid .songCard { 
+        max-width: 450px; 
+        margin: 0 auto; 
+    }
+}

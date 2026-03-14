@@ -1,0 +1,54 @@
+.wrapperBtns {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    height:50px ;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    gap: 10px;
+    width: fit-content;
+    
+
+}
+
+.toggle-btn {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background-color: white;
+    color: gray;
+    border: none;
+    gap: 3px;
+    font-size: 16px;
+
+
+}
+
+.toggle-btn.active {
+    color: black;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+}
+
+
+
+
+.icon {
+    font-size: 1.1rem;
+}
+
+@media (max-width:700px) {
+    .icon {
+        font-size:0.8rem ;
+    }
+    .toggle-btn{
+        font-size: 14px;
+    }
+}
