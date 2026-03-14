@@ -31,7 +31,7 @@ function Manage() {
 
     const [songs, setSongs] = useState<SongDto[]>([])
     const [users, setUsers] = useState<UserDto[]>([])
-
+let g=5
     useEffect(() => {
         const loadData = async () => {
             try {
