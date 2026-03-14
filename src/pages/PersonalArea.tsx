@@ -65,9 +65,8 @@ function PersonalArea() {
 
                 {activeTab == 'person' && <UserProfile />}
 
-                <button onClick={() => navigate('/SongController')}>הוסף שיר</button>
-                <button onClick={() => navigate('/SongController')}>הוסף קטגוריה</button>
-                <Categories /> 
+
+                {/* <Categories />  */}
 
             </div>
 

@@ -7,7 +7,9 @@ import type { SongDto } from "../types";
 import { useNavigate } from "react-router-dom";
 function ChordsDisplay(props: { songs: SongDto[] }) {
     const songs = props.songs;
-    const [cardsDisplay, setDisplay] = useState('list')
+    if (songs.length == 0)
+        return <>אין נתונים להצגה</>
+    const [cardsDisplay, setDisplay] = useState('cards')
     const navigate = useNavigate()
     function onChordsClick(songId: number) {
         navigate(`chords/${songId}`);

@@ -11,6 +11,8 @@ import { useLocation } from 'react-router-dom';
 function SongController() {
     const [isAIScaning, setAIScaning] = useState(false)
     const user = useSelector((state: RootState) => state.auth.user);
+    if (user.role == 0 || user.role == 'Regular')
+        return <>אינך מורשה לגשת לדף זה</>
     const categories = useSelector((state: RootState) => state.categories.categories);
     const location = useLocation();
     const [data, setData] = useState<SongDto>(location.state || {
