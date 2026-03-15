@@ -13,7 +13,7 @@
     flex-direction: row;
     justify-content: flex-end;
     /* עדיף על right בתוך flex */
-    width: 100%;
+    /* width: 100%; */
 }
 
 .chordsOfSong {
@@ -151,12 +151,17 @@
 
 @media(max-width:700px) {
     .chordsOfSong {
-        padding: 2%;
+        width: 100%;
+        padding: 0;
     }
 
     .utubLink {
         width: 80%;
         height: 300px;
+    }
+
+    .wrappwr {
+        padding: 0px;
     }
 
 }

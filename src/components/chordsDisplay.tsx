@@ -11,18 +11,22 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
         return <>אין נתונים להצגה</>
     const [cardsDisplay, setDisplay] = useState('cards')
     const navigate = useNavigate()
-    function onChordsClick(songId: number) {
-        navigate(`chords/${songId}`);
+    function onChordsClick(song: SongDto) {
+        debugger
+        navigate(`/chords/${song.id}`);
     }
     const cards = songs.map((s: SongDto, index: number) => <SongCard
         song={s}
-        onClick={onChordsClick}
+        onClick={() => onChordsClick(s)}
+        key={index}
     />)
 
     const list = songs.map((s: SongDto, index: number) => <SongList
         song={s}
-        onClick={onChordsClick}
+        onClick={() => onChordsClick(s)}
+        key={index}
     />)
+    console.log(songs);
 
 
     return (

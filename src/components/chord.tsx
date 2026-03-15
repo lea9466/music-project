@@ -1,6 +1,6 @@
 import plusIcon from "../img/stat_1_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg";
 import minusIcon from "../img/stat_minus_1_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg";
-import { useNavigate, useParams } from 'react-router-dom';
+import { data, useNavigate, useParams } from 'react-router-dom';
 import '../style/chord.css'
 import { useEffect, useState } from 'react';
 import { getFullSong } from '../services/songService';
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import { toggleFavoriteSongService } from "../services/favoriteSongsService";
 import { addFavoriteSong, removeFavoriteSong } from "../redux/auth/authSlice";
-
+import ChordsViewer from "./chordsViewer";
 function ChordsOfSong() {
     const dispatch = useDispatch();
 
@@ -34,9 +34,15 @@ function ChordsOfSong() {
 
     useEffect(() => {
         const loadSong = async () => {
+            // בדיקה שה-id קיים והוא אכן מספר תקין
+            const songId = Number(id);
+            if (isNaN(songId)) {
+                console.error("ID לא תקין:", id);
+                return;
+            }
             try {
-                const data = await getFullSong(Number(id));
-                setFullSong(data)
+                const data = await getFullSong(songId);
+                setFullSong(data);
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);
             }
@@ -45,43 +51,29 @@ function ChordsOfSong() {
     }, [id]);
 
 
-
-    const baseSong = fullSong.song
-    const song = {
-        Id: baseSong?.id || -1,
-        catId: baseSong.categoryId,
-        userId: '2552',
-        name: baseSong.name,
-        songer: baseSong.artist,
-        utubLink: baseSong.utubLink,
-        rating: 10,
-        mazorOrMinor: baseSong.majorOrMinor,
-        languagu: baseSong.language
-    }
-
     async function toggleFavoriteSong() {
-        
+
         if (!user.id) {
             alert('עליך להתחבר כדי לסמן שירים מועדפים');
             return;
         }
-        if(!token){
+        if (!token) {
             alert('כדי לסמן מועדפים עליך להתחבר מחדש')
             return
         }
         const dataToSend = {
-            songId: song.Id
+            songId: fullSong.song.id!
         };
 
         try {
             const response = await toggleFavoriteSongService(dataToSend);
             if (response.songId) {
                 setheartSrc('../src/img/לב מלא.png');
-                dispatch(addFavoriteSong(song.Id));
+                dispatch(addFavoriteSong(fullSong.song.id!));
             }
             else {
                 setheartSrc('../src/img/לב ריק.png');
-                dispatch(removeFavoriteSong(song.Id));
+                dispatch(removeFavoriteSong(fullSong.song.id!));
             }
         } catch (error) {
             console.error("Error toggling favorite:", error);
@@ -92,10 +84,10 @@ function ChordsOfSong() {
             <div className='wrappwr'>
                 <AutoScroller />
                 <div className="chordsOfSong">
-                    <h1>{`אקורדים לשיר ${song.name}`}</h1>
+                    <h1>{`אקורדים לשיר ${fullSong.song.name}`}</h1>
                     <iframe className="utubLink"
                         radioGroup=""
-                        src={`https://www.youtube.com/embed/${song.utubLink}`}
+                        src={`https://www.youtube.com/embed/${fullSong.song.utubLink}`}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -103,7 +95,7 @@ function ChordsOfSong() {
                         allowFullScreen
                     ></iframe>
                     <div className='information'>
-                        <div>{`מבצע במקור: ${song.songer}`}</div>
+                        <div>{`מבצע במקור: ${fullSong.song.artist}`}</div>
                         {/* <div>{`${song.scale} :סולם`}</div> */}
                     </div>
                     <button onClick={() => setUseFlats(!useFlats)}>
@@ -112,6 +104,7 @@ function ChordsOfSong() {
                     <button className="like" onClick={toggleFavoriteSong}>
                         <img className="likeImg" src={heartSrc} alt="" />
                     </button>
+                    <ChordsViewer chordsByLine={fullSong.chordsByLine!} />
                     <ChordsDiv fullSong={fullSong} ton={ton} useFlats={useFlats} isFromScaning={false} />
                     <div className="modolationDiv">
                         <img src={plusIcon} alt=""

@@ -1,0 +1,72 @@
+:root {
+    /* צבעים */
+    --chord-bg: #ffffff;
+    --chord-primary: #2196F3; /* כחול - צבע האצבעות והבארה */
+    --chord-text: #2c3e50;    /* צבע כותרת וקווים ראשיים */
+    --chord-lines: #bdc3c7;   /* צבע סריגים ומיתרים */
+    --chord-danger: #e74c3c;  /* צבע ה-X */
+    --chord-secondary: #95a5a6; /* צבע עיגולים פתוחים ומספרי סריג */
+    
+    /* מידות */
+    --chord-card-radius: 12px;
+}
+
+.guitar-chord-card {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+    padding: 5px;
+    background-color: var(--chord-bg);
+    border-radius: var(--chord-card-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.chord-title {
+    margin-bottom: 2px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--chord-text);
+}
+
+.fret-line, .string-line {
+    stroke: var(--chord-lines);
+    stroke-width: 1;
+}
+
+.nut-line {
+    stroke: var(--chord-text);
+    stroke-width: 4;
+}
+
+.barre-rect {
+    fill: var(--chord-primary);
+    opacity: 0.9;
+}
+
+.finger-circle {
+    fill: var(--chord-primary);
+}
+
+.finger-text {
+    fill: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.open-string-circle {
+    fill: none;
+    stroke: var(--chord-secondary);
+    stroke-width: 1.5;
+}
+
+.muted-string-x {
+    fill: var(--chord-danger);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.fret-number {
+    fill: var(--chord-secondary);
+    font-size: 12px;
+}

@@ -1,0 +1,53 @@
+:root {
+  --chord-title-color: #5b32a8;
+  --active-key-color: #5b32a8;      /* סגול לקליד לבן לחוץ */
+  --active-black-key-color: #ffff00; /* צהוב זוהר לקליד שחור לחוץ - הכי בולט */
+  --inactive-key-color: #ffffff;
+  --inactive-black-key-color: #333333;
+  --border-color: #ddd;
+  --text-color: #666;
+  --key-text-white: #ffffff;
+  --key-text-black: #000000;
+}
+
+.piano-card {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.chord-title {
+  margin: 0 0 5px 0;
+  color: var(--chord-title-color);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.white-key {
+  stroke: #ccc;
+  stroke-width: 0.5;
+}
+
+.black-key {
+  stroke: #000;
+  stroke-width: 0.3;
+}
+
+.key-label {
+  pointer-events: none;
+  font-weight: bold;
+  font-size: 3px;
+}
+
+.notes-display {
+  margin-top: 5px;
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}

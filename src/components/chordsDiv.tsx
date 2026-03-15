@@ -13,7 +13,6 @@ function ChordsDiv(props: Props) {
     const sharps = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const flats = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
     const { fullSong, useFlats, ton, isFromScaning, chordsFromAI = [] } = props
-    console.log(fullSong.chordsByLine);
 
     const words = (fullSong.wordLines || []).map(line => ({
         index: line.lineNumber,
