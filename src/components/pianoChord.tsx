@@ -5,7 +5,7 @@ interface PianoChordProps {
   chordName: string;
 }
 
-export default function PianoChord({ chordName }: PianoChordProps) {
+function PianoChord({ chordName }: PianoChordProps) {
   const chordData = Chord.get(chordName);
   const notes = chordData.notes;
 
@@ -19,37 +19,37 @@ export default function PianoChord({ chordName }: PianoChordProps) {
 
   const whiteKeys = ["C", "D", "E", "F", "G", "A", "B"];
   const blackKeys = [
-    { note: "C#", x: 7 },
-    { note: "D#", x: 17 },
-    { note: "F#", x: 37 },
-    { note: "G#", x: 47 },
-    { note: "A#", x: 57 },
+    { note: "C#", x: 6.5 },  // המיקומים עודכנו בהתאם לרוחב החדש
+    { note: "D#", x: 16.5 },
+    { note: "F#", x: 36.5 },
+    { note: "G#", x: 46.5 },
+    { note: "A#", x: 56.5 },
   ];
 
   return (
     <div className="piano-card">
       <h3 className="chord-title">{chordName}</h3>
 
-      {/* הגודל של הציור*/}
-      <svg width="200" height="100" viewBox="0 0 70 40">
-        {/* קלידים לבנים */}
+      <svg className="piano-svg" width="100%" height="90" viewBox="0 -3 72 50">
+        {/* קלידים לבנים - צרים יותר (8.5 במקום 10) */}
         {whiteKeys.map((note, i) => {
           const activeName = getActiveNoteName(note);
           return (
             <g key={`white-${note}`}>
               <rect
                 className="white-key"
-                x={i * 10} y="0" width="10" height="40"
+                x={i * 10} y="0"
+                width="10" height="40"
                 fill={activeName ? "var(--active-key-color)" : "var(--inactive-key-color)"}
-                rx="1"
+                rx="1" // עיגול פינות עדין
               />
               {activeName && (
                 <text
-                  x={i * 10 + 5}
-                  y="32" /* מיקום האות בלבן */
+                  x={i * 10 + 4.25}
+                  y="34"
                   fill="var(--key-text-white)"
                   textAnchor="middle"
-                  fontSize="5.5" /* הגדלתי את האות בלבן */
+                  fontSize="5"
                   style={{ fontWeight: 'bold', fontFamily: 'Arial' }}
                 >
                   {activeName}
@@ -59,24 +59,25 @@ export default function PianoChord({ chordName }: PianoChordProps) {
           );
         })}
 
-        {/* קלידים שחורים */}
+        {/* קלידים שחורים - דקים יותר (4.5 במקום 6) */}
         {blackKeys.map((k) => {
           const activeName = getActiveNoteName(k.note);
           return (
             <g key={`black-${k.note}`}>
               <rect
                 className="black-key"
-                x={k.x} y="0" width="6" height="25"
+                x={k.x} y="0"
+                width="5" height="27"
                 fill={activeName ? "var(--active-black-key-color)" : "var(--inactive-black-key-color)"}
-                rx="0.5"
+                rx="0.8"
               />
               {activeName && (
                 <text
-                  x={k.x + 3}
-                  y="16" /* מיקום האות בשחור - גבוה יותר כדי שיהיה מקום */
+                  x={k.x + 2.5}
+                  y="16"
                   fill="var(--key-text-black)"
                   textAnchor="middle"
-                  fontSize="4" /* האות בשחור עכשיו כמעט ברוחב כל הקליד! */
+                  fontSize="3.5"
                   style={{ fontWeight: '900', fontFamily: 'Arial' }}
                 >
                   {activeName.replace("b", "♭")}
@@ -86,10 +87,8 @@ export default function PianoChord({ chordName }: PianoChordProps) {
           );
         })}
       </svg>
-
-      {/* <div className="notes-display">
-        {notes.join(" • ")}
-      </div> */}
     </div>
   );
 }
+
+export default PianoChord;

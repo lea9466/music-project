@@ -26,24 +26,40 @@ function AutoScroller() {
         return () => {
             stopScrolling();
         };
-    }, [isScrolling,fast]);
+    }, [isScrolling, fast]);
     useEffect(() => {
         return () => stopScrolling();
     }, []);
 
     return (
-        <>
-            <div className="divBtns">
-                <button className="btn" onClick={() => setIsScrolling(!isScrolling)}>
-                    {isScrolling ? 'Stop' : 'Start Scroll'}
-                </button>
-                <div className="btns">
-                    <button onClick={() => setFast(fast - 10)}>+</button>
-                    <button onClick={() => setFast(fast + 10)}>-</button>
-                </div>
-            </div>
-        </>
+        <div className="divBtns">
+            <button
+                className={`btn-main ${isScrolling ? 'active' : ''}`}
+                onClick={() => setIsScrolling(!isScrolling)}
+            >
+                {isScrolling ? 'Stop' : 'Start Scroll'}
+            </button>
 
+            <div className="speed-controls">
+                {/* פלוס = יותר מהירות = פחות מילי-שניות */}
+                <button
+                    className="btn-speed material-symbols-outlined"
+                    onClick={() => setFast(prev => prev - 10)}
+                    title="מהיר יותר"
+                >
+                    add
+                </button>
+
+                {/* מינוס = פחות מהירות = יותר מילי-שניות */}
+                <button
+                    className="btn-speed material-symbols-outlined"
+                    onClick={() => setFast(prev => prev + 10)}
+                    title="איטי יותר"
+                >
+                    remove
+                </button>
+            </div>
+        </div>
     );
 }
 export default AutoScroller

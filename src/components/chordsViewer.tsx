@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ChordDto } from "../types";
 import PianoChord from "./pianoChord";
-import GuitarChord from "./GuitarChord";
+import GuitarChords from "./GuitarChord";
 import ToggleButtons from "./toggleButton";
 import '../style/chordsViewer.css'
 
@@ -39,7 +39,7 @@ export default function ChordsViewer({ chordsByLine }: ChordsViewerProps) {
                 }
                 {activeTab == "" &&
                     uniqueChords.map((chordStr, index) => (
-                        <GuitarChord key={index} chordName={chordStr} />
+                        <GuitarChords key={index} chordName={chordStr} />
                     ))
                 }
 

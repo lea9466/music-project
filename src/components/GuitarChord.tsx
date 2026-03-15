@@ -1,16 +1,16 @@
 import React from 'react';
 import guitarDb from '@tombatossals/chords-db/lib/guitar.json';
 import '../style/guitarChord.css'
-interface GuitarChordDisplayProps {
+type GuitarChordDisplayProps= {
     chordName: string;
 }
 
-const GuitarChordDisplay: React.FC<GuitarChordDisplayProps> = ({ chordName }) => {
-    
+function GuitarChords({ chordName }:GuitarChordDisplayProps){
+
     const getChordData = () => {
         const root = chordName.charAt(0).toUpperCase() + (chordName[1] === '#' || chordName[1] === 'b' ? chordName[1] : '');
         let suffix = chordName.replace(root, '');
-        
+
         if (suffix === '') suffix = 'major';
         if (suffix === 'm') suffix = 'minor';
 
@@ -25,7 +25,7 @@ const GuitarChordDisplay: React.FC<GuitarChordDisplayProps> = ({ chordName }) =>
 
     if (!data) return <div className="chord-error">אקורד {chordName} לא נמצא</div>;
 
-    const stringSpacing = 20;
+    const stringSpacing = 18;
     const fretSpacing = 25;
     const xStart = 20;
     const yStart = 30;
@@ -33,8 +33,8 @@ const GuitarChordDisplay: React.FC<GuitarChordDisplayProps> = ({ chordName }) =>
     return (
         <div className="guitar-chord-card">
             <div className="chord-title">{chordName}</div>
-            
-            <svg width="150" height="170">
+
+            <svg width="130" height="170">
                 {/* ציור סריגים */}
                 {[0, 1, 2, 3, 4, 5].map((i) => (
                     <line
@@ -64,7 +64,7 @@ const GuitarChordDisplay: React.FC<GuitarChordDisplayProps> = ({ chordName }) =>
                     const stringsWithFret = data.frets
                         .map((f: number, i: number) => f === barreFret ? i : -1)
                         .filter((i: number) => i !== -1);
-                    
+
                     if (stringsWithFret.length > 1) {
                         const first = Math.min(...stringsWithFret);
                         const last = Math.max(...stringsWithFret);
@@ -93,7 +93,7 @@ const GuitarChordDisplay: React.FC<GuitarChordDisplayProps> = ({ chordName }) =>
                 {/* ציור אצבעות, X ו-O */}
                 {data.frets.map((fret: number, i: number) => {
                     const x = xStart + i * stringSpacing;
-                    
+
                     if (fret === -1) {
                         return <text key={i} className="muted-string-x" x={x - 5} y={yStart - 10}>X</text>;
                     }
@@ -121,4 +121,4 @@ const GuitarChordDisplay: React.FC<GuitarChordDisplayProps> = ({ chordName }) =>
     );
 };
 
-export default GuitarChordDisplay;
+export default GuitarChords;
