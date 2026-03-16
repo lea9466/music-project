@@ -104,6 +104,7 @@ function SongController() {
                     <span>שורה שהיא מילים של שיר הכנס בצורה רגילה</span><br />
                     <span>אקורד עלייך להכניס בפורמט כזה: לדוגמא [A]</span><br />
                     <span>אם ברצונך להכניס אקורד עם תוספת עלייך להכניסו כך: [A/m7]</span><br />
+                    <span>שים לב b/# הם חלק מאקורד ולכן יופיעו לפני הסלש</span><br />
                 </div>
                 <textarea className="songText"
                     value={data.sourceText}

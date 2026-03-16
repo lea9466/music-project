@@ -50,7 +50,7 @@ function ChordsDiv(props: Props) {
             }
             else {
                 // songAndChord.push(<br/>)
-                songAndChord.push(<ChordsLine 
+                songAndChord.push(<ChordsLine
                     chords={mergedArray[i].value}
                     sharps={sharps}
                     flats={flats}
@@ -83,19 +83,31 @@ function ChordsLine(props: any) {
     const kind = (isFlat == true ? flats : sharps)
     const ton = props.ton
     for (let i = chords.length - 1; i >= 0; i--) {
-        if (chords[i].adding != '' && chords[i].adding != null) {
-            str.push(<div className='char' style={{ display: 'flex', flexDirection: 'row' }}>
-                <div>{kind[((sharps.indexOf(chords[i].name) + ton) % 12 + 12) % 12]}</div>
-                {chords[i].adding[0] == 'm' && <div>{chords[i].adding[0]}</div>}
-                <h5 >{chords[i].adding.slice(1)}</h5>
+        let chordDto: ChordDto = chords[i]
+        const baseName = kind[((sharps.indexOf(chordDto.name) + ton) % 12 + 12) % 12]
+        let name = baseName, adding = chordDto.adding!
+        if (adding.includes('#') && adding.includes('b')) {
+            adding = adding.replace('#', '')
+            adding = adding.replace('b', '')
+        }
+        if (adding) {
+            if (adding[0] == 'm')
+                str.push(<div className='char' style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div>{name}</div>
+                    <div>{adding[0]}</div>
+                    <h5 >{adding.slice(1)}</h5>
+                </div>)
+            else str.push(<div className='char' style={{ display: 'flex', flexDirection: 'row' }}>
+                <div>{name}</div>
+                <h5 >{adding}</h5>
             </div>)
         }
-        else str.push(<div className='char'>{kind[((sharps.indexOf(chords[i].name) + ton) % 12 + 12) % 12]}</div>)
+        else str.push(<div className='char'>{name}</div>)
         for (let k = 0; k < chords[i].spaces; k++)
             str.push(<div>{' '}</div>);
     }
     return (
-        <div style={{ whiteSpace: 'pre', display: 'flex', flexDirection: 'row', justifyContent: 'center' ,marginTop:'5px'}}>
+        <div style={{ whiteSpace: 'pre', display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: '5px' }}>
             {str}
         </div>
     )
@@ -158,3 +170,4 @@ function mergeByIndex(words: any, chords: any) {
 
     return merged;
 }
+

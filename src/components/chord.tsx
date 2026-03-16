@@ -12,10 +12,10 @@ import type { RootState } from "../redux/store";
 import { toggleFavoriteSongService } from "../services/favoriteSongsService";
 import { addFavoriteSong, removeFavoriteSong } from "../redux/auth/authSlice";
 import ChordsViewer from "./chordsViewer";
+import ToggleButtons from "./toggleButton";
 function ChordsOfSong() {
     const dispatch = useDispatch();
 
-    const [useFlats, setUseFlats] = useState(false);
     const { id } = useParams<{ id: string }>();
     const [ton, setTon] = useState(0)
     const user = useSelector((state: RootState) => state.auth.user);
@@ -79,6 +79,13 @@ function ChordsOfSong() {
             console.error("Error toggling favorite:", error);
         }
     }
+
+    const [activeTab, setActiveTab] = useState<string>("♯");
+    const btns = [
+        { str: "מצב במולים", icon: "♭" },
+        { str: "מצב דיאזים", icon: "♯" },
+    ];
+
     return (
         <>
             <div className='wrappwr'>
@@ -98,14 +105,15 @@ function ChordsOfSong() {
                         <div>{`מבצע במקור: ${fullSong.song.artist}`}</div>
                         {/* <div>{`${song.scale} :סולם`}</div> */}
                     </div>
-                    <button onClick={() => setUseFlats(!useFlats)}>
+                    {/* <button onClick={() => setUseFlats(!useFlats)}>
                         {useFlats ? "מצב דיאזים" : "מצב במולים"}
-                    </button>
+                    </button> */}
                     <button className="like" onClick={toggleFavoriteSong}>
                         <img className="likeImg" src={heartSrc} alt="" />
                     </button>
                     <ChordsViewer chordsByLine={fullSong.chordsByLine!} />
-                    <ChordsDiv fullSong={fullSong} ton={ton} useFlats={useFlats} isFromScaning={false} />
+                    <ToggleButtons btns={btns} activeTab={activeTab} onSet={setActiveTab} />
+                    <ChordsDiv fullSong={fullSong} ton={ton} useFlats={activeTab == '♭' ? true : false} isFromScaning={false} />
                     <div className="modolationDiv">
                         <img src={plusIcon} alt=""
                             onClick={() => { if (ton < 12) setTon(ton + 1) }}
