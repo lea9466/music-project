@@ -5,6 +5,7 @@ import '../style/home.css'
 import { getSongs } from '../services/songService';
 import type { SongDto } from '../types';
 import { useNavigate } from 'react-router-dom';
+import SongRequest from '../components/songRequest';
 function Home() {
     const [songs, setSongs] = useState<SongDto[]>([])
     const navigate = useNavigate()
@@ -41,6 +42,7 @@ function Home() {
                         <img className="icon" src="../src/img/search_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
                     </button>
                 </div>
+                <SongRequest/>
 
             </div>
         </div>

@@ -10,9 +10,10 @@ type Props<T> = {
     onDelete: (item: T) => void;
     onEdit: (item: T) => void;
     buttunAdd?: { text: string, function: () => void }
+    showAction: boolean;
 };
 
-function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit, buttunAdd }: Props<T>) {
+function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit, buttunAdd, showAction }: Props<T>) {
 
     const headers = tableHeaders.map((header, i) => (
         <th key={i}>{header}</th>
@@ -30,18 +31,22 @@ function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit
                         : <span className="empty-val">---</span>}
                 </td>
             ))}
-            <td data-label="פעולות" className="actions-cell">
-                {!(rowIndex == 0 && 'songsCount' in (item as any)) && //בשביל שלא יוכלו למחוק את הקטגוריה הבסיסית
-                    <div className="flex-actions">
-                        <button onClick={() => onEdit(item)} className="icon-btn edit" title="עריכה">✎</button>
-                        <button onClick={() => onDelete(item)} className="icon-btn delete" title="מחיקה">🗑</button>
-                    </div>}
-                {(rowIndex == 0 && 'songsCount' in (item as any)) && //בשביל שלא יוכלו למחוק את הקטגוריה הבסיסית
-                    <div className="flex-actions">
-                        אי אפשר למחוק או לערוך
-                    </div>}
-            </td>
-
+            {showAction && (
+                <td data-label="פעולות" className="actions-cell">
+                    {rowIndex === 0 && 'songsCount' in (item as any) ? (
+                        /* מקרה א': קטגוריה בסיסית */
+                        <div className="flex-actions disabled-text">
+                            אי אפשר למחוק או לערוך
+                        </div>
+                    ) : (
+                        /* מקרה ב': שורה רגילה עם כפתורים */
+                        <div className="flex-actions">
+                            <button onClick={() => onEdit(item)} className="icon-btn edit" title="עריכה">✎</button>
+                            <button onClick={() => onDelete(item)} className="icon-btn delete" title="מחיקה">🗑</button>
+                        </div>
+                    )}
+                </td>
+            )}
         </tr>
     )
 
@@ -54,7 +59,7 @@ function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit
                         <thead>
                             <tr>
                                 {headers}
-                                <th className="actions-column">פעולות</th>
+                                {showAction &&<th className="actions-column">פעולות</th>}
                             </tr>
                         </thead>
                         <tbody>

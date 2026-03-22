@@ -39,7 +39,7 @@ export type SongDto = {
     majorOrMinor: string;
     date?: string;
     userId?: number;
-    sourceText:string;
+    sourceText: string;
 
 };
 
@@ -83,4 +83,20 @@ export type GeminiSongResponse = {
 export type UserFavoriteSong = {
     songId: number
 }
-
+export type SongRequestDto = {
+    id?: number;
+    songDes: string;
+    creatorId?: number
+    creatorName?: string
+    votesCount?: number
+    priorityScore?: number
+    isFulfilled: boolean
+    fulfillerId?: number
+    fulfillerName?: string
+    date?: string;
+    isVotedByMe?: boolean;
+}
+export type ApiResponse = {
+    message: string;
+    status: boolean;
+}

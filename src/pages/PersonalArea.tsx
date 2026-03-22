@@ -47,11 +47,11 @@ function PersonalArea() {
                             </div>
                         </div>
                         <div className="user-avatar">
-                            {user.srcImage ? (
+                            {/* {user.srcImage ? (
                                 <img src={user.srcImage} alt={user.name} />
-                            ) : (
+                            ) : ( */}
                                 <div className="default-avatar">👤</div>
-                            )}
+                            {/* )} */}
                         </div>
                     </div>
                     <span>{convertUser(user).role}</span>
