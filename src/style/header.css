@@ -1,24 +1,24 @@
 .header {
-    width: 100%;
-    position: fixed;
+   width: 100%;
+    /* position: fixed; */
     top: 0;
+    height: 100px;
+    z-index: 1000;
+    /* הסרת ה-background-color הקודם כדי שיראו את התמונה שנתקעה מאחור */
+    background-color: transparent; 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 15px;
-    height: 100px;
     padding: 20px;
-    z-index: 1000;
-    background-color: var(--big-elements-color);
-}
-
-.space {
-    margin-top: 0;
-    height: 120px;
-    /* margin-top: 30px; */
+    
 
 }
+
+/* .space {
+ height: 60px;
+} */
 
 .mainLinks {
     width: 75%;
@@ -27,6 +27,20 @@
     align-items: center;
     justify-content: center;
     gap: 25px;
+    direction: rtl;
+    color: white;
+}
+
+a {
+    color: white;
+    font-size: 18px;
+}
+
+.headeBtns {
+    background: none;
+    border-color: var(--border-color);
+    color: white;
+    border-radius: 20px
 }
 
 .right,

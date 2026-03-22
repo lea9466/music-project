@@ -18,14 +18,14 @@ function Header() {
         <>
             <header className="header">
                 <div className="left">
-                    <button onClick={() => navigate(`${user?.name ? '/PersonalArea' : '/sign-in'}`)}>{user?.name || 'הרשמה/התחברות'}</button>
+                    <button className='headeBtns' onClick={() => navigate(`${user?.name ? '/PersonalArea' : '/sign-in'}`)}>{user?.name || 'הרשמה/התחברות'}</button>
                     {/* <button onClick={toggleTheme}>{theme}</button> */}
-                    <button onClick={() => { dispatch(logout()); navigate('/') }}>התנתקות</button>
+                    <button className='headeBtns' onClick={() => { dispatch(logout()); navigate('/') }}>התנתקות</button>
                 </div>
                 <div className="mainLinks">
                     <Link to='/'>בית</Link>
-                    <a href="">פוסטים</a>
-                    <a href="">אודות</a>
+                    <Link to='/categories'>קטגוריות</Link>
+                    {/* <Link to='/'>בית</Link> */}
                 </div>
                 <div className="right">ימין</div>
 

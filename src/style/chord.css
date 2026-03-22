@@ -9,24 +9,25 @@
     min-height: 100vh;
     /* תוקן מ-vw ל-vh */
     display: flex;
-    padding: 100px;
+    /* padding: 100px; */
     flex-direction: row;
     justify-content: flex-end;
     /* עדיף על right בתוך flex */
-    /* width: 100%; */
+    width: 95%;
 }
 
 .chordsOfSong {
-    /* width: 90%; */
-    /* height: 80vh; */
-    /* גובה מוגדר - חובה בשביל הגלילה! */
-    padding: 5%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 50px;
-    /* הוספתי גבול קטן רק כדי שתראי שהאזור הזה הוא זה שגולל */
     border: 1px solid transparent;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 5%;
+
 }
 
 .chords {
@@ -161,7 +162,7 @@
     }
 
     .wrappwr {
-        padding:20px;
+        padding: 20px;
     }
 
 }

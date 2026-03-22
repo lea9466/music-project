@@ -24,25 +24,31 @@ function Home() {
     }, []);
 
     return (
-        <div>
-            <div className="hero"></div>
+        <div >
+            <div className="welcome">
+                <h1>לנגן זה לא קשה!!</h1>
+                <h2>כאן תוכלו למצוא אקורדים למגוון שירים ברמות שונות ובצורה הנוחה ביותר</h2>
+                <h3>שימו לב אם הינכם יודעים לכתוב אקורדים תוכלו להעלות שירים בעצמכם אנא צרו קשר עם מנהל האתר</h3>
+                <button className="menuBtns" onClick={() => navigate('categories')}>התחילו לנגן ←</button>
+            </div>
+            {/* <div className="menuBtnsDiv">
+                <button className="menuBtns" onClick={() => navigate('categories')}>
+                    <h3>היכנס כדי לנגן לפי הז'אנר המועדף עלייך</h3>
+                    <div>מאות אקורדים מחולקים לקטגוריות לפי סגנון</div>
+                    <img className="icon" src="../src/img/queue_music_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+
+                </button>
+                <button className="menuBtns">
+                    <h3>כל האקורדים בסינון חופשי</h3>
+                    <div>מצא את השירים האהובים עלייך בחיפוש חופשי לפי שם אומן שם שיר</div>
+                    <img className="icon" src="../src/img/search_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+                </button>
+            </div> */}
             <div className="content">
                 <h1>אקורדים חדשים באתר</h1>
                 <ChordsDisplay songs={songs} />
-                <div className="menuBtnsDiv">
-                    <button className="menuBtns" onClick={()=>navigate('categories') }>
-                        <h3>היכנס כדי לנגן לפי הז'אנר המועדף עלייך</h3>
-                        <div>מאות אקורדים מחולקים לקטגוריות לפי סגנון</div>
-                        <img className="icon" src="../src/img/queue_music_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
-
-                    </button>
-                    <button className="menuBtns">
-                        <h3>כל האקורדים בסינון חופשי</h3>
-                        <div>מצא את השירים האהובים עלייך בחיפוש חופשי לפי שם אומן שם שיר</div>
-                        <img className="icon" src="../src/img/search_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
-                    </button>
-                </div>
-                <SongRequest/>
+                <h1>בקשות שירים מהקהילה</h1>
+                <SongRequest />
 
             </div>
         </div>

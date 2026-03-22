@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom"
-import Categories from "../components/categories"
 import Manage from "./Manage"
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
@@ -37,6 +36,7 @@ function PersonalArea() {
     return (
         <>
             <div className="personalArea">
+                <h2>אזור משתמש</h2>
                 <div className="user-card">
                     <div className="user-info">
                         <div className="user-text">
@@ -61,12 +61,7 @@ function PersonalArea() {
 
                 <ToggleButtons btns={btns} onSet={setActiveTab} activeTab={activeTab} />
                 {activeTab == 'favorite' && <ChordsDisplay songs={favSongs} />}
-
-
                 {activeTab == 'person' && <UserProfile />}
-
-
-                {/* <Categories />  */}
 
             </div>
 

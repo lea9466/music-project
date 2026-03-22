@@ -31,7 +31,7 @@ const Layout = () => {
       <main>
         <Outlet /> {/* כאן יוצגו הדפים המשתנים */}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

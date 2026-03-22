@@ -8,7 +8,6 @@ import { ToggleVote } from "../services/songRequestVoteService";
 function SongRequest() {
     const [requests, setRequests] = useState<SongRequestDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [status, setStatus] = useState<boolean>(false);
 
     // קריאה לשרת עם טעינת הקומפוננטה
     const loadRequests = async () => {
@@ -42,17 +41,14 @@ function SongRequest() {
                 return req
             })
             setRequests(nweReq)
-
         } catch (err) {
             console.error("שגיאה בהצבעה:", err);
-            // אופציונלי: כאן אפשר להגיד למשתמש "צריך להתחבר כדי להצביע"
         }
     };
     if (loading) return <div className="loader">טוען בקשות...</div>;
 
     return (
         <div className="requests-container" dir="rtl">
-            <h2 className="title">בקשות שירים מהקהילה</h2>
 
             {requests.length === 0 ? (
                 <p className="no-requests">אין בקשות כרגע, תהיו הראשונים לבקש!</p>

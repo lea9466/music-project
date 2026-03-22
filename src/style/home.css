@@ -1,22 +1,59 @@
-.hero {
-    height: 100vh;
-    width: 100vw;
-    background-image: url('../src/img/רקע אקורדים2.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.welcome {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    direction: rtl;
+    gap: 10px;
+    padding: 10%;
+    padding-top: 5%;
+    align-items: center;
+}
+
+.welcome button {
+    background: none;
+    width: 180px;
+    border-color: white;
+    font-size: 20px;
+    color: white;
+    animation: pulse 2s infinite; /* שם האנימציה, משך זמן (2 שניות), והגדרה שתחזור על עצמה לתמיד */
+    border-radius: 20px;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        /* גודל מקורי */
+        box-shadow: 0 0 0 0 rgba(204, 48, 209, 0.7);
+        /* צבע ההילה (כמו ה-SVG שלך) */
+    }
+
+    50% {
+        transform: scale(1.1);
+        /* גדל ב-10% */
+        box-shadow: 0 0 0 10px rgba(204, 48, 209, 0);
+        /* הילה מתרחבת ונעלמת */
+    }
+
+    100% {
+        transform: scale(1);
+        /* חוזר לגודל מקורי */
+        box-shadow: 0 0 0 0 rgba(204, 48, 209, 0);
+        /* הילה נעלמת לגמרי */
+    }
 }
 
 .content {
-    padding: 10%;
-    background-color: rgba(255, 255, 255, 0.8);
-    /* אופציונלי: קצת שקיפות כדי להפריד מהרקע */
+    /* position: relative; */
+    /* background-color: white; */
     width: 100%;
-    justify-content: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 5%;
+    background-color: white;
+    border-radius: 20px;
+    gap: 30px;
 }
 
 .menuBtnsDiv {
@@ -57,7 +94,5 @@
     .menuBtns {
         width: 100%;
         height: 300px;
-
     }
-
 }

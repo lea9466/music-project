@@ -5,6 +5,7 @@
     gap: 30px;
     direction: rtl;
     font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
 }
 
 .songListFlex .songList {
