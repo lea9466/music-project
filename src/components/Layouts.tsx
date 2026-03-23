@@ -6,6 +6,7 @@ import { setCategories } from '../redux/categoreis/categorieSlice';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
+import SideBar from "./sideBar";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Layout = () => {
   return (
     <>
       <Header />
+      <SideBar/>
       <main>
         <Outlet /> {/* כאן יוצגו הדפים המשתנים */}
       </main>

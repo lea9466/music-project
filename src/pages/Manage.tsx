@@ -25,7 +25,7 @@ function Manage() {
     const catDisplayKeys = ['name', 'description', 'songsCount'];
 
     const songHeaders = ['שם', 'אומן', 'תאריך הפצה', 'קטגוריה']
-    const songDisplayKeys = ['name', 'artist', 'date', 'CategoryId'];
+    const songDisplayKeys = ['name', 'artist', 'date', 'catName'];
 
     const userHeaders = ['שם', 'אימייל', 'הרשאות']
     const userDisplayKeys = ['name', 'email', 'role'];
@@ -39,7 +39,8 @@ function Manage() {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const songs = await getSongsByUserId();
+                const songs = user.role == 2 ? await getSongs() : await getSongsByUserId();
+                songs.map(s => s.catName = categories.find(c => c.id == s.categoryId)?.name)
                 const users = await getUsers()
                 const songRequests = await getAllRequests()
                 const convertedUsers = users.map(convertUser);
@@ -93,7 +94,6 @@ function Manage() {
         setOpenWindow(true)
     }
     function onEditSong(item: SongDto) {
-        debugger
         navigate('/SongController', {
             state: item
         });
@@ -113,10 +113,10 @@ function Manage() {
     return (
         <>
             <ToggleButtons btns={btns} onSet={setActiveTab} activeTab={activeTab} />
-            {activeTab == 'dataset' && <GenericTable elements={categories} displayKeys={catDisplayKeys as (keyof CategoryDto)[]} onDelete={(item: CategoryDto) => onDeletCat(item)} onEdit={(item: CategoryDto) => onEditCat(item)} tableHeaders={catHeaders} buttunAdd={{ text: 'add', function: () => onAddCat() }} showAction={true}/>}
-            {activeTab == 'music_note_2' && <GenericTable elements={songs} displayKeys={songDisplayKeys as (keyof SongDto)[]} onDelete={onDeletSong} onEdit={(item: SongDto) => onEditSong(item)} tableHeaders={songHeaders} buttunAdd={{ text: 'add', function: () => navigate('/SongController') }} showAction={true}/>}
-            {activeTab == 'group' && <GenericTable elements={users} displayKeys={userDisplayKeys as (keyof UserDto)[]} onDelete={onDeletUser} onEdit={onEditUser} tableHeaders={userHeaders} showAction={true}/>}
-            {activeTab == 'folded_hands' && <GenericTable elements={songRequests} displayKeys={SRDisplayKeys as (keyof SongRequestDto)[]} onDelete={()=>{}} onEdit={()=>{}} tableHeaders={SRHeaders} showAction={false}/>}
+            {activeTab == 'dataset' && <GenericTable elements={categories} displayKeys={catDisplayKeys as (keyof CategoryDto)[]} onDelete={(item: CategoryDto) => onDeletCat(item)} onEdit={(item: CategoryDto) => onEditCat(item)} tableHeaders={catHeaders} buttunAdd={{ text: 'add', function: () => onAddCat() }} showAction={true} />}
+            {activeTab == 'music_note_2' && <GenericTable elements={songs} displayKeys={songDisplayKeys as (keyof SongDto)[]} onDelete={onDeletSong} onEdit={(item: SongDto) => onEditSong(item)} tableHeaders={songHeaders} buttunAdd={{ text: 'add', function: () => navigate('/SongController') }} showAction={true} />}
+            {activeTab == 'group' && <GenericTable elements={users} displayKeys={userDisplayKeys as (keyof UserDto)[]} onDelete={onDeletUser} onEdit={onEditUser} tableHeaders={userHeaders} showAction={true} />}
+            {activeTab == 'folded_hands' && <GenericTable elements={songRequests} displayKeys={SRDisplayKeys as (keyof SongRequestDto)[]} onDelete={() => { }} onEdit={() => { }} tableHeaders={SRHeaders} showAction={false} />}
             {openWindow && <AddCategory setOpen={setOpenWindow} editCat={cat} />}
         </>
 

@@ -40,6 +40,7 @@ export type SongDto = {
     date?: string;
     userId?: number;
     sourceText: string;
+    catName?: string;
 
 };
 
@@ -90,7 +91,7 @@ export type SongRequestDto = {
     creatorName?: string
     votesCount?: number
     priorityScore?: number
-    isFulfilled: boolean
+    isFulfilled?: boolean
     fulfillerId?: number
     fulfillerName?: string
     date?: string;

@@ -6,6 +6,10 @@ export const getSongs = async (): Promise<SongDto[]> => {
     const response = await axios.get<SongDto[]>(url);
     return response.data;
 };
+export const getNewSongs = async (): Promise<SongDto[]> => {
+    const response = await axios.get<SongDto[]>(url+'/GetNewSongs');
+    return response.data;
+};
 
 export const getFullSong = async (songId: number): Promise<FullSongDto> => {
     const response = await axios.get<FullSongDto>(`${url}/full/${songId}`);
@@ -34,7 +38,7 @@ export const deleteSong = async (id: number) => {
 }
 export const updateSong = async (song: FullSongDto) => {
     try {
-        const response = await axios.put(url, song);
+        const response = await axios.put<SongDto>(url, song);
         return response.data;
     } catch (error) {
         console.error("שגיאה בעדכון שיר:", error);

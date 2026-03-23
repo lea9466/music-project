@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import ChordsDisplay from '../components/chordsDisplay';
 import '../style/home.css'
-import { getSongs } from '../services/songService';
+import { getNewSongs, getSongs } from '../services/songService';
 import type { SongDto } from '../types';
 import { useNavigate } from 'react-router-dom';
 import SongRequest from '../components/songRequest';
@@ -12,7 +12,7 @@ function Home() {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const data = await getSongs();
+                const data = await getNewSongs();
                 setSongs(data)
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);
@@ -47,7 +47,7 @@ function Home() {
             <div className="content">
                 <h1>אקורדים חדשים באתר</h1>
                 <ChordsDisplay songs={songs} />
-                <h1>בקשות שירים מהקהילה</h1>
+                <h1 id="newReq" >בקשות שירים מהקהילה</h1>
                 <SongRequest />
 
             </div>

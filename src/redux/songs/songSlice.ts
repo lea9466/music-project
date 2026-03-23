@@ -5,7 +5,7 @@ import type { SongDto } from '../../types';
 
 interface SongsState {
     songs: SongDto[];
-    totalCount: number; // חשוב לדפדוף - כמה שירים יש בסך הכל בשרת
+    totalCount: number; 
     loading: boolean;
     error: string | null;
 }

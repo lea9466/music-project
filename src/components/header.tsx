@@ -25,9 +25,9 @@ function Header() {
                 <div className="mainLinks">
                     <Link to='/'>בית</Link>
                     <Link to='/categories'>קטגוריות</Link>
-                    {/* <Link to='/'>בית</Link> */}
+                    <a href='#newReq'>בקשת שיר</a>
                 </div>
-                <div className="right">ימין</div>
+                {/* <div className="right">ימין</div> */}
 
             </header >
             <div className="space"></div>

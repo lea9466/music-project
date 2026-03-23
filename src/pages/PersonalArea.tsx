@@ -50,7 +50,7 @@ function PersonalArea() {
                             {/* {user.srcImage ? (
                                 <img src={user.srcImage} alt={user.name} />
                             ) : ( */}
-                                <div className="default-avatar">👤</div>
+                            <div className="default-avatar">👤</div>
                             {/* )} */}
                         </div>
                     </div>

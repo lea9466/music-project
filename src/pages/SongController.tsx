@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import type { ChordDto, FullSongDto, GeminiSongResponse, SongDto, WordLineDto } from "../types";
 import '../style/songController.css'
@@ -7,9 +7,12 @@ import { addSong, updateSong } from "../services/songService";
 import ChordsDiv from "../components/chordsDiv";
 import { AIScan } from "../services/AIService";
 import { useLocation } from 'react-router-dom';
+import { setCategories } from "../redux/categoreis/categorieSlice";
+import { getCategories } from "../services/categoryService";
 
 function SongController() {
     const [isAIScaning, setAIScaning] = useState(false)
+    const dispatch = useDispatch()
     const user = useSelector((state: RootState) => state.auth.user);
     if (user.role == 0 || user.role == 'Regular')
         return <>אינך מורשה לגשת לדף זה</>
@@ -38,6 +41,7 @@ function SongController() {
             if (data.id) {
                 const upSong = await updateSong(newFullSong)
                 alert('השיר עודכן בהצלחה')
+                dispatch(setCategories(await getCategories()))
             }
             else {
                 const newSong = await addSong(newFullSong)
@@ -256,3 +260,4 @@ function transformChordsToRecord(chords: ChordDto[]): Record<number, ChordDto[]>
         return acc;
     }, {} as Record<number, ChordDto[]>);
 };
+

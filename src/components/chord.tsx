@@ -13,6 +13,19 @@ import { toggleFavoriteSongService } from "../services/favoriteSongsService";
 import { addFavoriteSong, removeFavoriteSong } from "../redux/auth/authSlice";
 import ChordsViewer from "./chordsViewer";
 import ToggleButtons from "./toggleButton";
+
+const getEmbedUrl = (url: string) => {
+    if (!url) return "";
+
+    // רג'קס שתופס את ה-ID מכל סוגי הקישורים של יוטיוב
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    const videoId = (match && match[2].length === 11) ? match[2] : null;
+
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+};
+
 function ChordsOfSong() {
     const dispatch = useDispatch();
 
@@ -94,7 +107,7 @@ function ChordsOfSong() {
                     <h1>{`אקורדים לשיר ${fullSong.song.name}`}</h1>
                     <iframe className="utubLink"
                         radioGroup=""
-                        src={`https://www.youtube.com/embed/${fullSong.song.utubLink}`}
+                        src={getEmbedUrl(fullSong.song.utubLink || '')}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
