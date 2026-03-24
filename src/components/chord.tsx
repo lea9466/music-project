@@ -39,6 +39,8 @@ function ChordsOfSong() {
         chordsByLine: {}
     });
     const [heartSrc, setheartSrc] = useState(`${user.favoriteSongs?.includes(fullSong.song.id!) ? '../src/img/לב מלא.png' : '../src/img/לב ריק.png'}`)
+    // const allChords = Object.values(fullSong.chordsByLine || {}).flat();
+
 
     useEffect(() => {
         const isFavorite = user.favoriteSongs?.includes(fullSong.song.id!);
@@ -116,15 +118,11 @@ function ChordsOfSong() {
                     ></iframe>
                     <div className='information'>
                         <div>{`מבצע במקור: ${fullSong.song.artist}`}</div>
-                        {/* <div>{`${song.scale} :סולם`}</div> */}
                     </div>
-                    {/* <button onClick={() => setUseFlats(!useFlats)}>
-                        {useFlats ? "מצב דיאזים" : "מצב במולים"}
-                    </button> */}
                     <button className="like" onClick={toggleFavoriteSong}>
                         <img className="likeImg" src={heartSrc} alt="" />
                     </button>
-                    <ChordsViewer chordsByLine={fullSong.chordsByLine!} />
+                    <ChordsViewer useFlats={activeTab == '♭' ? true : false} ton={ton} chordsByLine={fullSong.chordsByLine!} />
                     <ToggleButtons btns={btns} activeTab={activeTab} onSet={setActiveTab} />
                     <ChordsDiv fullSong={fullSong} ton={ton} useFlats={activeTab == '♭' ? true : false} isFromScaning={false} />
                     <div className="modolationDiv">

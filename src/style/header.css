@@ -1,24 +1,18 @@
+/* עיצוב כללי של ההדר עם גרדיאנט ורוד-סגול */
 .header {
-   width: 100%;
-    /* position: fixed; */
-    top: 0;
+    width: 100%;
     height: 100px;
     z-index: 1000;
-    /* הסרת ה-background-color הקודם כדי שיראו את התמונה שנתקעה מאחור */
-    background-color: transparent; 
+    /* גרדיאנט מודרני מסגול לוורוד */
+    /* background: linear-gradient(135deg, #6a11cb 0%, #da22ff 100%);  */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 15px;
     padding: 20px;
-    
-
+    /* box-shadow: 0 4px 10px rgba(0,0,0,0.1);  */
 }
-
-/* .space {
- height: 60px;
-} */
 
 .mainLinks {
     width: 75%;
@@ -26,53 +20,86 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 25px;
+    gap: 30px;
+    /* רווח קצת יותר גדול בין הלינקים */
     direction: rtl;
-    color: white;
 }
 
-a {
-    color: white;
+/* עיצוב הקישורים */
+.mainLinks a {
+    color: rgba(255, 255, 255, 0.8);
+    /* לבן קצת שקוף כשלא לחוץ */
     font-size: 18px;
+    text-decoration: none;
+    position: relative;
+    /* חשוב בשביל הפס התחתון */
+    padding-bottom: 8px;
+    transition: all 0.3s ease;
 }
 
-.headeBtns {
-    background: none;
-    border-color: var(--border-color);
+/* עיצוב הפס מתחת לדף הפעיל - יופיע רק כשיש class="active" */
+.mainLinks a.active {
     color: white;
-    border-radius: 20px
+    font-weight: bold;
 }
 
-.right,
+.mainLinks a.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #ffffff;
+    /* צבע הפס */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    /* הילה עדינה לפס */
+}
+
+/* עיצוב הכפתורים (התחברות/התנתקות) */
+.headeBtns {
+    background: rgba(255, 255, 255, 0.15);
+    /* רקע שקוף חלקית */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.headeBtns:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 .left {
     width: 25%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
+/* שמירה על הרספונסיביות שלך לנייד */
 @media(max-width:1000px) {
     .header {
         flex-direction: column;
         padding-top: 20px;
-        height: 150px;
-
+        height: auto;
+        /* שיתאים לתוכן בנייד */
+        min-height: 150px;
     }
 
     .mainLinks {
-        justify-content: left;
+        justify-content: center;
         width: 100%;
+        gap: 15px;
     }
 
-    .right,
     .left {
         width: 100%;
-        justify-content: left;
-        align-items: center;
-    }
-
-    .space {
-        height: 150px;
+        margin-top: 10px;
     }
 }

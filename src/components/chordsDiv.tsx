@@ -8,7 +8,7 @@ type Props = {
 }
 
 function ChordsDiv(props: Props) {
-    console.log(props.chordsFromAI);
+
 
     const sharps = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const flats = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -26,7 +26,6 @@ function ChordsDiv(props: Props) {
     }
 
     const mergedArray = mergeByIndex(words, chords);
-    console.log(mergedArray);
 
     let songAndChord = [];
     for (let i = 0; i < mergedArray.length; i++) {

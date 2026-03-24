@@ -17,6 +17,11 @@ function SignIn() {
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (data.email == '' || data.password == '') {
+            alert('חסר פרטים')
+            return
+        }
+
         try {
             debugger
             const log: UserDto = { name: data.name, password: data.password, email: data.email };
@@ -38,8 +43,10 @@ function SignIn() {
                     return;
                 }
                 else {
-                    console.log("vhh");
-
+                    if (data.name == '') {
+                        alert('חסר פרטים')
+                        return
+                    }
                     const { token, user } = await addUser(data);
                     if (user && token) {
                         // 1. שמירה לזיכרון הדפדפן (חובה כדי שהטוקן לא יתנדף)

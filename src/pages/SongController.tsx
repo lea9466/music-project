@@ -163,7 +163,6 @@ function AIScaning(props: Props) {
         const loadAI = async () => {
             try {
                 hasFetched.current = true;
-                console.log("Sending to AI:", JSON.stringify(newFullSongToServer));
                 const message = await AIScan(newFullSongToServer);
                 setResult(message);
                 let transChords = transformChordsToRecord(message.Chords || [])

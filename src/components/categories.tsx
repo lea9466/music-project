@@ -21,11 +21,9 @@ function CategoryDrawer({ categoryId, isOpen }: DrawerProps) {
         const fetchSongs = async () => {
             // שולפים רק אם המגירה נפתחת ועדיין אין שירים ב-state
             if (isOpen && songs.length === 0) {
-                console.log(`מנסה לשלוף שירים לקטגוריה מספר: ${categoryId}`);
                 setLoading(true);
                 try {
                     const data = await getSongsByCatId(categoryId);
-                    console.log("נתונים שהתקבלו מהשרת:", data);
                     setSongs(data);
                 } catch (err) {
                     console.error("שגיאה בשליפת השירים:", err);

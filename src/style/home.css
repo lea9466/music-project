@@ -12,11 +12,13 @@
 
 .welcome button {
     background: none;
-    width: 180px;
+    width: auto;
     border-color: white;
+    height: auto;
     font-size: 20px;
     color: white;
-    animation: pulse 2s infinite; /* שם האנימציה, משך זמן (2 שניות), והגדרה שתחזור על עצמה לתמיד */
+    animation: pulse 2s infinite;
+    /* שם האנימציה, משך זמן (2 שניות), והגדרה שתחזור על עצמה לתמיד */
     border-radius: 20px;
 }
 

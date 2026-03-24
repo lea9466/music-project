@@ -38,7 +38,6 @@ const UserProfile = () => {
             return;
         }
         // שליחה לשרת (למשל POST /api/user/security)
-        console.log("מעדכן פרטים רגישים עם אימות סיסמה...");
     };
 
     return (

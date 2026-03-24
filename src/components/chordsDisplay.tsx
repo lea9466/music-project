@@ -26,7 +26,6 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
         onClick={() => onChordsClick(s)}
         key={index}
     />)
-    console.log(songs);
 
 
     return (

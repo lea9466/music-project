@@ -1,7 +1,7 @@
 
 
 // import { useTheme } from "./theme/useTheme";
-import { Link, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'; // החלפת Link ב-NavLink
 import '../style/header.css'
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
@@ -23,8 +23,8 @@ function Header() {
                     <button className='headeBtns' onClick={() => { dispatch(logout()); navigate('/') }}>התנתקות</button>
                 </div>
                 <div className="mainLinks">
-                    <Link to='/'>בית</Link>
-                    <Link to='/categories'>קטגוריות</Link>
+                    <NavLink to='/' end>בית</NavLink>
+                    <NavLink to='/categories'>קטגוריות</NavLink>
                     <a href='#newReq'>בקשת שיר</a>
                 </div>
                 {/* <div className="right">ימין</div> */}

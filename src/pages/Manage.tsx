@@ -59,7 +59,6 @@ function Manage() {
 
     async function onDeletCat(item: CategoryDto) {
         // if (item.SongsCount! > 0) {
-        console.log("The count is:", item.songsCount);
         const message = `שימי לב! בקטגוריה זו יש ${item.songsCount} פריטים. 
                             מחיקת הקטגוריה תעביר את כל השירים המשוייכים אליה לקטגוריה כללית .
                             האם את בטוחה שברצונך להמשיך?`;

@@ -4,8 +4,6 @@ const url = 'SongRequestVote'
 
 
 export const ToggleVote = async (songId: number) => {
-    const response = await axios.post<ApiResponse>(url+'/'+ songId)
-    console.log(response.data);
-    
+    const response = await axios.post<ApiResponse>(url+'/'+ songId)    
     return response.data
 }

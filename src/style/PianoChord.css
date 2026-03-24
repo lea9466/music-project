@@ -48,6 +48,8 @@
   font-weight: 800;
   font-size: 1.1rem;
   color: #2c3e50;
+    direction: ltr;
+
 }
 
 .key-label {

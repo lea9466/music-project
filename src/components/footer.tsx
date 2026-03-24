@@ -37,7 +37,6 @@ function ConnecteionForm() {
     // שליחת טופס
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log(formData); // כאן שולחים לשרת בעתיד
         // איפוס טופס
         setFormData({
             name: "",

@@ -4,7 +4,6 @@ const url = 'Category'
 
 export const getCategories = async (): Promise<CategoryDto[]> => {
     const response = await axios.get<CategoryDto[]>(url);
-    console.log(response.data);
     return response.data;
 };
 

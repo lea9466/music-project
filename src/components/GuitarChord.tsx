@@ -1,20 +1,34 @@
 import React from 'react';
 import guitarDb from '@tombatossals/chords-db/lib/guitar.json';
 import '../style/guitarChord.css'
-type GuitarChordDisplayProps= {
+import { normalizeChordName } from '../services/chordUtils';
+
+type GuitarChordDisplayProps = {
     chordName: string;
 }
 
-function GuitarChords({ chordName }:GuitarChordDisplayProps){
+
+
+function rootToDbKey(root: string): string {
+    const map: Record<string, string> = {
+        "C#": "Csharp", "F#": "Fsharp",
+    };
+    return map[root] ?? root;
+}
+
+function GuitarChords({ chordName }: GuitarChordDisplayProps) {
 
     const getChordData = () => {
-        const root = chordName.charAt(0).toUpperCase() + (chordName[1] === '#' || chordName[1] === 'b' ? chordName[1] : '');
-        let suffix = chordName.replace(root, '');
+        const normalized = normalizeChordName(chordName);
+
+        const root = normalized.charAt(0).toUpperCase() + (normalized[1] === '#' || normalized[1] === 'b' ? normalized[1] : '');
+        let suffix = normalized.replace(root, '');
 
         if (suffix === '') suffix = 'major';
         if (suffix === 'm') suffix = 'minor';
 
-        const keyData = (guitarDb.chords as any)[root];
+        const dbKey = rootToDbKey(root); // ← המרה למפתח הנכון ב-DB
+        const keyData = (guitarDb.chords as any)[dbKey];
         if (!keyData) return null;
 
         const variation = keyData.find((v: any) => v.suffix === suffix);
@@ -29,13 +43,11 @@ function GuitarChords({ chordName }:GuitarChordDisplayProps){
     const fretSpacing = 25;
     const xStart = 20;
     const yStart = 30;
-
     return (
         <div className="guitar-chord-card">
             <div className="chord-title">{chordName}</div>
 
             <svg width="130" height="170">
-                {/* ציור סריגים */}
                 {[0, 1, 2, 3, 4, 5].map((i) => (
                     <line
                         key={`fret-${i}`}
@@ -47,7 +59,6 @@ function GuitarChords({ chordName }:GuitarChordDisplayProps){
                     />
                 ))}
 
-                {/* ציור מיתרים */}
                 {[0, 1, 2, 3, 4, 5].map((i) => (
                     <line
                         key={`string-${i}`}
@@ -59,7 +70,6 @@ function GuitarChords({ chordName }:GuitarChordDisplayProps){
                     />
                 ))}
 
-                {/* ציור בארה (Barre) - הפס של אקורד F ודומיו */}
                 {data.barres && data.barres.map((barreFret: number, index: number) => {
                     const stringsWithFret = data.frets
                         .map((f: number, i: number) => f === barreFret ? i : -1)
@@ -83,14 +93,12 @@ function GuitarChords({ chordName }:GuitarChordDisplayProps){
                     return null;
                 })}
 
-                {/* מספר סריג צדדי */}
                 {data.baseFret > 1 && (
                     <text className="fret-number" x={xStart + 5 * stringSpacing + 7} y={yStart + 15}>
                         {data.baseFret}fr
                     </text>
                 )}
 
-                {/* ציור אצבעות, X ו-O */}
                 {data.frets.map((fret: number, i: number) => {
                     const x = xStart + i * stringSpacing;
 
@@ -101,7 +109,6 @@ function GuitarChords({ chordName }:GuitarChordDisplayProps){
                         return <circle key={i} className="open-string-circle" cx={x} cy={yStart - 12} r={4} />;
                     }
 
-                    // אם האצבע היא חלק מבארה, לא נצייר עיגול נפרד (הפס כבר מכסה)
                     const isPartOfBarre = data.barres && data.barres.includes(fret);
                     if (isPartOfBarre) return null;
 

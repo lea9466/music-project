@@ -1,12 +1,16 @@
 import { Chord } from "@tonaljs/tonal";
 import "../style/PianoChord.css";
+import { enharmonicNormalize, normalizeChordName } from "../services/chordUtils";
 
 interface PianoChordProps {
   chordName: string;
 }
 
+
+
 function PianoChord({ chordName }: PianoChordProps) {
-  const chordData = Chord.get(chordName);
+  const normalized = normalizeChordName(chordName);
+  const chordData = Chord.get(normalized);
   const notes = chordData.notes;
 
   function getActiveNoteName(keyNote: string) {
@@ -14,12 +18,15 @@ function PianoChord({ chordName }: PianoChordProps) {
       "C#": "Db", "D#": "Eb", "F#": "Gb", "G#": "Ab", "A#": "Bb",
       "Db": "C#", "Eb": "D#", "Gb": "F#", "Ab": "G#", "Bb": "A#"
     };
-    return notes.find(chordNote => chordNote === keyNote || synonyms[chordNote] === keyNote);
+    return notes.find(chordNote => {
+      const norm = enharmonicNormalize(chordNote);
+      return norm === keyNote || synonyms[norm] === keyNote;
+    });
   }
 
   const whiteKeys = ["C", "D", "E", "F", "G", "A", "B"];
   const blackKeys = [
-    { note: "C#", x: 6.5 },  // המיקומים עודכנו בהתאם לרוחב החדש
+    { note: "C#", x: 6.5 },
     { note: "D#", x: 16.5 },
     { note: "F#", x: 36.5 },
     { note: "G#", x: 46.5 },
@@ -31,7 +38,6 @@ function PianoChord({ chordName }: PianoChordProps) {
       <h3 className="chord-title">{chordName}</h3>
 
       <svg className="piano-svg" width="100%" height="90" viewBox="0 -3 72 50">
-        {/* קלידים לבנים - צרים יותר (8.5 במקום 10) */}
         {whiteKeys.map((note, i) => {
           const activeName = getActiveNoteName(note);
           return (
@@ -41,7 +47,7 @@ function PianoChord({ chordName }: PianoChordProps) {
                 x={i * 10} y="0"
                 width="10" height="40"
                 fill={activeName ? "var(--active-key-color)" : "var(--inactive-key-color)"}
-                rx="1" // עיגול פינות עדין
+                rx="1"
               />
               {activeName && (
                 <text
@@ -59,7 +65,6 @@ function PianoChord({ chordName }: PianoChordProps) {
           );
         })}
 
-        {/* קלידים שחורים - דקים יותר (4.5 במקום 6) */}
         {blackKeys.map((k) => {
           const activeName = getActiveNoteName(k.note);
           return (

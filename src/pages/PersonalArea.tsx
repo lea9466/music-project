@@ -21,7 +21,6 @@ function PersonalArea() {
         const loadData = async () => {
             try {
                 const full_favSongs = await getSongsByIDs(user.favoriteSongs ?? [])
-                console.log(full_favSongs);
                 setFavSongs(full_favSongs)
 
             } catch (err) {
