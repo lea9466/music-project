@@ -101,3 +101,10 @@ export type ApiResponse = {
     message: string;
     status: boolean;
 }
+export type searchObjDto = {
+    nameSong?: string;
+    nameArtist?: string;
+    chords?: ChordDto[]
+    wordLine?: string
+    chordsText?:string
+}
