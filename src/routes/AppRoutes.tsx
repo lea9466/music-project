@@ -7,6 +7,7 @@ import SongController from '../pages/SongController';
 import ChordsOfSong from '../components/chord';
 import Categories from '../components/categories';
 import Search from '../pages/Search';
+import SongsListByCat from '../pages/SongsListByCat';
 // import SongsPage from '../pages/SongsPage';
 // import SongDetailsPage from '../pages/SongDetailsPage';
 
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
             {
                 path: "/search", 
                 element: <Search />,
+            },
+            {
+                path: "cat/:id",
+                element: <SongsListByCat />
             },
         ],
     },

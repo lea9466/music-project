@@ -75,7 +75,7 @@ function SignIn() {
     }
     return (
         <>
-            <form onSubmit={onSubmit} autoComplete="off">
+            <form onSubmit={onSubmit} autoComplete="off" className="log-in-form">
                 <h1>ברוך הבא</h1>
                 <div className="btns">
                     <button className={`btn1 ${signOrLog === 'sign' ? 'active' : ''}`} type="button" onClick={() => setSign('sign')} >הרשמה</button>

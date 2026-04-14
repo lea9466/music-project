@@ -1,6 +1,13 @@
 .songText {
     height: 600px;
     width: 100%;
+    font-size: medium;
+}
+
+.tips {
+    height: 200px;
+    width: 100%;
+    font-size: medium;
 }
 
 p,
@@ -15,13 +22,10 @@ h3 {
     flex-direction: row;
     width: 100%;
     justify-content: right;
-    /* align-items: flex-start; */
     padding: 50px;
     gap: 20px;
-    /* גובה קבוע לאבא הוא קריטי כדי שהבנים ידעו מתי להתחיל גלילה */
-    /* height: 1500px; */
-    /* שיניתי ל-vh (אחוז מהמסך) כי 1800px זה ענק, אבל מה שנוח לך */
     z-index: 10;
+    height: auto;
 
 
 }
@@ -34,8 +38,6 @@ h3 {
 }
 
 .addSong {
-    /* height: 100%; */
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: end;
@@ -45,24 +47,29 @@ h3 {
     padding: 5%;
     max-width: 1000px;
     gap: 13px;
+    height: auto !important;
 }
 
 .points {
     display: flex;
     flex-direction: column;
     align-items: end;
-    gap: 2.5px;
+    gap: 4px;
+    /* height: 300px; */
+
 }
-.points span{
-    height: 2.5px;
+
+.points div {
+    /* height: 2.5px; */
     direction: rtl;
 }
 
 .vewChords {
     width: 70%;
     height: 100%;
-    overflow-y: auto;
-    overflow: visible !important;
+    background-color: var(--elements-color);
+    border-radius: 10px;
+    padding: 2%;
 }
 
 .inputsDiv {
@@ -77,16 +84,32 @@ h3 {
 .vewChords {
     flex: 1;
     height: 100%;
-    overflow-y: auto;
 
-    /* 1. בשביל דפדפני Chrome, Safari ו-Edge החדש */
-    &::-webkit-scrollbar {
-        display: none;
+}
+.titlle-logo{
+    display: flex;
+    flex-direction: row;
+    direction: rtl;
+    align-items: center;
+    gap: 10px;
+}
+@media(max-width:1000px) {
+    .vewChords {
+        width: 100%;
     }
 
-    /* 2. בשביל דפדפן Firefox */
-    scrollbar-width: none;
+    .addSong {
+        width: 100% !important;
+        margin: 0;
+    }
 
-    /* 3. בשביל Internet Explorer ו-Edge הישן */
-    -ms-overflow-style: none;
+    .formAndScan {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .inputsDiv {
+        flex-direction: column;
+    }
+
 }

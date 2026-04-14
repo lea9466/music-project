@@ -9,32 +9,47 @@ function SideBar() {
     const [openTatLinks, setOpenTatLinks] = useState(false);
 
     const sidLinks = {
-        link1: 'קטגוריות',
-        link2: 'יצירת קשר',
-        link3: 'בלוג'
+        link1: 'בית',
+        link2: 'אזור אישי',
+        link3: 'קטגוריות',
     }
     const categories = useSelector((state: RootState) => state.categories.categories);
 
-    const TatLinks = categories.map(c => { return c.name }).slice(1)
-    const newTatLinks = TatLinks.map(link => (
-        <Link to={''}>{link}</Link>
+    const TatLinks = categories.map(c => { return c }).slice(1)
+    debugger
+    const newTatLinks = TatLinks.map(cat => (
+        <Link to={`/cat/${cat.id}`}>{cat.name}</Link>
     ))
 
 
     return (
         <>
+            {/* ה-Overlay: מופיע רק כשהסיידבר פתוח */}
+            {open && <div className="sidebar-overlay" onClick={() => setOpen(false)}></div>}
+
             <button className="sidebar-btn" onClick={() => setOpen(!open)}>
                 ☰
             </button>
-            <div className={`sidebar ${open ? "open" : ""}`}>
-                <button onClick={() => setOpenTatLinks(!openTatLinks)}>{sidLinks.link1 + ' '} ▼</button>
-                <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`} style={{ display: `${openTatLinks == true ? 'block' : 'none'}` }}>
-                    {newTatLinks}
-                </div>
-                <a href="">{sidLinks.link2}</a>
-                <a href="">{sidLinks.link3}</a>
-            </div>
 
+            <div className={`sidebar ${open ? "open" : ""}`}>
+                {/* כאן הוספתי סגירה של הסיידבר כשלוחצים על לינק פנימי - חווית משתמש טובה יותר */}
+                <Link to={'/'} onClick={() => setOpen(false)}>{sidLinks.link1}</Link>
+                <Link to={'/PersonalArea'} onClick={() => setOpen(false)}>{sidLinks.link2}</Link>
+
+                <button onClick={() => setOpenTatLinks(!openTatLinks)}>
+                    {sidLinks.link3 + ' '} ▼
+                </button>
+
+                <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`}
+                    style={{ display: openTatLinks ? 'block' : 'none' }}>
+                    {/* גם כאן כדאי להוסיף onClick לסגירת הסיידבר הראשי כשבוחרים קטגוריה */}
+                    {categories.slice(1).map(cat => (
+                        <Link key={cat.id} to={`/cat/${cat.id}`} onClick={() => setOpen(false)}>
+                            {cat.name}
+                        </Link>
+                    ))}
+                </div>
+            </div>
         </>
     )
 }

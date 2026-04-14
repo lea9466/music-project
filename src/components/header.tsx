@@ -23,7 +23,7 @@ function Header() {
                     <button className='headeBtns' onClick={() => { dispatch(logout()); navigate('/') }}>התנתקות</button>
                 </div>
                 <div className="mainLinks">
-                    <NavLink to='/' end>בית</NavLink>
+                    <NavLink to='/'>בית</NavLink>
                     <NavLink to='/categories'>קטגוריות</NavLink>
                     <a href='#newReq'>בקשת שיר</a>
                     <NavLink to='/search'>חיפוש</NavLink>

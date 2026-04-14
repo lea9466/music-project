@@ -26,7 +26,8 @@ function SongController() {
         majorOrMinor: '',
         categoryId: 0,
         userId: user.id,
-        sourceText: ''
+        sourceText: '',
+        tips: ''
     });
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const types = ["Major", "Minor"];
@@ -57,10 +58,15 @@ function SongController() {
         const { name, value } = event.target
         setData({ ...data, [name]: value })
     }
+    const updateDataDirectly = (newData: Partial<SongDto>) => {
+        setData(prev => ({ ...prev, ...newData }));
+    };
+
+
 
     return (
         <><div className="formAndScan">
-            {isAIScaning && <div className="vewChords"><AIScaning songText={data.sourceText} song={data} /></div>}
+            {isAIScaning && <div className="vewChords"><AIScaning songText={data.sourceText} song={data} setTips={updateDataDirectly} /></div>}
             <form onSubmit={onSubmit} autoComplete="off" className="addSong"
                 style={{ width: `${isAIScaning ? '30%' : '50%'}` }}>
                 <h1>הוספה/עדכון שיר</h1>
@@ -104,20 +110,36 @@ function SongController() {
                 </div>
                 <div className="points">
                     <h3>שים לב חשוב מאד!</h3>
-                    <span>כותרת שברצונך שתהיה מודגשת עלייך להכניס עם # בתחילה</span><br />
-                    <span>שורה שהיא מילים של שיר הכנס בצורה רגילה</span><br />
-                    <span>אקורד עלייך להכניס בפורמט כזה: לדוגמא [A]</span><br />
-                    <span>אם ברצונך להכניס אקורד עם תוספת עלייך להכניסו כך: [A/m7]</span><br />
-                    <span>שים לב b/# הם חלק מאקורד ולכן יופיעו לפני הסלש</span><br />
+                    <div>כותרת שברצונך שתהיה מודגשת עלייך להכניס עם # בתחילה</div>
+                    <div>שורה שהיא מילים של שיר הכנס בצורה רגילה</div>
+                    <div>אקורד עלייך להכניס בפורמט כזה: לדוגמא [A]</div>
+                    <div>אם ברצונך להכניס אקורד עם תוספת עלייך להכניסו כך: [A/m7]</div>
+                    <div>שים לב b/# הם חלק מאקורד ולכן יופיעו לפני הסלש</div>
+                    <div>אנא היצמד למצב מסוים ואל תעבור מבמולים לדיאזים לטובת השיר</div>
                 </div>
                 <textarea className="songText"
                     value={data.sourceText}
                     onChange={(e) => setData({ ...data, sourceText: e.target.value })} >
 
                 </textarea>
+                <div className="titlle-logo">
+                    <h3>טיפים לנגינת השיר מ- Gemini</h3>
+                    <img width="25" height="25" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
+
+                </div>
+                <textarea className="tips"
+                    value={data.tips}
+                    onChange={(e) => setData({ ...data, tips: e.target.value })} >
+
+                </textarea>
                 <div className="formBtns">
                     <button>שמור</button>
-                    <button type="button" onClick={() => { setAIScaning(true) }}>סריקת AI</button>
+                    <button type="button" onClick={() => { setAIScaning(true) }}>
+                        <div className="titlle-logo">
+                            <h4>סריקת AI</h4>
+                            <img width="25" height="25" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
+                        </div>
+                    </button>
                 </div>
 
             </form>
@@ -133,10 +155,12 @@ export default SongController
 
 type Props = {
     songText: string,
-    song: SongDto
+    song: SongDto,
+    setTips: Function;
 }
 
 function AIScaning(props: Props) {
+    debugger
     const hasFetched = useRef(false);
     const [result, setResult] = useState<GeminiSongResponse | null>(null);
     const [tranChordsFromAI, setTranChordsFromAI] = useState<Record<number, ChordDto[]> | undefined>([]);
@@ -165,7 +189,8 @@ function AIScaning(props: Props) {
                 hasFetched.current = true;
                 const message = await AIScan(newFullSongToServer);
                 setResult(message);
-                let transChords = transformChordsToRecord(message.Chords || [])
+                props.setTips({ tips: message.musicalRecommendations });
+                let transChords = transformChordsToRecord(message.chords || [])
                 setTranChordsFromAI(transChords)
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);

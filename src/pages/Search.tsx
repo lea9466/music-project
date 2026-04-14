@@ -2,14 +2,13 @@ import { useState, type ChangeEvent } from "react";
 import type { ChordDto, searchObjDto, SongDto } from "../types";
 import { searchSongs } from "../services/songService";
 import ChordsDisplay from "../components/chordsDisplay";
-import { Chord } from "@tonaljs/tonal";
 
 function Search() {
-
     const [searchObj, setData] = useState<searchObjDto>({
         nameSong: '', nameArtist: '', chords: [], wordLine: '', chordsText: ''
     });
     const [songs, setSongs] = useState<SongDto[]>([]);
+    const [isLoading, setIsLoading] = useState(false); // מצב טעינה
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
@@ -17,23 +16,41 @@ function Search() {
     }
 
     async function setSearch() {
-
-        const songsFromServer = await searchSongs(searchObj)
-        setData({ ...searchObj, chords: parseChordsString(searchObj.chordsText || '') })
-        setSongs(songsFromServer)
+        setIsLoading(true); // מתחילים לחפש
+        try {
+            const transChords: ChordDto[] = parseChordsString(searchObj.chordsText || '')
+            // שימי לב: setData הוא אסינכרוני, אז נשלח לשרת אובייקט מעודכן ידנית
+            const updatedSearchObj = { ...searchObj, chords: transChords };
+            const songsFromServer = await searchSongs(updatedSearchObj);
+            setSongs(songsFromServer);
+        } catch (error) {
+            console.error("חיפוש נכשל", error);
+        } finally {
+            setIsLoading(false); // סיימנו (גם אם נכשל)
+        }
     }
+
     return (
         <>
-            <h1>חיפוש חכם</h1>
-            <input type="text" placeholder="חיפוש לפי שם" onChange={onChange} value={searchObj.nameSong} name="nameSong" />
-            <input type="text" placeholder="מילים בשיר" onChange={onChange} value={searchObj.wordLine} name="wordLine" />
-            <input type="text" placeholder="שם אמן" onChange={onChange} value={searchObj.nameArtist} name="nameArtist" />
-            <input type="text" placeholder="אקורדים שים לב אם תכניס כמה אקורדים עליך להפרידם בפסיק" onChange={onChange} value={searchObj.chordsText} name="chordsText" />
-            <button onClick={setSearch}>חפש</button>
+            <div className="searchSection">
+                <h1>חיפוש חכם</h1>
+                <div className="searchForm">
+                    <input type="text" placeholder="שם שיר" onChange={onChange} value={searchObj.nameSong} name="nameSong" />
+                    <input type="text" placeholder="שם אמן" onChange={onChange} value={searchObj.nameArtist} name="nameArtist" />
+                    <input type="text" placeholder="מילים מהשיר" onChange={onChange} value={searchObj.wordLine} name="wordLine" />
+                    <input type="text" placeholder="אקורדים (מופרדים בפסיק)" onChange={onChange} value={searchObj.chordsText} name="chordsText" className="searchInput" />
+                    <h5 >שים לב בחיפוש לפי אקורדים עלייך לכתוב אקורד בפורמט כזה לדוגמא A/m ז"א כל תוספת שהיא תהיה אחרי /</h5>
+                    <h5 >בנוסף שים לב ש #/b הינם חלק מהאקורד הבסיסי ולכן יופיעו לפני ה/</h5>
+                    <button onClick={setSearch} disabled={isLoading} className="searchBtn">
+                        {isLoading ? <div className="spinner"></div> : "חפש שירים"}
+                    </button>
+                </div>
+            </div>
+
+            {/* תוצאות החיפוש - מחוץ לעיצוב של הקונטיינר למעלה */}
             {songs.length > 0 && <ChordsDisplay songs={songs} />}
         </>
     )
-
 }
 export default Search
 

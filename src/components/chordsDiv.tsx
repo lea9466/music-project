@@ -8,7 +8,7 @@ type Props = {
 }
 
 function ChordsDiv(props: Props) {
-
+debugger
 
     const sharps = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const flats = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];

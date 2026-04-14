@@ -3,41 +3,55 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { updateSuccess } from '../store/userSlice'; // הפעולה שמעדכנת את הרדוקס והלוקאל-סטורג'
 import type { RootState } from '../redux/store';
 import '../style/UserProfile.css'
-import { setNameOrImg } from '../services/userService';
+import { setEmailOrPass, setNameOrImg } from '../services/userService';
 import type { UserDto } from '../types';
-import { updateNameOrImg } from '../redux/auth/authSlice';
+import { updateUser } from '../redux/auth/authSlice';
 const UserProfile = () => {
     const user = useSelector((state: RootState) => state.auth.user);
+
     const dispatch = useDispatch();
 
     // סטייט לפרטים רגילים
     const [formData, setFormData] = useState<UserDto>({ name: user.name, email: user.email });
 
     // סטייט לשינויים רגישים
-    const [securityData, setSecurityData] = useState({
+    const [securityData, setSecurityData] = useState<UserDto>({
         email: user?.email || '',
-        currentPassword: '', // חובה לאימות
-        newPassword: ''
+        newPass: '', // חובה לאימות
+        name: user.name,
+        password: ''
+
     });
 
     const handleGeneralUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const isSucces = await setNameOrImg(formData)
         if (isSucces) {
-            dispatch(updateNameOrImg({name:formData.name}))
+            dispatch(updateUser(formData))
             alert("הפרטים הכלליים עודכנו בהצלחה!");
 
         }
-       
+
     };
 
     const handleSecurityUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!securityData.currentPassword) {
+        if (!securityData.password) {
             alert("חובה להזין סיסמה נוכחית לביצוע שינוי זה");
             return;
         }
-        // שליחה לשרת (למשל POST /api/user/security)
+        const isSucces = await setEmailOrPass(securityData)
+        if (isSucces) {
+            dispatch(updateUser(securityData))
+            alert("הפרטים עודכנו בהצלחה!");
+            setSecurityData({
+                email: user?.email || '',
+                newPass: '', 
+                name: user.name,
+                password: ''
+            })
+        }
+        else alert('error')
     };
 
     return (
@@ -72,16 +86,16 @@ const UserProfile = () => {
 
                 <input
                     type="password"
-                    value={securityData.currentPassword}
-                    onChange={(e) => setSecurityData({ ...securityData, currentPassword: e.target.value })}
+                    value={securityData.password}
+                    onChange={(e) => setSecurityData({ ...securityData, password: e.target.value })}
                     placeholder="סיסמה נוכחית (חובה)"
                     required
                 />
 
                 <input
                     type="password"
-                    value={securityData.newPassword}
-                    onChange={(e) => setSecurityData({ ...securityData, newPassword: e.target.value })}
+                    value={securityData.newPass}
+                    onChange={(e) => setSecurityData({ ...securityData, newPass: e.target.value })}
                     placeholder="סיסמה חדשה (אופציונלי)"
                 />
 

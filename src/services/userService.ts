@@ -34,6 +34,11 @@ export const setNameOrImg = async (user: Omit<UserDto, 'id'>) => {
     if (response.status === 204) return true; // הצלחה
     return false;
 }
+export const setEmailOrPass = async (user: Omit<UserDto, 'id'>) => {
+    const response = await axios.post(url+'/setEmailOrPass', user)
+    if (response.status === 204) return true; // הצלחה
+    return false;
+}
 
 // export const deleteUser = async (id: string) => {
 //     const response = await axios.delete(`${url}/${id}`)

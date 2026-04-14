@@ -52,14 +52,15 @@ const authSlice = createSlice({
                 );
             }
         },
-        updateNameOrImg: (state, action: PayloadAction<{ name?: string; srcImage?: string }>) => {
-            const { name, srcImage } = action.payload;
+        updateUser: (state, action: PayloadAction<UserDto>) => {
+            const { name, srcImage, email } = action.payload;
             if (name !== undefined) state.user.name = name;
             if (srcImage !== undefined) state.user.srcImage = srcImage;
+            if (email !== undefined) state.user.email = email;
             localStorage.setItem("user", JSON.stringify(state.user));
         }
     }
 });
 
-export const { logout, loginSuccess, addFavoriteSong, removeFavoriteSong ,updateNameOrImg} = authSlice.actions;
+export const { logout, loginSuccess, addFavoriteSong, removeFavoriteSong, updateUser } = authSlice.actions;
 export default authSlice.reducer;

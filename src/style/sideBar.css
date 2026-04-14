@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: column;
     /* שינוי לימין */
-    align-items: flex-start; 
+    align-items: flex-start;
     box-shadow: -5px 0 25px rgba(240, 98, 146, 0.1);
 }
 
@@ -34,14 +34,15 @@
     display: block;
     color: #880e4f;
     /* פדינג שנותן מרווח נכון מהימין */
-    padding: 15px 25px; 
+    padding: 15px 25px;
     text-align: right;
     direction: rtl;
     cursor: pointer;
     width: 100%;
     font-weight: 500;
     box-sizing: border-box;
-    position: relative; /* בשביל האפקט של הקו */
+    position: relative;
+    /* בשביל האפקט של הקו */
     transition: all 0.3s ease;
 }
 
@@ -62,12 +63,14 @@
 .sidebar button:hover {
     background: rgba(255, 255, 255, 0.5);
     color: var(--dusty-rose);
-    padding-right: 32px; /* תזוזה קלה שמאלה בתוך הלינק */
+    padding-right: 32px;
+    /* תזוזה קלה שמאלה בתוך הלינק */
 }
 
 .sidebar a:hover::after,
 .sidebar button:hover::after {
-    width: 5px; /* הופעת הפס ב-Hover */
+    width: 5px;
+    /* הופעת הפס ב-Hover */
 }
 
 .divOfTatLinks {
@@ -76,21 +79,22 @@
     flex-direction: column;
     align-items: flex-start;
     /* מדרגה לתתי-לינקים שתיראה ברור */
-    padding-right: 20px; 
+    padding-right: 20px;
     background: rgba(255, 255, 255, 0.2);
     border-right: 1px solid rgba(240, 98, 146, 0.1);
 }
 
 .sidebar-btn {
     position: fixed;
-    top: 22px;
+    top: 24px;
+    /* right: 20px; */
     right: 20px;
     z-index: 1600;
     font-size: 20px;
     padding: 10px 14px;
     border-radius: 12px;
     cursor: pointer;
-    background: var(--glass-white);
+    background: none;
     color: var(--deep-pink);
     border: 1px solid rgba(240, 98, 146, 0.2);
     backdrop-filter: blur(8px);
@@ -99,7 +103,24 @@
 }
 
 .sidebar-btn:hover {
-    background: white;
-    transform: rotate(90deg); /* אפקט מגניב לכפתור הפתיחה */
+    /* background: white;
+    transform: rotate(90deg);
+    /* אפקט מגניב לכפתור הפתיחה */
     color: var(--dusty-rose);
+    
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2);
+    /* צבע כהה עדין, אפשר גם transparent לשקיפות מלאה */
+    backdrop-filter: blur(2px);
+    /* מוסיף אפקט טשטוש יפה לרקע */
+    z-index: 1400;
+    /* פחות מהסיידבר (1500) אבל יותר מהתוכן */
+    cursor: pointer;
 }

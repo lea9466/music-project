@@ -17,14 +17,12 @@ function Home() {
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);
             }
-
         };
-
         loadData();
     }, []);
 
     return (
-        <div >
+        <div className='home'>
             <div className="welcome">
                 <h1>לנגן זה לא קשה!!</h1>
                 <h2>כאן תוכלו למצוא אקורדים למגוון שירים ברמות שונות ובצורה הנוחה ביותר</h2>

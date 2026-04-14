@@ -6,6 +6,7 @@ export type UserDto = {
     srcImage?: string;
     role?: UserRole | number;
     favoriteSongs?: number[]
+    newPass?: string;
 };
 
 export type UserRole = "Regular" | "Admin" | "Manager";
@@ -41,6 +42,7 @@ export type SongDto = {
     userId?: number;
     sourceText: string;
     catName?: string;
+    tips?: string;
 
 };
 
@@ -78,8 +80,8 @@ export type FullSongDto = {
 }
 
 export type GeminiSongResponse = {
-    Chords: ChordDto[],
-    MusicalRecommendations: string
+    chords: ChordDto[],
+    musicalRecommendations: string
 }
 export type UserFavoriteSong = {
     songId: number
@@ -106,5 +108,5 @@ export type searchObjDto = {
     nameArtist?: string;
     chords?: ChordDto[]
     wordLine?: string
-    chordsText?:string
+    chordsText?: string
 }

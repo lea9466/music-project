@@ -1,41 +1,124 @@
-/* form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    height: 500px;
-    background-color: var(--big-elements-color);
-    padding: 5%;
+:root {
+    --primary-purple: #cc30d1;
+    --dark-purple: #6d1b70;
+    --border-light: rgba(0, 0, 0, 0.05);
+}
+
+.log-in-form {
+    max-width: 900px; /* הגדלנו כדי שיהיה מקום לשניים בשורה */
+    margin: 60px auto;
+    padding: 50px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--border-light);
+    direction: rtl;
+    
+    /* הופכים את הטופס ל-Grid */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
     gap: 20px;
-} */
+    font-family: sans-serif;
+}
+
+/* כותרת והכפתורים העליונים תופסים שורה שלמה */
+.log-in-form h1, .btns {
+    grid-column: span 2;
+    text-align: center;
+}
+
+.log-in-form h1 {
+    color: var(--dark-purple);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 800;
+}
 
 .btns {
-    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
 }
 
-.btn1,
-.btn2 {
+/* עיצוב האינפוטים */
+.log-in-form input {
+    height: 60px;
+    padding: 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    font-size: 1.1rem;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.log-in-form input:focus {
+    border-color: var(--primary-purple);
+    background-color: white;
+    box-shadow: 0 0 8px rgba(204, 48, 209, 0.1);
+}
+
+/* טיפול במצב של 3 שדות (שם, מייל, סיסמה) - שהאחרון יהיה רחב */
+.log-in-form input:nth-last-of-type(1):nth-of-type(odd) {
+    grid-column: span 2;
+}
+
+/* כפתור השליחה תופס שורה שלמה */
+.log-in-form button:not(.btn1) {
+    grid-column: span 2;
+    height: 65px;
+    background: var(--primary-purple);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(204, 48, 209, 0.25);
+}
+
+.log-in-form button:not(.btn1):hover {
+    background-color: var(--dark-purple);
+    transform: translateY(-2px);
+}
+
+/* כפתורי הטאבים (הרשמה/התחברות) */
+.btn1 {
     background: none;
     border: none;
-    padding-bottom: 5px;
+    padding: 10px 20px;
     cursor: pointer;
-    font-size: 16px;
-    transition: color 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #999;
     border-bottom: 3px solid transparent;
-    border-radius: 0px;
 }
 
-.btn1:hover,
-.btn2:hover {
-    color: rgb(239, 42, 193);
+.btn1.active {
+    color: var(--primary-purple);
+    border-bottom: 3px solid var(--primary-purple);
 }
 
-.btn1:focus, .btn2:focus,
-.btn1.active, .btn2.active {
-    border-bottom: 3px solid  rgb(239, 42, 193);
-    color: rgb(239, 42, 193);
-    outline: none;
+/* מובייל - מעבר לעמודה אחת */
+@media (max-width: 750px) {
+    .log-in-form {
+        grid-template-columns: 1fr;
+        margin: 20px;
+        padding: 30px 20px;
+    }
+    
+    .log-in-form h1, .btns, .log-in-form button:not(.btn1), .log-in-form input:nth-last-of-type(1):nth-of-type(odd) {
+        grid-column: span 1;
+    }
+
+    .log-in-form h1 {
+        font-size: 1.8rem;
+    }
 }
