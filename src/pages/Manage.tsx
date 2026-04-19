@@ -2,21 +2,24 @@ import { useDispatch, useSelector } from "react-redux";
 import GenericTable from "../components/table";
 import { convertUser, type CategoryDto, type SongDto, type SongRequestDto, type UserDto } from "../types";
 import type { RootState } from "../redux/store";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import ToggleButtons from "../components/toggleButton";
 import { deleteSong, getSongs, getSongsByUserId } from "../services/songService";
-import { getUsers } from "../services/userService";
+import { deleteUser, getUsers } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 import AddCategory from "../components/addCategory";
 import { deleteCategory } from "../services/categoryService";
 import { deleteCategoryFromStore } from "../redux/categoreis/categorieSlice";
-import { getAllRequests } from "../services/songRequestService";
+import { fillSongRequest, getAllRequests } from "../services/songRequestService";
+import SetUserRole from "../components/setUserRole";
 
 function Manage() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [openWindow, setOpenWindow] = useState(false);
+    const [openWindowOfUser, setOpenWindowOfUser] = useState(false);
     const [cat, setCat] = useState<CategoryDto>({ name: '', description: '', songsCount: 0 });
+    const [userEdit, setUserEdit] = useState<UserDto>({ name: '', email: '' });
 
     const user = useSelector((state: RootState) => state.auth.user);
     const categories: CategoryDto[] = useSelector((state: RootState) => state.categories.categories);
@@ -30,7 +33,7 @@ function Manage() {
     const userHeaders = ['שם', 'אימייל', 'הרשאות']
     const userDisplayKeys = ['name', 'email', 'role'];
 
-    const SRHeaders = ['בקשה', 'מצביעים', 'דרוג', 'תאריך בקשה']
+    const SRHeaders = ['בקשה', 'מצביעים', 'דרוג', 'תאריך בקשה', 'בוצע']
     const SRDisplayKeys = ['songDes', 'votesCount', 'priorityScore', 'date'];
 
     const [songs, setSongs] = useState<SongDto[]>([])
@@ -43,15 +46,14 @@ function Manage() {
                 songs.map(s => s.catName = categories.find(c => c.id == s.categoryId)?.name)
                 const users = await getUsers()
                 const songRequests = await getAllRequests()
-                const convertedUsers = users.map(convertUser);
+                // const convertedUsers = users.map(convertUser);
                 setSongs(songs)
-                setUsers(convertedUsers)
+                setUsers(users)
                 seSongRequests(songRequests)
 
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);
             }
-
         };
 
         loadData();
@@ -85,19 +87,48 @@ function Manage() {
             alert('השיר נמחק בהצלחה!')
         else alert('שגיאה')
     }
-    function onDeletUser(item: any) {
-
+    function onEditUser(item: UserDto) {
+        setUserEdit(item)
+        setOpenWindowOfUser(true)
     }
+
     function onEditCat(item: CategoryDto) {
         setCat(item)
         setOpenWindow(true)
     }
+
     function onEditSong(item: SongDto) {
         navigate('/SongController', {
             state: item
         });
     }
-    function onEditUser() {
+    async function onDeletUser(item: UserDto) {
+        const message = 'אתה בטוח שברצונך למחוק משתמש זה?';
+        const confirmed = window.confirm(message);
+        if (!confirmed) {
+            return;
+        }
+        const success = await deleteUser(item.id!)
+        setUsers(users.filter(u => u.id != item.id))
+        if (success)
+            alert('המשתמש נמחק בהצלחה!')
+        else alert('שגיאה')
+    }
+    async function onEditSongReq(item: SongRequestDto) {
+        item.isFulfilled = true
+        item.fulfillerId = user.id
+        item.fulfillerName = user.name
+        const message = 'שים לב לחיצה כאן מהווה אישור לכך שמילאת את בקשת המשתמש והעלת את השיר המבוקש';
+        const confirmed = window.confirm(message);
+        if (!confirmed) {
+            return;
+        }
+        const success = await fillSongRequest(item)
+        if (success) {
+            alert('הבקשה עודכנה בהצלחה')
+            seSongRequests(songRequests.filter(s => s.id != item.id))
+        }
+        else alert('שגיאה')
 
     }
     function onAddCat() {
@@ -114,9 +145,10 @@ function Manage() {
             <ToggleButtons btns={btns} onSet={setActiveTab} activeTab={activeTab} />
             {activeTab == 'dataset' && <GenericTable elements={categories} displayKeys={catDisplayKeys as (keyof CategoryDto)[]} onDelete={(item: CategoryDto) => onDeletCat(item)} onEdit={(item: CategoryDto) => onEditCat(item)} tableHeaders={catHeaders} buttunAdd={{ text: 'add', function: () => onAddCat() }} showAction={true} />}
             {activeTab == 'music_note_2' && <GenericTable elements={songs} displayKeys={songDisplayKeys as (keyof SongDto)[]} onDelete={onDeletSong} onEdit={(item: SongDto) => onEditSong(item)} tableHeaders={songHeaders} buttunAdd={{ text: 'add', function: () => navigate('/SongController') }} showAction={true} />}
-            {activeTab == 'group' && <GenericTable elements={users} displayKeys={userDisplayKeys as (keyof UserDto)[]} onDelete={onDeletUser} onEdit={onEditUser} tableHeaders={userHeaders} showAction={true} />}
-            {activeTab == 'folded_hands' && <GenericTable elements={songRequests} displayKeys={SRDisplayKeys as (keyof SongRequestDto)[]} onDelete={() => { }} onEdit={() => { }} tableHeaders={SRHeaders} showAction={false} />}
+            {activeTab == 'group' && <GenericTable elements={users.map(convertUser)} displayKeys={userDisplayKeys as (keyof UserDto)[]} onDelete={(item: UserDto) => onDeletUser(item)} onEdit={(item: UserDto) => onEditUser(item)} tableHeaders={userHeaders} showAction={true} />}
+            {activeTab == 'folded_hands' && <GenericTable elements={songRequests} displayKeys={SRDisplayKeys as (keyof SongRequestDto)[]} onDelete={() => { }} onEdit={(item: SongRequestDto) => onEditSongReq(item)} tableHeaders={SRHeaders} showAction={false} />}
             {openWindow && <AddCategory setOpen={setOpenWindow} editCat={cat} />}
+            {openWindowOfUser && <SetUserRole setOpen={setOpenWindowOfUser} user={userEdit} users={users} />}
         </>
 
     );

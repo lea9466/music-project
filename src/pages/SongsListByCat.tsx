@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 function SongsListByCat() {
     debugger
-    const { id } = useParams();    
+    const { id } = useParams();
     const cat = useSelector((state: RootState) => state.categories.categories).find(c => c.id == id);
     const [songs, setSongs] = useState<SongDto[]>([]);
     useEffect(() => {
@@ -22,7 +22,10 @@ function SongsListByCat() {
         };
 
         fetchSongs();
-    }, [id]);
+    }, [id, cat]);
+
+    if (!cat)
+        return (<><h2>טוען...</h2></>)
 
     return (
         <>

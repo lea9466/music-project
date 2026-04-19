@@ -9,7 +9,7 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
     const songs = props.songs;
     if (songs.length == 0)
         return <>אין נתונים להצגה</>
-    const [cardsDisplay, setDisplay] = useState('cards')
+    const [cardsDisplay, setDisplay] = useState('list')
     const navigate = useNavigate()
     function onChordsClick(song: SongDto) {
         debugger
@@ -32,11 +32,20 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
         <>
             <div className="display">
                 <div className="displayBtns">
-                    <button onClick={() => setDisplay('list')}>
-                        <img src="../src/img/format_list_bulleted_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+                    <button
+                        className={cardsDisplay === 'list' ? 'active' : ''}
+                        onClick={() => setDisplay('list')}
+                        title="תצוגת רשימה"
+                    >
+                        <img src="../src/img/format_list_bulleted_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="רשימה" />
                     </button>
-                    <button onClick={() => setDisplay('cards')}>
-                        <img src="../src/img/dashboard_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+
+                    <button
+                        className={cardsDisplay === 'cards' ? 'active' : ''}
+                        onClick={() => setDisplay('cards')}
+                        title="תצוגת כרטיסים"
+                    >
+                        <img src="../src/img/dashboard_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="כרטיסים" />
                     </button>
                 </div>
                 <div className={`${cardsDisplay == 'cards' ? 'songListGrid' : 'songListFlex'}`}>

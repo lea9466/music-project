@@ -20,7 +20,6 @@ const UserProfile = () => {
         newPass: '', // חובה לאימות
         name: user.name,
         password: ''
-
     });
 
     const handleGeneralUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,9 +28,7 @@ const UserProfile = () => {
         if (isSucces) {
             dispatch(updateUser(formData))
             alert("הפרטים הכלליים עודכנו בהצלחה!");
-
         }
-
     };
 
     const handleSecurityUpdate = async (e: React.FormEvent<HTMLFormElement>) => {

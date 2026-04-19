@@ -9,8 +9,6 @@ function SongCard(props: { song: SongDto, onClick: Function }) {
     return (
         <>
             <div className="songCard" key={song.id}>
-
-
                 <div className="divider"></div>
 
                 <div className="artistDiv">
@@ -36,7 +34,7 @@ function SongCard(props: { song: SongDto, onClick: Function }) {
                 <div className="divider"></div>
 
                 <button style={{ display: 'flex', flexDirection: 'row' }} onClick={() => onClick(onClick)}>
-                    <img src="src/img/music_note_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+                    <span className="material-symbols-outlined">music_note</span>
                     לאקורדים
                 </button>
 

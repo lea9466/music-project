@@ -31,7 +31,7 @@ function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit
                         : <span className="empty-val">---</span>}
                 </td>
             ))}
-            {showAction && (
+            {(
                 <td data-label="פעולות" className="actions-cell">
                     {rowIndex === 0 && 'songsCount' in (item as any) ? (
                         /* מקרה א': קטגוריה בסיסית */
@@ -42,7 +42,7 @@ function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit
                         /* מקרה ב': שורה רגילה עם כפתורים */
                         <div className="flex-actions">
                             <button onClick={() => onEdit(item)} className="icon-btn edit" title="עריכה">✎</button>
-                            <button onClick={() => onDelete(item)} className="icon-btn delete" title="מחיקה">🗑</button>
+                            {showAction && <button onClick={() => onDelete(item)} className="icon-btn delete" title="מחיקה">🗑</button>}
                         </div>
                     )}
                 </td>
@@ -59,7 +59,7 @@ function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit
                         <thead>
                             <tr>
                                 {headers}
-                                {showAction &&<th className="actions-column">פעולות</th>}
+                                {showAction && <th className="actions-column">פעולות</th>}
                             </tr>
                         </thead>
                         <tbody>

@@ -1,187 +1,131 @@
+:root {
+  --main-pink: #c690e6;
+  --light-pink: #f8f0ff;
+  --border-color: #eee;
+  --text-dark: #333;
+  --text-gray: #666;
+}
+
+/* קונטיינר עליון - יציב עם כפתור בימין */
 .btnAndTabl {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 10px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* מצמיד לימין ב-RTL */
+  gap: 15px;
+  width: 100%;
+  /* padding: 20px; */
+  box-sizing: border-box;
+  min-height: 85px; /* שומר על גובה קבוע */
 }
 
+/* כפתור הוספה - ורוד וחי */
 .btnAdd {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #eee;
+  background-color: var(--main-pink);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(198, 144, 230, 0.2);
 }
 
-/* קונטיינר כללי */
+.btnAdd:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* הטבלה - רוחב מלא ועיצוב נקי */
 .table-container {
-    width: 100%;
-    direction: rtl;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 12px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  direction: rtl;
 }
 
-/* כותרת וכפתור הוספה */
-.table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.table-header h2 {
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.table-header span {
-    font-size: 0.9rem;
-    color: #888;
-    font-weight: normal;
-}
-
-.add-btn {
-    background-color: #1a1a1a;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.add-btn:hover {
-    background-color: #444;
-}
-
-/* עיצוב הטבלה */
 .responsive-table {
-    overflow-x: auto;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  overflow-x: auto; /* רספונסיביות פשוטה: גלילה במקום בלאגן */
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
 }
 
 .custom-table {
-    width: bold;
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 1000px;
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* שומר שהטבלה לא תצטמק מדי */
 }
 
+/* כותרות */
 .custom-table th {
-    background-color: #fff;
-    color: black;
-    font-weight: 600;
-    text-align: right;
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    font-size: 0.85rem;
-    height: 50px;
-
+  background-color: #fafafa;
+  color: var(--text-dark);
+  font-weight: 700;
+  text-align: right;
+  padding: 18px 20px;
+  border-bottom: 2px solid var(--main-pink);
 }
 
+/* תאים */
 .custom-table td {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f1f1f1;
-    color: black;
-    vertical-align: middle;
+  padding: 15px 20px;
+  border-bottom: 1px solid #f5f5f5;
+  color: var(--text-gray);
+  vertical-align: middle;
 }
 
-.custom-table tr:last-child td {
-    border-bottom: none;
+/* שורה בולטת */
+.main-cell {
+  color: var(--text-dark) !important;
+  font-weight: 600;
 }
 
+/* אפקט ריחוף עדין בסגול-ורוד */
 .custom-table tr:hover {
-    background-color: #fcfcfc;
+  background-color: var(--light-pink);
 }
 
-/* אלמנטים מיוחדים בתוך הטבלה */
-.song-name {
-    font-weight: bold;
-    color: #1a1a1a;
-}
-
-.category-tag {
-    background-color: #eef2ff;
-    color: #4f46e5;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-}
-
-.date-cell {
-    color: black;
-    font-size: 0.9rem;
-}
-
-/* כפתורי פעולה */
-.actions-cell {
-    display: flex;
-    gap: 15px;
+/* כפתורי פעולה - דומיננטיים ומסודרים */
+.flex-actions {
+  display: flex;
+  gap: 10px;
 }
 
 .icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-    color: #bbb;
-    transition: color 0.2s;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: white;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 1.1rem;
 }
 
+/* עריכה */
+.icon-btn.edit {
+  color: var(--main-pink);
+}
 .icon-btn.edit:hover {
-    color: #4f46e5;
+  background-color: var(--main-pink);
+  color: white;
 }
 
+/* מחיקה */
+.icon-btn.delete {
+  color: #ff5e5e;
+}
 .icon-btn.delete:hover {
-    color: #ef4444;
+  background-color: #ff5e5e;
+  color: white;
 }
 
-/* רספונסיביות לנייד (Mobile) */
-@media (max-width: 768px) {
-    .custom-table thead {
-        display: none;
-        /* מסתירים את הכותרות המקוריות */
-    }
-
-    .custom-table,
-    .custom-table tbody,
-    .custom-table tr,
-    .custom-table td {
-        display: block;
-        width: 100%;
-    }
-
-    .custom-table tr {
-        margin-bottom: 15px;
-        border: 1px solid #eee;
-        border-radius: 8px;
-        padding: 10px;
-    }
-
-    .custom-table td {
-        text-align: left;
-        padding-left: 50%;
-        position: relative;
-        border-bottom: 1px solid #fafafa;
-    }
-
-    /* מוסיפים את שם העמודה לפני התוכן */
-    .custom-table td::before {
-        content: attr(data-label);
-        position: absolute;
-        right: 15px;
-        width: 45%;
-        font-weight: bold;
-        text-align: right;
-        color: #999;
-    }
-
-    .actions-cell {
-        justify-content: flex-start;
-    }
+/* הודעת "אין נתונים" */
+.empty-state {
+  padding: 40px;
+  text-align: center;
+  color: #999;
 }

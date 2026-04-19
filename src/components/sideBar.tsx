@@ -16,9 +16,8 @@ function SideBar() {
     const categories = useSelector((state: RootState) => state.categories.categories);
 
     const TatLinks = categories.map(c => { return c }).slice(1)
-    debugger
     const newTatLinks = TatLinks.map(cat => (
-        <Link to={`/cat/${cat.id}`}>{cat.name}</Link>
+        <Link to={`/cat/${cat.id}`} onClick={() => setOpen(false)} key={cat.id}>{cat.name}</Link>
     ))
 
 
@@ -43,11 +42,7 @@ function SideBar() {
                 <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`}
                     style={{ display: openTatLinks ? 'block' : 'none' }}>
                     {/* גם כאן כדאי להוסיף onClick לסגירת הסיידבר הראשי כשבוחרים קטגוריה */}
-                    {categories.slice(1).map(cat => (
-                        <Link key={cat.id} to={`/cat/${cat.id}`} onClick={() => setOpen(false)}>
-                            {cat.name}
-                        </Link>
-                    ))}
+                    {newTatLinks}
                 </div>
             </div>
         </>

@@ -1,54 +1,73 @@
+:root {
+    --main-pink: #c690e6;
+    --light-pink: #f8f0ff;
+    --text-gray: #888;
+    --transition: all 0.3s ease;
+}
+
+/* במחשב: מוצמד לימין */
 .wrapperBtns {
     display: flex;
     flex-direction: row;
     background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    justify-content: flex-start;
     align-items: center;
-    height:50px ;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 10px;
-    gap: 10px;
+    padding: 6px;
+    gap: 8px;
     width: fit-content;
-    
-
+    margin-right: 0; /* הצמדה לימין */
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #f0f0f0;
+    direction: rtl;
 }
 
 .toggle-btn {
-
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
-    background-color: white;
-    color: gray;
+    padding: 0 18px;
+    background-color: transparent;
+    color: var(--text-gray);
     border: none;
-    gap: 3px;
-    font-size: 16px;
-
-
+    border-radius: 8px;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
 .toggle-btn.active {
-    color: black;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-
+    color: var(--main-pink);
+    background-color: var(--light-pink);
+    font-weight: 600;
 }
 
-
-
-
-.icon {
-    font-size: 1.1rem;
-}
-
-@media (max-width:700px) {
-    .icon {
-        font-size:0.8rem ;
+/* --- רספונסיביות למובייל --- */
+@media (max-width: 700px) {
+    .wrapperBtns {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 כפתורים בשורה */
+        width: calc(100% - 20px); /* תופס את כל הרוחב עם מעט שוליים */
+        margin: 20px auto; /* ממרכז את כל האלמנט בדף */
+        justify-content: center;
+        gap: 8px;
+        box-sizing: border-box;
     }
-    .toggle-btn{
+
+    .toggle-btn {
+        width: 100%; /* הכפתורים ימלאו את חצי הרוחב של הגריד */
         font-size: 14px;
+        padding: 0 5px;
+        height: 48px; /* נוח יותר ללחיצה במובייל */
+    }
+
+    .icon {
+        font-size: 1rem;
     }
 }

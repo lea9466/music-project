@@ -14,7 +14,7 @@ export const login = async (log: UserDto) => {
         return response.data;
     } catch (error: any) {
         if (error.response?.status === 400) {
-            return {user:null,toke:null};
+            return { user: null, toke: null };
         }
         throw error;
     }
@@ -30,12 +30,22 @@ export const addUser = async (user: Omit<UserDto, 'id'>) => {
 }
 
 export const setNameOrImg = async (user: Omit<UserDto, 'id'>) => {
-    const response = await axios.post(url+'/setNameOrImg', user)
+    const response = await axios.post(url + '/setNameOrImg', user)
     if (response.status === 204) return true; // הצלחה
     return false;
 }
 export const setEmailOrPass = async (user: Omit<UserDto, 'id'>) => {
-    const response = await axios.post(url+'/setEmailOrPass', user)
+    const response = await axios.post(url + '/setEmailOrPass', user)
+    if (response.status === 204) return true; // הצלחה
+    return false;
+}
+export const setRole = async (user: Omit<UserDto, 'id'>) => {
+    const response = await axios.post(url + '/setRole', user)
+    if (response.status === 204) return true; // הצלחה
+    return false;
+}
+export const deleteUser = async (id: number) => {
+    const response = await axios.delete(url + '/' + id)
     if (response.status === 204) return true; // הצלחה
     return false;
 }

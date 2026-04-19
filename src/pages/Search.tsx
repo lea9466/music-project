@@ -2,7 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import type { ChordDto, searchObjDto, SongDto } from "../types";
 import { searchSongs } from "../services/songService";
 import ChordsDisplay from "../components/chordsDisplay";
-
+import '../style/search.css'
 function Search() {
     const [searchObj, setData] = useState<searchObjDto>({
         nameSong: '', nameArtist: '', chords: [], wordLine: '', chordsText: ''

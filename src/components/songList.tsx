@@ -38,7 +38,7 @@ function SongList(props: { song: SongDto, onClick: Function }) {
                 <div className="divider"></div>
 
                 <button className='tochordsbtn' style={{ display: 'flex', flexDirection: 'row' }} onClick={() => onClick(onClick)}>
-                    <img src="src/img/music_note_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+                    <span className="material-symbols-outlined">music_note</span>
                     <div className="chordBtn">לאקורדים</div>
                 </button>
 
