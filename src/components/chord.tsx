@@ -28,7 +28,6 @@ const getEmbedUrl = (url: string) => {
 
 function ChordsOfSong() {
     const dispatch = useDispatch();
-
     const { id } = useParams<{ id: string }>();
     const [ton, setTon] = useState(0)
     const user = useSelector((state: RootState) => state.auth.user);
@@ -39,6 +38,8 @@ function ChordsOfSong() {
         chordsByLine: {}
     });
     const [heartSrc, setheartSrc] = useState(`${user.favoriteSongs?.includes(fullSong.song.id!) ? '../src/img/לב מלא.png' : '../src/img/לב ריק.png'}`)
+    console.log(user.favoriteSongs);
+    
     // const allChords = Object.values(fullSong.chordsByLine || {}).flat();
 
 
@@ -133,6 +134,10 @@ function ChordsOfSong() {
                         <img src={minusIcon} alt=""
                             onClick={() => { if (ton > -12) setTon(ton - 1) }}
                             className="minus" />
+                    </div>
+                    <div className="tips">
+                        <h4>טיפים לניגון השיר מאת AI</h4>
+                        <div>{fullSong.song.tips}</div>
                     </div>
 
                 </div>

@@ -27,9 +27,9 @@
 
 /* עיצוב הקישורים */
 .mainLinks a {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.927);
     /* לבן קצת שקוף כשלא לחוץ */
-    font-size: 18px;
+    font-size: 20px;
     text-decoration: none;
     position: relative;
     /* חשוב בשביל הפס התחתון */

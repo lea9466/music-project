@@ -12,7 +12,7 @@ import UserProfile from "../components/userProfile";
 
 function PersonalArea() {
     const user = useSelector((state: RootState) => state.auth.user);
-    const btns = [{ str: 'פרטים עלי', icon: 'person' }, { str: 'שירים שאהבתי', icon: 'favorite' },]
+    const btns = [ { str: 'שירים שאהבתי', icon: 'favorite' },{ str: 'פרטים עלי', icon: 'person' }]
     const [activeTab, setActiveTab] = useState<string>(btns[1].icon);
     const [favSongs, setFavSongs] = useState<SongDto[]>([])
     console.log(JSON.stringify(user.favoriteSongs));
@@ -31,7 +31,6 @@ function PersonalArea() {
         loadData();
     }, []);
 
-    const navigate = useNavigate()
     return (
         <>
             <div className="personalArea">

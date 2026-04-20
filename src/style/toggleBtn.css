@@ -22,7 +22,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     border: 1px solid #f0f0f0;
-    direction: rtl;
+    /* direction: rtl; */
 }
 
 .toggle-btn {

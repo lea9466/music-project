@@ -6,7 +6,11 @@
     width: 100%;
 }
 
-
+.tips{
+    width: 70%;
+    direction: rtl;
+    margin-bottom: 50px;
+}
 
 .chords-grid {
     display: flex;
