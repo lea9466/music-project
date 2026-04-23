@@ -13,21 +13,14 @@ export const addCategory = async (cat: CategoryDto) => {
 }
 
 export const deleteCategory = async (id: number) => {
-    try {
-        const response = await axios.delete(`${url}/${id}`);
-        return response.status === 200 || response.status === 204;
-    } catch (error) {
-        console.error("שגיאה במחיקת קטגוריה:", error);
-        return false;
-    }
+
+    const response = await axios.delete(`${url}/${id}`);
+    return response.status === 200 || response.status === 204;
+
 };
-export const updateCategory = async (cat:CategoryDto) => {
-    try {
-        const response = await axios.post(url+'/updateCat',cat);
-        return response.status === 200 || response.status === 204;
-    } catch (error) {
-        console.error("שגיאה בעדכון קטגוריה:", error);
-        return false;
-    }
+export const updateCategory = async (cat: CategoryDto) => {
+    
+    const response = await axios.post(url + '/updateCat', cat);
+    return response.status === 200 || response.status === 204;
 };
 

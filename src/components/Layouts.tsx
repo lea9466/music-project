@@ -7,7 +7,10 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import SideBar from "./sideBar";
+import { ToastContainer } from "react-toastify";
 
+
+//פריסה בסיסית של כל הדפים
 const Layout = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state: RootState) => state.categories.categories);
@@ -33,6 +36,7 @@ const Layout = () => {
       <main>
         <Outlet /> {/* כאן יוצגו הדפים המשתנים */}
       </main>
+      <ToastContainer />
       {/* <Footer /> */}
     </>
   );

@@ -49,7 +49,7 @@ function ConnecteionForm() {
         <>
             <h3>יצירת קשר</h3>
             <form onSubmit={handleSubmit} className="contact-form">
-                
+
                 <input
                     type="text"
                     name="name"

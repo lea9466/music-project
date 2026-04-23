@@ -10,6 +10,9 @@ import { useLocation } from 'react-router-dom';
 import { setCategories } from "../redux/categoreis/categorieSlice";
 import { getCategories } from "../services/categoryService";
 
+
+
+//דף הוספה ועדכון של אקורדים לשיר
 function SongController() {
     const [isAIScaning, setAIScaning] = useState(false)
     const dispatch = useDispatch()

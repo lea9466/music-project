@@ -3,6 +3,8 @@ import type { ChordDto, searchObjDto, SongDto } from "../types";
 import { searchSongs } from "../services/songService";
 import ChordsDisplay from "../components/chordsDisplay";
 import '../style/search.css'
+
+//דף חיפוש לפי הרבה אופציות
 function Search() {
     const [searchObj, setData] = useState<searchObjDto>({
         nameSong: '', nameArtist: '', chords: [], wordLine: '', chordsText: ''

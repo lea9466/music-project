@@ -31,36 +31,21 @@ export const addUser = async (user: Omit<UserDto, 'id'>) => {
 
 export const setNameOrImg = async (user: Omit<UserDto, 'id'>) => {
     const response = await axios.post(url + '/setNameOrImg', user)
-    if (response.status === 204) return true; // הצלחה
-    return false;
+    return response.status === 204 || response.status === 200
 }
 export const setEmailOrPass = async (user: Omit<UserDto, 'id'>) => {
     const response = await axios.post(url + '/setEmailOrPass', user)
-    if (response.status === 204) return true; // הצלחה
-    return false;
+    return response.status === 204 || response.status === 200
+
 }
 export const setRole = async (user: Omit<UserDto, 'id'>) => {
     const response = await axios.post(url + '/setRole', user)
-    if (response.status === 204) return true; // הצלחה
-    return false;
+    return response.status === 204 || response.status === 200
+
 }
 export const deleteUser = async (id: number) => {
     const response = await axios.delete(url + '/' + id)
-    if (response.status === 204) return true; // הצלחה
-    return false;
+    return response.status === 204 || response.status === 200
+
 }
 
-// export const deleteUser = async (id: string) => {
-//     const response = await axios.delete(`${url}/${id}`)
-//     return response.data
-// }
-
-// export const addUser = async (user: Omit<User, 'id'>) => {
-//     const response = await axios.post(url,user)
-//     return response.data
-// }
-
-// export const upDateUser = async (user:User) => {
-//     const response = await axios.put(`${url}/${user.id}`,user)
-//     return response.data
-// }

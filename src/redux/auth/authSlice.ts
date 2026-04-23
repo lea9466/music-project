@@ -52,13 +52,21 @@ const authSlice = createSlice({
                 );
             }
         },
-        updateUser: (state, action: PayloadAction<UserDto>) => {
-            const { name, srcImage, email } = action.payload;
-            if (name !== undefined) state.user.name = name;
-            if (srcImage !== undefined) state.user.srcImage = srcImage;
-            if (email !== undefined) state.user.email = email;
+        updateUser: (state, action: PayloadAction<Partial<UserDto>>) => {
+            // 1. יצירת אובייקט חדש שממזג את המצב הקיים עם הנתונים החדשים
+            // אנחנו מסננים ערכי undefined כדי שלא ידריסו נתונים קיימים בטעות
+            const updatedData = Object.fromEntries(
+                Object.entries(action.payload).filter(([_, v]) => v !== undefined)
+            );
+
+            state.user = {
+                ...state.user,
+                ...updatedData
+            };
+
+            // 2. עדכון ה-LocalStorage עם האובייקט המעודכן
             localStorage.setItem("user", JSON.stringify(state.user));
-        }
+        },
     }
 });
 

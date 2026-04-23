@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import type { CategoryDto, SongDto } from "../types";
+import type {  SongDto } from "../types";
 import { getSongsByCatId } from "../services/songService";
 import ChordsDisplay from "../components/chordsDisplay";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import { useParams } from "react-router-dom";
 
+
+//דף של תצוגת שירים לפי קטגוריה
 function SongsListByCat() {
-    debugger
     const { id } = useParams();
     const cat = useSelector((state: RootState) => state.categories.categories).find(c => c.id == id);
     const [songs, setSongs] = useState<SongDto[]>([]);

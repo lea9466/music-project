@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import '../style/songList.css'
 import type { CategoryDto, SongDto } from '../types';
 import type { RootState } from '../redux/store';
+
+//תצוגת שיר חיצונית בכרטיס
 function SongCard(props: { song: SongDto, onClick: Function }) {
     const categories: CategoryDto[] = useSelector((state: RootState) => state.categories.categories)
     const { song, onClick } = props;

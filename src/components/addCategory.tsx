@@ -5,7 +5,11 @@ import { addCategoryToStore, updateCategoryFromStore } from '../redux/categoreis
 import { useDispatch, useSelector } from 'react-redux';
 import type { CategoryDto } from '../types';
 import type { RootState } from '../redux/store';
+import { toast } from 'react-toastify';
 
+
+
+//קומפוננטה שקופצת כאשר רוצים לערוך או להוסיף קטגוריה חדשה
 function AddCategory(props: { setOpen: (flaag: boolean) => void, editCat?: CategoryDto }) {
     const token = localStorage.getItem("token");
     const dispatch = useDispatch();
@@ -30,36 +34,28 @@ function AddCategory(props: { setOpen: (flaag: boolean) => void, editCat?: Categ
     };
 
     async function addOrSetCat() {
-        try {
-            if (!token) {
-                alert('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
-                return;
-            }
-
-            // בדיקה לפי ID - הדרך הכי בטוחה לדעת אם זה עדכון או הוספה
-            if (cat.id) {
-                const success = await updateCategory(cat);
-                if (success) {
-                    dispatch(updateCategoryFromStore(cat));
-                    alert('עודכן בהצלחה');
-                } else {
-                    alert('שגיאה בעדכון');
-                }
+        if (!token) {
+            toast.success('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
+            return;
+        }
+        // בדיקה לפי ID - הדרך הכי בטוחה לדעת אם זה עדכון או הוספה
+        if (cat.id) {
+            const success = await updateCategory(cat);
+            if (success) {
+                dispatch(updateCategoryFromStore(cat));
+                toast.success("Done!");
             }
             else {
                 const newCat = await addCategory(cat);
                 newCat.songsCount = 0;
                 dispatch(addCategoryToStore(newCat));
-                alert('הקטגוריה נוספה בהצלחה!');
+                toast.success("Done!");
             }
 
             handleClose(); // סגירה ואיפוס לאחר הצלחה
 
-        } catch (error) {
-            console.error(error);
         }
     }
-
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setCat({ ...cat, [name]: value });
@@ -105,6 +101,8 @@ function AddCategory(props: { setOpen: (flaag: boolean) => void, editCat?: Categ
         </div>
     );
 }
+
+
 export default AddCategory
 
 

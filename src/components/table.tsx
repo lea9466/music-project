@@ -13,6 +13,7 @@ type Props<T> = {
     showAction: boolean;
 };
 
+//טבלה גנרית לתצוגת מידע על שירים משתמשים קטגוריות ובקשות שירים
 function GenericTable<T>({ elements, tableHeaders, displayKeys, onDelete, onEdit, buttunAdd, showAction }: Props<T>) {
 
     const headers = tableHeaders.map((header, i) => (

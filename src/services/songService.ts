@@ -37,14 +37,11 @@ export const deleteSong = async (id: number) => {
     return response.data;
 }
 export const updateSong = async (song: FullSongDto) => {
-    try {
-        const response = await axios.put<SongDto>(url, song);
-        return response.data;
-    } catch (error) {
-        console.error("שגיאה בעדכון שיר:", error);
-    }
+
+    const response = await axios.put<SongDto>(url, song);
+    return response.data;
 };
 export const searchSongs = async (sobj: searchObjDto) => {
-    const response = await axios.post<SongDto[]>(`${url}/search`,sobj);
+    const response = await axios.post<SongDto[]>(`${url}/search`, sobj);
     return response.data;
 }

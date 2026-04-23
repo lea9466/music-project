@@ -6,7 +6,10 @@ import { addUser, getUsers, login } from "../services/userService"
 import { loginSuccess } from "../redux/auth/authSlice"
 import { useDispatch } from "react-redux"
 import type { UserDto } from "../types"
+import { toast } from "react-toastify"
 
+
+//דף התחברות
 function SignIn() {
     const dispatch = useDispatch();
 
@@ -22,51 +25,41 @@ function SignIn() {
             return
         }
 
-        try {
-            debugger
-            const log: UserDto = { name: data.name, password: data.password, email: data.email };
+        const log: UserDto = { name: data.name, password: data.password, email: data.email };
+        if (signOrLog === 'log') {
             const { token, user } = await login(log);
-            if (signOrLog === 'log') {
+            if (user && token) {
+                localStorage.setItem("token", token);
+                localStorage.setItem("user", JSON.stringify(user));
+                dispatch(loginSuccess({ user, token }));
+                toast.success("האימות הושלם!")
+                navigate('/PersonalArea');
+            }
+        }
+
+        else {
+            if (data.name == '') {
+                toast.error("חסר פרטים")
+                return
+            }
+            const { token, user } = await login(data);
+            if (user) { toast.error("משתמש קיים"); return }
+            else {
+                const { token, user } = await addUser(data);
                 if (user && token) {
                     localStorage.setItem("token", token);
                     localStorage.setItem("user", JSON.stringify(user));
+
                     dispatch(loginSuccess({ user, token }));
-                    alert('ברוך הבא');
+                    toast.success("נרשמת בהצלחה")
                     navigate('/PersonalArea');
-                }
-                else
-                    alert('פרטי התחברות שגויים');
-            }
-            else {
-                if (user) {
-                    alert('משתמש קיים');
-                    return;
-                }
-                else {
-                    if (data.name == '') {
-                        alert('חסר פרטים')
-                        return
-                    }
-                    const { token, user } = await addUser(data);
-                    if (user && token) {
-                        // 1. שמירה לזיכרון הדפדפן (חובה כדי שהטוקן לא יתנדף)
-                        localStorage.setItem("token", token);
-                        localStorage.setItem("user", JSON.stringify(user));
-
-                        // 2. עדכון ה-Redux (כדי שה-UI יתעדכן מיד)
-                        dispatch(loginSuccess({ user, token }));
-
-                        alert("נרשמת בהצלחה");
-                        navigate('/PersonalArea');
-                    } else {
-                        alert('שגיאה בהרשמה');
-                    }
+                
                 }
             }
+
         }
-        catch (error) {
-            console.error(error);
-        }
+
+
     };
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {

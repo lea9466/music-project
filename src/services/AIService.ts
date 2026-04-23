@@ -9,7 +9,7 @@ export const AIScan = async (song: Omit<FullSongDto, 'id'>) => {
 }
 
 const answer: GeminiSongResponse = {
-    "Chords": [
+    "chords": [
         { "name": "G", "indexInLine": 1, "lineNumber": 2, "spaces": 0, "adding": "7", "reason": "פתיחה דומיננטית ליצירת תנועה למנגינה" },
         { "name": "D", "indexInLine": 2, "lineNumber": 2, "spaces": 3, "adding": "m6", "reason": "הוספת הדרמה של ה-6 למודוס המינורי" },
         { "name": "F", "indexInLine": 3, "lineNumber": 2, "spaces": 3, "adding": "maj7", "reason": "ריכוך המעבר לפני הסיומת של הפתיחה" },
@@ -42,6 +42,6 @@ const answer: GeminiSongResponse = {
         { "name": "F", "indexInLine": 3, "lineNumber": 39, "spaces": 3, "adding": "7", "reason": "גיוון אחרון לפני האקורד הסופי" },
         { "name": "E", "indexInLine": 4, "lineNumber": 39, "spaces": 4, "adding": "sus4", "reason": "סיום פתוח שמשאיר מקום למחשבה" }
     ],
-    "MusicalRecommendations": "השיר בנוי על סולם מינורי עם תחושה ליטורגית עמוקה. בבתים, מומלץ לנגן בליווי פסנתר או גיטרה בפריטה עדינה (Arpeggio) כדי לתת מקום לטקסט. במעבר לפזמון ('מה לך ומניין לך'), כדאי להגביר את עוצמת הנגינה (Crescendo) ולהשתמש באקורדים רחבים יותר כמו ה-Fmaj7 וה-Cmaj7 שהוספתי, כדי ליצור תחושת התפעלות. בשורה 'מי הוא בעל הבירה', מומלץ לבצע עצירה קטנה (Rubato) לפני הנחיתה על האקורד האחרון כדי להדגיש את חשיבות השאלה."
+    "musicalRecommendations": "השיר בנוי על סולם מינורי עם תחושה ליטורגית עמוקה. בבתים, מומלץ לנגן בליווי פסנתר או גיטרה בפריטה עדינה (Arpeggio) כדי לתת מקום לטקסט. במעבר לפזמון ('מה לך ומניין לך'), כדאי להגביר את עוצמת הנגינה (Crescendo) ולהשתמש באקורדים רחבים יותר כמו ה-Fmaj7 וה-Cmaj7 שהוספתי, כדי ליצור תחושת התפעלות. בשורה 'מי הוא בעל הבירה', מומלץ לבצע עצירה קטנה (Rubato) לפני הנחיתה על האקורד האחרון כדי להדגיש את חשיבות השאלה."
 }
 

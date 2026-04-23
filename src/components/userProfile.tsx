@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { updateSuccess } from '../store/userSlice'; // הפעולה שמעדכנת את הרדוקס והלוקאל-סטורג'
 import type { RootState } from '../redux/store';
@@ -6,9 +6,11 @@ import '../style/UserProfile.css'
 import { setEmailOrPass, setNameOrImg } from '../services/userService';
 import type { UserDto } from '../types';
 import { updateUser } from '../redux/auth/authSlice';
+import { toast } from 'react-toastify';
+
+//עדכון פרטי משתמש
 const UserProfile = () => {
     const user = useSelector((state: RootState) => state.auth.user);
-
     const dispatch = useDispatch();
 
     // סטייט לפרטים רגילים
@@ -19,19 +21,32 @@ const UserProfile = () => {
         email: user?.email || '',
         newPass: '', // חובה לאימות
         name: user.name,
-        password: ''
+        password: '',
+        role: user.role
     });
-
+    // הוסיפי את זה בתוך הקומפוננטה
+    useEffect(() => {
+        setFormData({ name: user.name, email: user.email });
+        setSecurityData(prev => ({
+            ...prev,
+            email: user.email,
+            name: user.name,
+            password: '', // מאפסים סיסמה אחרי הצלחה
+            newPass: ''
+        }));
+    }, [user]); // בכל פעם שה-user ב-Redux משתנה, הטופס יתעדכן
     const handleGeneralUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+
         e.preventDefault();
         const isSucces = await setNameOrImg(formData)
         if (isSucces) {
             dispatch(updateUser(formData))
-            alert("הפרטים הכלליים עודכנו בהצלחה!");
+            toast.success("השם עודכן בהצלחה");
         }
     };
 
     const handleSecurityUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+        debugger
         e.preventDefault();
         if (!securityData.password) {
             alert("חובה להזין סיסמה נוכחית לביצוע שינוי זה");
@@ -39,13 +54,15 @@ const UserProfile = () => {
         }
         const isSucces = await setEmailOrPass(securityData)
         if (isSucces) {
+
             dispatch(updateUser(securityData))
-            alert("הפרטים עודכנו בהצלחה!");
+            toast.success("הפרטים עודכנו בהצלחה");
             setSecurityData({
                 email: user?.email || '',
-                newPass: '', 
+                newPass: '',
                 name: user.name,
-                password: ''
+                password: '',
+                role: user.role
             })
         }
         else alert('error')

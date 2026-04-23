@@ -8,7 +8,10 @@ import type { CategoryDto, UserDto } from '../types';
 import type { RootState } from '../redux/store';
 import { updateUser } from '../redux/auth/authSlice';
 import { setEmailOrPass, setRole } from '../services/userService';
+import { toast } from 'react-toastify';
 
+
+//חלון קופץ של עריכת דרגת משתמש
 function SetUserRole(props: { setOpen: (flaag: boolean) => void, user: UserDto, users: UserDto[] }) {
     const token = localStorage.getItem("token");
     const dispatch = useDispatch();
@@ -31,30 +34,24 @@ function SetUserRole(props: { setOpen: (flaag: boolean) => void, user: UserDto, 
     };
 
     async function setUserRole() {
-        try {
-            if (!token) {
-                alert('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
-                return;
-            }
-            debugger
 
-            // user.role = user.role == 'Regular' ? 0 : user.role == 'Admin' ? 1 : 2
-            const success = await setRole(user);
-            props.users.map(u => {
-                if (u.id == user.id)
-                    u.role = (user.role == 0 ? 'Regular' : user.role == 1 ? 'Admin' : 'Manager')
-            })
-            if (success) {
-                alert('עודכן בהצלחה');
-            } else {
-                alert('שגיאה בעדכון');
-            }
+        if (!token) {
+            toast.warn('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
+            return;
+        }
+        debugger
+
+        // user.role = user.role == 'Regular' ? 0 : user.role == 'Admin' ? 1 : 2
+        const success = await setRole(user);
+        props.users.map(u => {
+            if (u.id == user.id)
+                u.role = (user.role == 0 ? 'Regular' : user.role == 1 ? 'Admin' : 'Manager')
+        })
+        if (success) {
+            toast.success("Done!");
             handleClose(); // סגירה ואיפוס לאחר הצלחה
-        } catch (error) {
-            console.error(error);
         }
     }
-
 
 
     return (

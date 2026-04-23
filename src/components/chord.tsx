@@ -13,7 +13,9 @@ import { toggleFavoriteSongService } from "../services/favoriteSongsService";
 import { addFavoriteSong, removeFavoriteSong } from "../redux/auth/authSlice";
 import ChordsViewer from "./chordsViewer";
 import ToggleButtons from "./toggleButton";
+import { toast } from "react-toastify";
 
+//פונקציה לניקוי לינק של יוטיוב
 const getEmbedUrl = (url: string) => {
     if (!url) return "";
 
@@ -26,6 +28,8 @@ const getEmbedUrl = (url: string) => {
     return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
 };
 
+
+//הדיב הראשי שמוצגים בו פרטי השיר והאקורדים שלו - שיר שלם
 function ChordsOfSong() {
     const dispatch = useDispatch();
     const { id } = useParams<{ id: string }>();
@@ -39,9 +43,8 @@ function ChordsOfSong() {
     });
     const [heartSrc, setheartSrc] = useState(`${user.favoriteSongs?.includes(fullSong.song.id!) ? '../src/img/לב מלא.png' : '../src/img/לב ריק.png'}`)
     console.log(user.favoriteSongs);
-    
-    // const allChords = Object.values(fullSong.chordsByLine || {}).flat();
 
+    // const allChords = Object.values(fullSong.chordsByLine || {}).flat();
 
     useEffect(() => {
         const isFavorite = user.favoriteSongs?.includes(fullSong.song.id!);
@@ -70,11 +73,11 @@ function ChordsOfSong() {
     async function toggleFavoriteSong() {
 
         if (!user.id) {
-            alert('עליך להתחבר כדי לסמן שירים מועדפים');
+            toast.warn('עליך להתחבר כדי לסמן שירים מועדפים');
             return;
         }
         if (!token) {
-            alert('כדי לסמן מועדפים עליך להתחבר מחדש')
+            toast.warn('כדי לסמן מועדפים עליך להתחבר מחדש');
             return
         }
         const dataToSend = {

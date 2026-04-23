@@ -5,9 +5,11 @@ import { ToggleVote } from "../services/songRequestVoteService";
 import '../style/SongRequest.css';
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
+import { toast } from "react-toastify";
 
 const spanOptions = [1, 1, 2, 1, 2, 1, 1, 2];
 
+//בקשות שירים של משמתשים
 function SongRequest() {
     const [requests, setRequests] = useState<SongRequestDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -39,14 +41,14 @@ function SongRequest() {
 
     const handleAddRequest = async () => {
         if (!token) {
-            alert('אנא התחבר כדי לשלוח את הבקשה');
+            toast.warn('אנא התחבר כדי לבצע את הבקשה');
             return;
         }
         if (!newRequestDes.trim()) return;
         try {
             const response = await addSongRequest({ songDes: newRequestDes });
             setRequests([response, ...requests]);
-            alert('בקשתך נשלחה בהצלחה');
+            toast.success("בקשתך נשלחה בהצלחה");
             setNewRequestDes("");
         } catch (err) {
             console.error(err);

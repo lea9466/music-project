@@ -5,13 +5,15 @@ import ToggleButtons from "./toggleButton";
 import '../style/chordsViewer.css'
 import GuitarChords from "./guitarChord";
 
-interface ChordsViewerProps {
+type ChordsViewerProps = {
     // המילון שמגיע מהשרת (מפתח: מספר שורה, ערך: מערך אקורדים)
     chordsByLine: Record<number, ChordDto[]>;
     ton: number
     useFlats: boolean
 }
 
+
+//תצוגה ויזואלית של אקורדים לאורגנית ופסנתר
 export default function ChordsViewer({ chordsByLine, ton, useFlats }: ChordsViewerProps) {
     const sharps = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const flats = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -26,7 +28,7 @@ export default function ChordsViewer({ chordsByLine, ton, useFlats }: ChordsView
 
     // 1. איסוף וחישוב מחדש של כל אקורד בנפרד (בלי לדרוס את המקור!)
     const allChords = Object.values(chordsByLine || {}).flat();
-    
+
     const translatedChords = allChords.map(ch => {
         // נמצא את המיקום המקורי (נחפש גם בבמולים וגם בדיאזים ליתר ביטחון)
         let originalIndex = sharps.indexOf(ch.name);

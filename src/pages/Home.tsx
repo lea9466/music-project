@@ -6,6 +6,9 @@ import { getNewSongs, getSongs } from '../services/songService';
 import type { SongDto } from '../types';
 import { useNavigate } from 'react-router-dom';
 import SongRequest from '../components/songRequest';
+
+
+//דף הבית - ראשי לתצוגת שירים חדשים ובקשות משתמשים
 function Home() {
     const [songs, setSongs] = useState<SongDto[]>([])
     const navigate = useNavigate()

@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import '../style/songList.css'
 import type { CategoryDto, SongDto } from '../types';
 import type { RootState } from '../redux/store';
+
+//תצוגת שיר חיצונית ברשימה
 function SongList(props: { song: SongDto, onClick: Function }) {
 
     const categories: CategoryDto[] = useSelector((state: RootState) => state.categories.categories)

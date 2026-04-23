@@ -7,11 +7,12 @@ import { getSongsByCatId } from "../services/songService";
 import '../style/categories.css';
 
 // --- קומפוננטת המגירה הפנימית ---
-interface DrawerProps {
+type DrawerProps = {
     categoryId: number;
     isOpen: boolean;
 }
 
+//תצוגת השירים שנפתחים
 function CategoryDrawer({ categoryId, isOpen }: DrawerProps) {
     const [songs, setSongs] = useState<SongDto[]>([]);
     const [loading, setLoading] = useState(false);
@@ -50,8 +51,8 @@ function CategoryDrawer({ categoryId, isOpen }: DrawerProps) {
                             <span className="drawer-song-name">{song.name}</span>
                             <span className="drawer-song-artist">{song.artist || "אמן לא ידוע"}</span>
                         </div>
-                        <button 
-                            className="drawer-chords-btn" 
+                        <button
+                            className="drawer-chords-btn"
                             onClick={() => navigate(`/chords/${song.id}`)}
                         >
                             <span>לאקורדים</span>
@@ -79,29 +80,29 @@ function Categories() {
     return (
         <div className="catDisplay1">
             <h3>רשימת הקטגוריות</h3>
-            
+
             <div className="categories-list-container">
                 {categories.map((cat) => (
                     <div className="category-item-wrapper" key={cat.id}>
                         {/* שורת הקטגוריה הלחיצה */}
-                        <div 
-                            className={`cat-row ${openCategoryId === cat.id ? 'open' : ''}`} 
+                        <div
+                            className={`cat-row ${openCategoryId === cat.id ? 'open' : ''}`}
                             onClick={() => toggleCategory(cat.id!)}
-                        > 
+                        >
                             <div className="cat-main-content">
                                 <div className="cat-name">{cat.name}</div>
                                 <div className="cat-count">{`${cat.songsCount} שירים`}</div>
                             </div>
-                            
+
                             <div className={`cat-arrow-icon ${openCategoryId === cat.id ? 'rotate' : ''}`}>
                                 ▼
                             </div>
                         </div>
 
                         {/* המגירה שנפתחת */}
-                        <CategoryDrawer 
-                            categoryId={cat.id!} 
-                            isOpen={openCategoryId === cat.id} 
+                        <CategoryDrawer
+                            categoryId={cat.id!}
+                            isOpen={openCategoryId === cat.id}
                         />
                     </div>
                 ))}

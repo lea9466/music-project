@@ -5,6 +5,9 @@ import SongList from "./songList";
 import '../style/chordsDisplay.css'
 import type { SongDto } from "../types";
 import { useNavigate } from "react-router-dom";
+
+
+//קומפוננטה המחזירה תצוגת שירים - כרטיסים או רשימה
 function ChordsDisplay(props: { songs: SongDto[] }) {
     const songs = props.songs;
     if (songs.length == 0)

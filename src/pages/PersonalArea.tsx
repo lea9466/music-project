@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import Manage from "./Manage"
+import Manage from "../components/Manage"
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import '../style/personalArea.css'
@@ -10,9 +10,12 @@ import { convertUser, type SongDto } from "../types";
 import { getSongsByIDs } from "../services/songService";
 import UserProfile from "../components/userProfile";
 
+
+//דף של אזור משתמש בו יוצג לו באם יש הרשאות מידע ואופציות עריכה
+//וכן שירים שאהב ומידע עליו
 function PersonalArea() {
     const user = useSelector((state: RootState) => state.auth.user);
-    const btns = [ { str: 'שירים שאהבתי', icon: 'favorite' },{ str: 'פרטים עלי', icon: 'person' }]
+    const btns = [{ str: 'שירים שאהבתי', icon: 'favorite' }, { str: 'פרטים עלי', icon: 'person' }]
     const [activeTab, setActiveTab] = useState<string>(btns[1].icon);
     const [favSongs, setFavSongs] = useState<SongDto[]>([])
     console.log(JSON.stringify(user.favoriteSongs));

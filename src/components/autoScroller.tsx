@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import '../style/autoScroller.css'
 
+
+
+//קומפוננטה לגלילה אוטומטית
 function AutoScroller() {
     const [isScrolling, setIsScrolling] = useState(false);
     const [fast, setFast] = useState(50)

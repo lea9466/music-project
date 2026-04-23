@@ -1,18 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import GenericTable from "../components/table";
+import GenericTable from "./table";
 import { convertUser, type CategoryDto, type SongDto, type SongRequestDto, type UserDto } from "../types";
 import type { RootState } from "../redux/store";
 import { use, useEffect, useState } from "react";
-import ToggleButtons from "../components/toggleButton";
+import ToggleButtons from "./toggleButton";
 import { deleteSong, getSongs, getSongsByUserId } from "../services/songService";
 import { deleteUser, getUsers } from "../services/userService";
 import { useNavigate } from "react-router-dom";
-import AddCategory from "../components/addCategory";
+import AddCategory from "./addCategory";
 import { deleteCategory } from "../services/categoryService";
 import { deleteCategoryFromStore } from "../redux/categoreis/categorieSlice";
 import { fillSongRequest, getAllRequests } from "../services/songRequestService";
-import SetUserRole from "../components/setUserRole";
+import SetUserRole from "./setUserRole";
+import { toast } from "react-toastify";
 
+
+//קומפוננטת ניהול מידע
 function Manage() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -72,7 +75,7 @@ function Manage() {
         const success = await deleteCategory(item.id!)
         if (success) {
             dispatch(deleteCategoryFromStore(item.id!));
-            alert('הקטגוריה נמחקה בהצלחה ')
+            toast.success("Done!");
         }
     }
     async function onDeletSong(item: SongDto) {
@@ -82,10 +85,10 @@ function Manage() {
             return;
         }
         const success = await deleteSong(item.id!)
-        setSongs(songs.filter(s => s.id != item.id))
-        if (success)
-            alert('השיר נמחק בהצלחה!')
-        else alert('שגיאה')
+        if (success) {
+            setSongs(songs.filter(s => s.id != item.id))
+            toast.success("Done!");
+        }
     }
     function onEditUser(item: UserDto) {
         setUserEdit(item)
@@ -111,9 +114,9 @@ function Manage() {
         const success = await deleteUser(item.id!)
         setUsers(users.filter(u => u.id != item.id))
         if (success)
-            alert('המשתמש נמחק בהצלחה!')
-        else alert('שגיאה')
+            toast.success("Done!");
     }
+    
     async function onEditSongReq(item: SongRequestDto) {
         item.isFulfilled = true
         item.fulfillerId = user.id
@@ -125,10 +128,9 @@ function Manage() {
         }
         const success = await fillSongRequest(item)
         if (success) {
-            alert('הבקשה עודכנה בהצלחה')
+            toast.success("Done!");
             seSongRequests(songRequests.filter(s => s.id != item.id))
         }
-        else alert('שגיאה')
 
     }
     function onAddCat() {

@@ -7,9 +7,11 @@ type Props = {
     chordsFromAI?: Record<number, ChordDto[]>
 }
 
-function ChordsDiv(props: Props) {
-debugger
 
+//הקומפוננטה שמחזירה רק את השיר עצמו והאקרודים מעליו - 
+// אם יש גם אקורדים של בינה מלאכותית מציגה גם אותם
+
+function ChordsDiv(props: Props) {
     const sharps = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const flats = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
     const { fullSong, useFlats, ton, isFromScaning, chordsFromAI = [] } = props
@@ -61,7 +63,6 @@ debugger
         }
     }
 
-
     return (
         <>
             <div className="chords" style={{ alignItems: `${fullSong.song.language == 'E' ? 'flex-start' : 'flex-end'}`, display: 'flex', flexDirection: 'column' }}>
@@ -72,7 +73,7 @@ debugger
 }
 export default ChordsDiv
 
-
+//יצירת שורת אקרודים לתצוגה לפי מה שהכניס המשתמש
 function ChordsLine(props: any) {
     let str = []
     const sharps = props.sharps
@@ -116,6 +117,8 @@ type ChordsLineScanType = {
     chords: ChordDto[];
     isFromAI?: boolean;
 }
+
+//יצירת שורת אקרודים לתצוגה לפי מה שהביאה בינה מלאכותית 
 function ChordsLineScan(props: ChordsLineScanType) {
     let str = []
     const chords = props.chords
@@ -146,7 +149,7 @@ function ChordsLineScan(props: ChordsLineScanType) {
     )
 }
 
-
+//מיזוג מערך שורות מילים עם מערך שורות אקורדים
 function mergeByIndex(words: any, chords: any) {
     let merged = [];
     let i = 0, j = 0;

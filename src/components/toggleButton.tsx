@@ -5,7 +5,7 @@ type Props = {
     onSet:Function
     activeTab:string
 }
-
+//קומפוננטה המקבלת מערך של שמות כפתורים ואייקונים ומחזירה בצורה יפה
 function ToggleButtons(props: Props) {
     const newBtns = props.btns.map(btn =>
         <button

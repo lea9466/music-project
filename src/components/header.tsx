@@ -6,6 +6,8 @@ import '../style/header.css'
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { loginSuccess, logout } from '../redux/auth/authSlice';
+
+//תצוגת ראש הדף - הדר
 function Header() {
     const user = useSelector((state: RootState) => state.auth.user);
     // const { theme, toggleTheme } = useTheme();
