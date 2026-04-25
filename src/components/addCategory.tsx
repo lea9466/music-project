@@ -34,6 +34,7 @@ function AddCategory(props: { setOpen: (flaag: boolean) => void, editCat?: Categ
     };
 
     async function addOrSetCat() {
+        debugger
         if (!token) {
             toast.success('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
             return;
@@ -45,17 +46,18 @@ function AddCategory(props: { setOpen: (flaag: boolean) => void, editCat?: Categ
                 dispatch(updateCategoryFromStore(cat));
                 toast.success("Done!");
             }
-            else {
-                const newCat = await addCategory(cat);
-                newCat.songsCount = 0;
-                dispatch(addCategoryToStore(newCat));
-                toast.success("Done!");
-            }
-
-            handleClose(); // סגירה ואיפוס לאחר הצלחה
-
         }
+        else {
+            const newCat = await addCategory(cat);
+            newCat.songsCount = 0;
+            dispatch(addCategoryToStore(newCat));
+            toast.success("Done!");
+        }
+
+        handleClose(); // סגירה ואיפוס לאחר הצלחה
+
     }
+
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setCat({ ...cat, [name]: value });
