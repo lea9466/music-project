@@ -37,7 +37,6 @@ export const deleteSong = async (id: number) => {
     return response.data;
 }
 export const updateSong = async (song: FullSongDto) => {
-
     const response = await axios.put<SongDto>(url, song);
     return response.data;
 };

@@ -6,6 +6,8 @@ import { getNewSongs, getSongs } from '../services/songService';
 import type { SongDto } from '../types';
 import { useNavigate } from 'react-router-dom';
 import SongRequest from '../components/songRequest';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../redux/store';
 
 
 //דף הבית - ראשי לתצוגת שירים חדשים ובקשות משתמשים
@@ -15,8 +17,8 @@ function Home() {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const data = await getNewSongs();
-                setSongs(data)
+                const newSongs = useSelector((state: RootState) => state.songs.newSongs);
+                setSongs(newSongs)
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);
             }

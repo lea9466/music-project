@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import SideBar from "./sideBar";
 import { ToastContainer } from "react-toastify";
+import { getNewSongs } from "../services/songService";
+import { setSongs } from "../redux/songs/songSlice";
+import type { SongDto } from "../types";
 
 
 //פריסה בסיסית של כל הדפים
@@ -21,6 +24,8 @@ const Layout = () => {
         try {
           const data = await getCategories();
           dispatch(setCategories(data));
+          const newSongs: SongDto[] = await getNewSongs();
+          dispatch(setSongs({ items: newSongs }));
         } catch (err) {
           console.error("שגיאה בקריאת הנתונים:", err);
         }
@@ -32,7 +37,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <SideBar/>
+      <SideBar />
       <main>
         <Outlet /> {/* כאן יוצגו הדפים המשתנים */}
       </main>
