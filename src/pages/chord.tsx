@@ -5,14 +5,14 @@ import '../style/chord.css'
 import { useEffect, useState } from 'react';
 import { getFullSong } from '../services/songService';
 import type { FullSongDto, SongDto, UserFavoriteSong } from '../types';
-import AutoScroller from './autoScroller';
-import ChordsDiv from "./chordsDiv";
+import AutoScroller from '../components/autoScroller';
+import ChordsDiv from "../components/chordsDiv";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import { toggleFavoriteSongService } from "../services/favoriteSongsService";
 import { addFavoriteSong, removeFavoriteSong } from "../redux/auth/authSlice";
-import ChordsViewer from "./chordsViewer";
-import ToggleButtons from "./toggleButton";
+import ChordsViewer from "../components/chordsViewer";
+import ToggleButtons from "../components/toggleButton";
 import { toast } from "react-toastify";
 import heartFull from "../img/לב מלא.png";
 import heartEmpty from "../img/לב ריק.png";
@@ -110,7 +110,7 @@ function ChordsOfSong() {
     ];
 
     if (!fullSong.song.name) {
-        return <h3>טוען...</h3> 
+        return <h3>טוען...</h3>
     }
 
     return (

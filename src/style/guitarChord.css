@@ -79,7 +79,8 @@
 
 @media(max-width:700px) {
     .guitar-chord-card {
-        margin: 8px;
+        margin: 5px;
+        padding: 2px;
     }
 
 }

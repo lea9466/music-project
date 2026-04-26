@@ -4,7 +4,7 @@ import SignIn from '../pages/SignIn';
 import Layout from '../components/Layouts';
 import PersonalArea from '../pages/PersonalArea';
 import SongController from '../pages/SongController';
-import ChordsOfSong from '../components/chord';
+import ChordsOfSong from '../pages/chord';
 import Categories from '../components/categories';
 import Search from '../pages/Search';
 import SongsListByCat from '../pages/SongsListByCat';
@@ -38,11 +38,11 @@ export const router = createBrowserRouter([
                 element: <ChordsOfSong />
             },
             {
-                path: "/categories", 
+                path: "/categories",
                 element: <Categories />,
             },
             {
-                path: "/search", 
+                path: "/search",
                 element: <Search />,
             },
             {

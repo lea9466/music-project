@@ -113,6 +113,10 @@
         margin-bottom: 10px;
     }
 
+    .content h1 {
+        font-size: 1.7rem;
+    }
+
     .welcome h2 {
         font-size: 1.1rem;
         /* כותרת משנית */

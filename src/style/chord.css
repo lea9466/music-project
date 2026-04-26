@@ -154,6 +154,9 @@
     .chordsOfSong {
         width: 100%;
     }
+    .chordsOfSong h1{
+        font-size: large;
+    }
     .wrappwr{
         padding: 2px;
         width: 100%;
