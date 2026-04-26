@@ -1,22 +1,28 @@
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ChordsDisplay from '../components/chordsDisplay';
 import '../style/home.css'
-import { getNewSongs, getSongs } from '../services/songService';
-import type { SongDto } from '../types';
+import { getNewSongs } from '../services/songService';
 import { useNavigate } from 'react-router-dom';
 import SongRequest from '../components/songRequest';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store';
+import { setSongs } from '../redux/songs/songSlice';
 
-
-//דף הבית - ראשי לתצוגת שירים חדשים ובקשות משתמשים
 function Home() {
-    const [songs, setSongs] = useState<SongDto[]>([])
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const songs = useSelector((state: RootState) => state.songs.newSongs)
+
     useEffect(() => {
-        const newSongs = useSelector((state: RootState) => state.songs.newSongs);
-        setSongs(newSongs)
+        const loadData = async () => {
+            try {
+                const newSongs = await getNewSongs();
+                dispatch(setSongs({ items: newSongs }));
+            } catch (err) {
+                console.error("שגיאה בקריאת הנתונים:", err);
+            }
+        };
+        loadData();
     }, []);
 
     return (
@@ -27,25 +33,11 @@ function Home() {
                 <h3>שימו לב אם הינכם יודעים לכתוב אקורדים תוכלו להעלות שירים בעצמכם אנא צרו קשר עם מנהל האתר</h3>
                 <button className="menuBtns" onClick={() => navigate('categories')}>התחילו לנגן ←</button>
             </div>
-            {/* <div className="menuBtnsDiv">
-                <button className="menuBtns" onClick={() => navigate('categories')}>
-                    <h3>היכנס כדי לנגן לפי הז'אנר המועדף עלייך</h3>
-                    <div>מאות אקורדים מחולקים לקטגוריות לפי סגנון</div>
-                    <img className="icon" src="../src/img/queue_music_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
-
-                </button>
-                <button className="menuBtns">
-                    <h3>כל האקורדים בסינון חופשי</h3>
-                    <div>מצא את השירים האהובים עלייך בחיפוש חופשי לפי שם אומן שם שיר</div>
-                    <img className="icon" src="../src/img/search_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
-                </button>
-            </div> */}
             <div className="content">
                 <h1>אקורדים חדשים באתר</h1>
                 <ChordsDisplay songs={songs} />
-                <h1 id="newReq" >בקשות שירים מהקהילה</h1>
+                <h1 id="newReq">בקשות שירים מהקהילה</h1>
                 <SongRequest />
-
             </div>
         </div>
     );
