@@ -109,6 +109,10 @@ function ChordsOfSong() {
         { str: "מצב דיאזים", icon: "♯" },
     ];
 
+    if (!fullSong.song.name) {
+        return <h3>טוען...</h3> 
+    }
+
     return (
         <>
             <div className='wrappwr'>
