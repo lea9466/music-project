@@ -15,15 +15,8 @@ function Home() {
     const [songs, setSongs] = useState<SongDto[]>([])
     const navigate = useNavigate()
     useEffect(() => {
-        const loadData = async () => {
-            try {
-                const newSongs = useSelector((state: RootState) => state.songs.newSongs);
-                setSongs(newSongs)
-            } catch (err) {
-                console.error("שגיאה בקריאת הנתונים:", err);
-            }
-        };
-        loadData();
+        const newSongs = useSelector((state: RootState) => state.songs.newSongs);
+        setSongs(newSongs)
     }, []);
 
     return (

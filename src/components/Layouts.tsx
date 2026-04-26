@@ -17,6 +17,7 @@ import type { SongDto } from "../types";
 const Layout = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state: RootState) => state.categories.categories);
+  const newSongs = useSelector((state: RootState) => state.songs.newSongs);
 
   useEffect(() => {
     const loadData = async () => {
@@ -24,6 +25,13 @@ const Layout = () => {
         try {
           const data = await getCategories();
           dispatch(setCategories(data));
+
+        } catch (err) {
+          console.error("שגיאה בקריאת הנתונים:", err);
+        }
+      }
+      if (newSongs.length === 0) {
+        try {
           const newSongs: SongDto[] = await getNewSongs();
           dispatch(setSongs({ items: newSongs }));
         } catch (err) {
