@@ -14,6 +14,8 @@ import { addFavoriteSong, removeFavoriteSong } from "../redux/auth/authSlice";
 import ChordsViewer from "./chordsViewer";
 import ToggleButtons from "./toggleButton";
 import { toast } from "react-toastify";
+import heartFull from "../img/לב מלא.png";
+import heartEmpty from "../img/לב ריק.png";
 
 //פונקציה לניקוי לינק של יוטיוב
 const getEmbedUrl = (url: string) => {
@@ -41,14 +43,17 @@ function ChordsOfSong() {
         wordLines: [],
         chordsByLine: {}
     });
-    const [heartSrc, setheartSrc] = useState(`${user.favoriteSongs?.includes(fullSong.song.id!) ? '../src/img/לב מלא.png' : '../src/img/לב ריק.png'}`)
-    console.log(user.favoriteSongs);
+
+    const [heartSrc, setheartSrc] = useState(
+        user.favoriteSongs?.includes(fullSong.song.id!) ? heartFull : heartEmpty
+    )
+    // console.log(user.favoriteSongs);
 
     // const allChords = Object.values(fullSong.chordsByLine || {}).flat();
 
     useEffect(() => {
         const isFavorite = user.favoriteSongs?.includes(fullSong.song.id!);
-        setheartSrc(isFavorite ? '../src/img/לב מלא.png' : '../src/img/לב ריק.png');
+        setheartSrc(isFavorite ? heartFull : heartEmpty);
     }, [user.favoriteSongs, fullSong.song.id]);
 
     useEffect(() => {
@@ -87,11 +92,10 @@ function ChordsOfSong() {
         try {
             const response = await toggleFavoriteSongService(dataToSend);
             if (response.songId) {
-                setheartSrc('../src/img/לב מלא.png');
+                setheartSrc(heartFull);
                 dispatch(addFavoriteSong(fullSong.song.id!));
-            }
-            else {
-                setheartSrc('../src/img/לב ריק.png');
+            } else {
+                setheartSrc(heartEmpty);
                 dispatch(removeFavoriteSong(fullSong.song.id!));
             }
         } catch (error) {
