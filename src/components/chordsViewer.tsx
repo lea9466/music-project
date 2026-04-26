@@ -3,8 +3,7 @@ import type { ChordDto } from "../types";
 import PianoChord from "./pianoChord";
 import ToggleButtons from "./toggleButton";
 import '../style/chordsViewer.css'
-// import GuitarChords from "./guitarChord";
-
+import GC from "./gc";
 type ChordsViewerProps = {
     // המילון שמגיע מהשרת (מפתח: מספר שורה, ערך: מערך אקורדים)
     chordsByLine: Record<number, ChordDto[]>;
@@ -56,8 +55,7 @@ export default function ChordsViewer({ chordsByLine, ton, useFlats }: ChordsView
                     activeTab === "piano" ? (
                         <PianoChord key={fullChordName} chordName={fullChordName} />
                     ) : (
-                        // <GuitarChords key={fullChordName} chordName={fullChordName} />
-                        <></>
+                         <GC key={fullChordName} chordName={fullChordName} />
                     )
                 ))}
             </div>
