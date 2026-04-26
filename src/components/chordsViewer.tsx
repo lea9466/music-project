@@ -4,6 +4,7 @@ import PianoChord from "./pianoChord";
 import ToggleButtons from "./toggleButton";
 import '../style/chordsViewer.css'
 import GuitarChords from "./guitarChord";
+
 type ChordsViewerProps = {
     // המילון שמגיע מהשרת (מפתח: מספר שורה, ערך: מערך אקורדים)
     chordsByLine: Record<number, ChordDto[]>;
