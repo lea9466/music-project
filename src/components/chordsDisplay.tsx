@@ -36,19 +36,19 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
             <div className="display">
                 <div className="displayBtns">
                     <button
-                        className={cardsDisplay === 'list' ? 'active' : ''}
-                        onClick={() => setDisplay('list')}
+                        className={`material-symbols-outlined ${cardsDisplay === 'list' ? 'active' : ''}`} onClick={() => setDisplay('list')}
                         title="תצוגת רשימה"
                     >
-                        <img src="../src/img/format_list_bulleted_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="רשימה" />
+                        {/* <img src="../src/img/format_list_bulleted_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="רשימה" /> */}
+                        list
                     </button>
 
                     <button
-                        className={cardsDisplay === 'cards' ? 'active' : ''}
-                        onClick={() => setDisplay('cards')}
+                        className={`material-symbols-outlined ${cardsDisplay === 'cards' ? 'active' : ''}`} onClick={() => setDisplay('cards')}
                         title="תצוגת כרטיסים"
                     >
-                        <img src="../src/img/dashboard_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="כרטיסים" />
+                        {/* <img src="../src/img/dashboard_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="כרטיסים" /> */}
+                        dashboard
                     </button>
                 </div>
                 <div className={`${cardsDisplay == 'cards' ? 'songListGrid' : 'songListFlex'}`}>
