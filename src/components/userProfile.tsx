@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { updateSuccess } from '../store/userSlice'; // הפעולה שמעדכנת את הרדוקס והלוקאל-סטורג'
 import type { RootState } from '../redux/store';
-import '../style/UserProfile.css'
+import '../style/userProfile.css'
 import { setEmailOrPass, setNameOrImg } from '../services/userService';
 import type { UserDto } from '../types';
 import { updateUser } from '../redux/auth/authSlice';
