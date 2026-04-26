@@ -104,3 +104,39 @@
         height: 300px;
     }
 }
+
+/* --- עיצוב למסכים קטנים (מובייל) --- */
+@media (max-width: 600px) {
+    .welcome h1 {
+        font-size: 1.7rem;
+        /* מקטין את הכותרת הראשית */
+        margin-bottom: 10px;
+    }
+
+    .welcome h2 {
+        font-size: 1.1rem;
+        /* כותרת משנית */
+        padding: 0 10px;
+        /* קצת מרווח מהצדדים */
+    }
+
+    .welcome h3 {
+        font-size: 0.9rem;
+        /* טקסט ההסבר */
+        font-weight: normal;
+        line-height: 1.4;
+        /* מרווח בין השורות לקריאות טובה */
+    }
+
+    .menuBtns {
+        padding: 10px 20px;
+        font-size: 1rem;
+        width: 80%;
+        /* שהכפתור יהיה רחב ונוח ללחיצה */
+    }
+
+    .welcome {
+        text-align: center;
+        padding: 20px;
+    }
+}

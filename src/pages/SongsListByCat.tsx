@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import type {  SongDto } from "../types";
+import type { SongDto } from "../types";
 import { getSongsByCatId } from "../services/songService";
 import ChordsDisplay from "../components/chordsDisplay";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import { useParams } from "react-router-dom";
-
+import '../style/songsListByCat.css'
 
 //דף של תצוגת שירים לפי קטגוריה
 function SongsListByCat() {
@@ -29,10 +29,12 @@ function SongsListByCat() {
         return (<><h2>טוען...</h2></>)
 
     return (
-        <>
+        <><div className="box">
             <h1>{cat!.name}</h1>
             <h4>{cat!.songsCount} :שירים בקטגוריה זו</h4>
             <ChordsDisplay songs={songs} />
+        </div>
+
         </>)
 
 }
