@@ -50,7 +50,7 @@ const Layout = () => {
         <Outlet /> {/* כאן יוצגו הדפים המשתנים */}
       </main>
       <ToastContainer />
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

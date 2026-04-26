@@ -1,13 +1,17 @@
 .footer {
     bottom: 0;
-    height: 400px;
+    height: 100px;
     width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
-    padding: 50px;
+    /* padding: 50px; */
+    font-size: x-large;
+    color: white;
     /* position: sticky; */
-    padding-right: 10%;
-    background-color: var(--big-elements-color);
+    /* padding-right: 10%;
+    background-color: var(--big-elements-color); */
 }
 
 .rightFooter {

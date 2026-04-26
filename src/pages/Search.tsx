@@ -50,7 +50,9 @@ function Search() {
             </div>
 
             {/* תוצאות החיפוש - מחוץ לעיצוב של הקונטיינר למעלה */}
-            {songs.length > 0 && <ChordsDisplay songs={songs} />}
+            {songs.length > 0 && <div className="box">
+                <ChordsDisplay songs={songs} />
+            </div>}
         </>
     )
 }

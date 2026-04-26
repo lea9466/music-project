@@ -9,17 +9,20 @@ function Footer() {
         <a href="">{link}</a>
     ))
 
+    // return (
+    //     <div className="footer">
+    //         <div className="rightFooter">
+    //             <h3>לינקים חשובים</h3>
+    //             {nweLinks}
+    //         </div>
+    //         {/* <DropDown/> */}
+    //         <div className="leftFooter">
+    //             <ConnecteionForm />
+    //         </div>
+    //     </div>
+    // )
     return (
-        <div className="footer">
-            <div className="rightFooter">
-                <h3>לינקים חשובים</h3>
-                {nweLinks}
-            </div>
-            {/* <DropDown/> */}
-            <div className="leftFooter">
-                <ConnecteionForm />
-            </div>
-        </div>
+        <div className="footer">כל הזכויות שמורות ©</div>
     )
 }
 
@@ -44,38 +47,40 @@ function ConnecteionForm() {
             message: "",
         });
     };
-
     return (
-        <>
-            <h3>יצירת קשר</h3>
-            <form onSubmit={handleSubmit} className="contact-form">
+        <div className="footer">כל הזכויות שמורות ©</div>
+    )
+    //     return (
+    //         <>
+    //             <h3>יצירת קשר</h3>
+    //             <form onSubmit={handleSubmit} className="contact-form">
 
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="שם"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
+    //                 <input
+    //                     type="text"
+    //                     name="name"
+    //                     placeholder="שם"
+    //                     value={formData.name}
+    //                     onChange={handleChange}
+    //                 />
 
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="אימייל"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
+    //                 <input
+    //                     type="email"
+    //                     name="email"
+    //                     placeholder="אימייל"
+    //                     value={formData.email}
+    //                     onChange={handleChange}
+    //                 />
 
-                <textarea
-                    name="message"
-                    placeholder="תוכן ההודעה"
-                    value={formData.message}
-                    onChange={handleChange}
-                />
+    //                 <textarea
+    //                     name="message"
+    //                     placeholder="תוכן ההודעה"
+    //                     value={formData.message}
+    //                     onChange={handleChange}
+    //                 />
 
-                <button type="submit">שליחה</button>
-            </form>
-        </>
+    //                 <button type="submit">שליחה</button>
+    //             </form>
+    //         </>
 
-    );
+    //     );
 }
