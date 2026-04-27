@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+מערכת ניהול אקורדים לשירים - Full Stack Project
+אפליקציית Web לניהול והצגת אקורדים לשירים בזמן אמת, עם דגש על חווית משתמש (UX) גבוהה ועיצוב מדויק (Pixel-perfect).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 לינקים (Links)
+- **אתר פעיל (Live Demo):** [music-project-snowy-five.vercel.app](https://music-project-snowy-five.vercel.app)
+משתמש דמו לניהול (Admin Access):
 
-Currently, two official plugins are available:
+> [!IMPORTANT]
+> **Admin Access for Reviewers:**
+> - **Email:** `admin@demo.com`
+> - **Password:** `Admin123!`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✨ פיצ'רים עיקריים (Features)
+אזור ניהול (Admin Panel): מערכת הרשאות מלאה הכוללת טבלאות גנריות לביצוע פעולות CRUD (הוספה, עריכה, מחיקה) על שירים וקטגוריות.
 
-## React Compiler
+מקלדת ויזואלית אינטראקטיבית: הצגת אקורדים בצורה ויזואלית על גבי קלידים בזמן אמת.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+מצב דיאזים/במולים: אפשרות לשינוי תצוגת האקורדים לפי העדפת המשתמש.
+Auto-Scroll: פונקציונליות ייעודית לנגנים המאפשרת גלילה אוטומטית של השיר בזמן הנגינה
 
-## Expanding the ESLint configuration
+עיצוב רספונסיבי: התאמה מלאה לכל סוגי המסכים (Mobile & Desktop).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🛠 טכנולוגיות (Tech Stack)
+Frontend: React, TypeScript, Vite, SASS/SCSS.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Backend: ASP.NET Core, Entity Framework Core, REST API.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Database: MS SQL Server.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Tools: Git, GitHub, Postman, Figma.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+<img width="1882" height="892" alt="image" src="https://github.com/user-attachments/assets/2e34fed5-5010-46d8-ba45-1ac9f8ebf90d" />
+<img width="1869" height="885" alt="image" src="https://github.com/user-attachments/assets/8aa94e4e-95e3-4be0-ab99-26bd0f552944" />
+<img width="1814" height="900" alt="image" src="https://github.com/user-attachments/assets/ee131ab8-4cbc-42c5-b0b2-5288b6886e1b" />
+<img width="1841" height="905" alt="image" src="https://github.com/user-attachments/assets/f569f65b-cc18-4e0d-95d8-28d1933796ee" />
+<img width="1660" height="903" alt="image" src="https://github.com/user-attachments/assets/a6de2ceb-b8ad-45dc-8512-8f3dab5e10c5" />
+<img width="1739" height="892" alt="image" src="https://github.com/user-attachments/assets/740e95e8-69e0-4ae1-8973-633e4bcfb645" />
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+
+
