@@ -36,10 +36,9 @@ function AddCategory(props: { setOpen: (flaag: boolean) => void, editCat?: Categ
     async function addOrSetCat() {
         debugger
         if (!token) {
-            toast.success('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
+            toast.error('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
             return;
         }
-        // בדיקה לפי ID - הדרך הכי בטוחה לדעת אם זה עדכון או הוספה
         if (cat.id) {
             const success = await updateCategory(cat);
             if (success) {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ChordsDisplay from '../components/chordsDisplay';
 import '../style/home.css'
 import { getNewSongs } from '../services/songService';
@@ -7,13 +7,17 @@ import SongRequest from '../components/songRequest';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { setSongs } from '../redux/songs/songSlice';
+import SplashScreen from '../assets/SplashScreen';
+import HeroSection from '../assets/HeroSection';
 
 function Home() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const songs = useSelector((state: RootState) => state.songs.newSongs)
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const loadData = async () => {
             try {
                 const newSongs = await getNewSongs();
@@ -25,15 +29,22 @@ function Home() {
         loadData();
     }, []);
 
+    if (!mounted) return null;
+
+    function setShowSplash(arg0: boolean): void {
+        throw new Error('Function not implemented.');
+    }
+
     return (
-        <div className='home'>
-            <div className="welcome">
-                <h1>לנגן זה לא קשה!!</h1>
+        <div className='home' suppressHydrationWarning>
+            {/* <div className="welcome" suppressHydrationWarning> */}
+                {/* <h1>Harmonia</h1>
                 <h2>כאן תוכלו למצוא אקורדים למגוון שירים ברמות שונות ובצורה הנוחה ביותר</h2>
-                <h3>שימו לב אם הינכם יודעים לכתוב אקורדים תוכלו להעלות שירים בעצמכם אנא צרו קשר עם מנהל האתר</h3>
-                <button className="menuBtns" onClick={() => navigate('categories')}>התחילו לנגן ←</button>
-            </div>
-            <div className="content">
+                <button className="menuBtns" onClick={() => navigate('categories')}>התחילו לנגן ←</button> */}
+                {/* <SplashScreen onDone={() => setShowSplash(true)} /> */}
+                <HeroSection/>
+            {/* </div> */}
+            <div className="content" suppressHydrationWarning>
                 <h1>אקורדים חדשים באתר</h1>
                 <ChordsDisplay songs={songs} />
                 <h1 id="newReq">בקשות שירים מהקהילה</h1>
@@ -42,4 +53,5 @@ function Home() {
         </div>
     );
 }
+
 export default Home

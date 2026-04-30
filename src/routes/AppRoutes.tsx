@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
                 element: <SignIn />,
             },
             {
-                path: "/PersonalArea", // דף התחברות
+                path: "/PersonalArea", 
                 element: <PersonalArea />,
 
             },
