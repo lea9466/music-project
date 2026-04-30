@@ -3,7 +3,7 @@ import '../style/splashScreen.css';
 
 function SplashScreen({ onDone }: { onDone: () => void }) {
     useEffect(() => {
-        const timer = setTimeout(onDone, 2200); // נעלם אחרי 3 שניות
+        const timer = setTimeout(onDone, 3000); // נעלם אחרי 3 שניות
         return () => clearTimeout(timer);
     }, []);
 
@@ -13,7 +13,7 @@ function SplashScreen({ onDone }: { onDone: () => void }) {
             <div className="logo-wrap">
                 <div className="logo-text">
                     {'Harmonia'.split('').map((l, i) => (
-                        <span key={i} style={{ animationDelay: `${i * 0.3}s` }}>{l}</span>
+                        <span key={i} style={{ animationDelay: `${i * 0.6}s` }}>{l}</span>
                     ))}
                 </div>
                 <p className="subtitle">אקורדים · מוזיקה · קהילה</p>
