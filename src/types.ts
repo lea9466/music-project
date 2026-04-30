@@ -41,8 +41,9 @@ export type SongDto = {
     date?: string;
     userId?: number;
     sourceText: string;
-    catName?: string;
+    creatorName?: string;
     tips?: string;
+
 
 };
 

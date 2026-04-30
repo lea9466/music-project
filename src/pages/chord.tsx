@@ -130,6 +130,8 @@ function ChordsOfSong() {
                     ></iframe>
                     <div className='information'>
                         <div>{`מבצע במקור: ${fullSong.song.artist}`}</div>
+                        <div style={{ direction: "rtl" }}>משתמש שהעלה: {fullSong.song.creatorName}</div>
+
                     </div>
                     <button className="like" onClick={toggleFavoriteSong}>
                         <img className="likeImg" src={heartSrc} alt="" />
@@ -146,7 +148,7 @@ function ChordsOfSong() {
                             onClick={() => { if (ton > -12) setTon(ton - 1) }}
                             className="minus" />
                     </div>
-                    <div className="tips">
+                    <div className="tipsAI">
                         <h4>טיפים לניגון השיר מאת AI</h4>
                         <div>{fullSong.song.tips}</div>
                     </div>

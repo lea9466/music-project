@@ -38,6 +38,11 @@
     direction: ltr;
 
 }
+.tipsAI{
+    width: 100%;
+    height: auto;
+    direction: rtl;
+}
 
 .char {
     background-color: var(--bg);
