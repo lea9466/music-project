@@ -41,7 +41,7 @@ function SongController() {
         try {
             const arrs = scanText(data.sourceText)
             const newFullSong: FullSongDto = { song: data, wordLines: arrs.wordLines, chords: arrs.chordsLines }
-            debugger
+            
             if (data.id) {
                 const upSong = await updateSong(newFullSong)
                 alert('השיר עודכן בהצלחה')
@@ -163,7 +163,7 @@ type Props = {
 }
 
 function AIScaning(props: Props) {
-    debugger
+    
     const hasFetched = useRef(false);
     const [result, setResult] = useState<GeminiSongResponse | null>(null);
     const [tranChordsFromAI, setTranChordsFromAI] = useState<Record<number, ChordDto[]> | undefined>([]);
@@ -240,7 +240,7 @@ const scanText = (text: string) => {
             }
         }
     });
-    debugger
+    
     return { wordLines, chordsLines }
 };
 

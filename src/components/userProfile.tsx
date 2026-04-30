@@ -46,7 +46,7 @@ const UserProfile = () => {
     };
 
     const handleSecurityUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-        debugger
+        
         e.preventDefault();
         if (!securityData.password) {
             alert("חובה להזין סיסמה נוכחית לביצוע שינוי זה");

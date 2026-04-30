@@ -39,7 +39,7 @@ function SetUserRole(props: { setOpen: (flaag: boolean) => void, user: UserDto, 
             toast.warn('בשביל לבצע פעולה זו עלייך להתחבר מחדש');
             return;
         }
-        debugger
+        
 
         // user.role = user.role == 'Regular' ? 0 : user.role == 'Admin' ? 1 : 2
         const success = await setRole(user);

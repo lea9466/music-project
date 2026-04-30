@@ -15,7 +15,7 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
     const [cardsDisplay, setDisplay] = useState('list')
     const navigate = useNavigate()
     function onChordsClick(song: SongDto) {
-        debugger
+        
         navigate(`/chords/${song.id}`);
     }
     const cards = songs.map((s: SongDto, index: number) => <SongCard

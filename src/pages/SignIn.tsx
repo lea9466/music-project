@@ -34,7 +34,6 @@ function SignIn() {
         }
 
         const log: UserDto = { name: data.name, password: data.password, email: data.email };
-        debugger
         if (signOrLog === 'log') {
             const { token, user } = await login(log);
             if (user && token) {
