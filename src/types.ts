@@ -43,7 +43,8 @@ export type SongDto = {
     sourceText: string;
     creatorName?: string;
     tips?: string;
-
+    catName?: string;
+    scale?:string;
 
 };
 

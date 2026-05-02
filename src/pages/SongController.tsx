@@ -9,6 +9,8 @@ import { AIScan } from "../services/AIService";
 import { useLocation } from 'react-router-dom';
 import { setCategories } from "../redux/categoreis/categorieSlice";
 import { getCategories } from "../services/categoryService";
+import { AestheticSongEditor } from "../components/aestheticSongEditor";
+import { toast } from "react-toastify";
 
 
 
@@ -41,7 +43,10 @@ function SongController() {
         try {
             const arrs = scanText(data.sourceText)
             const newFullSong: FullSongDto = { song: data, wordLines: arrs.wordLines, chords: arrs.chordsLines }
-            
+            if (data.name == '' || data.artist == '' || data.language == '' || data.categoryId == 0 || data.sourceText == '') {
+                toast.error("חסר פרטים");
+                return
+            }
             if (data.id) {
                 const upSong = await updateSong(newFullSong)
                 alert('השיר עודכן בהצלחה')
@@ -68,49 +73,51 @@ function SongController() {
 
 
     return (
-        <><div className="formAndScan">
-            {isAIScaning && <div className="vewChords"><AIScaning songText={data.sourceText} song={data} setTips={updateDataDirectly} /></div>}
+        <div className="formAndScan">
+
+
             <form onSubmit={onSubmit} autoComplete="off" className="addSong"
-                style={{ width: `${isAIScaning ? '30%' : '50%'}` }}>
+                style={{
+                    /* שינוי כאן: הגדלנו את הרוחב ל-45% בזמן סריקה כדי שלא יהיה "חנק" */
+                    width: isAIScaning ? '50%' : '100%',
+                    maxWidth: isAIScaning ? 'none' : '1000px'
+                }}>
+
                 <h1>הוספה/עדכון שיר</h1>
+
+                {/* שורה 1: שם, אמן, קישור */}
                 <div className="inputsDiv">
                     <input name="name" type="text" placeholder="שם שיר" value={data.name} onChange={onChange} />
                     <input name="artist" type="text" placeholder="אומן/מבצע" value={data.artist} onChange={onChange} />
                     <input name="utubLink" type="text" placeholder="קישור ליוטיוב" value={data.utubLink} onChange={onChange} />
                 </div>
+
+                {/* שורה 2: שפה, סולם, קטגוריה */}
                 <div className="inputsDiv">
-                    {/* <input name="language" type="text" placeholder="שפה" value={data.language} onChange={onChange} /> */}
-                    <select
-                        value={data.language}
-                        onChange={(e) => setData({ ...data, language: e.target.value })}
-                    >
+                    <select value={data.language} onChange={(e) => setData({ ...data, language: e.target.value })}>
                         <option value='' disabled hidden>בחר שפה</option>
                         <option value="H">עברית</option>
                         <option value="E">אנגלית</option>
                         <option value="O">אחר</option>
                     </select>
-                    <select
-                        value={data.majorOrMinor}
-                        onChange={(e) => setData({ ...data, majorOrMinor: e.target.value })}
-                    >
+
+                    <select value={data.majorOrMinor} onChange={(e) => setData({ ...data, majorOrMinor: e.target.value })}>
                         <option value='' disabled hidden>בחר סולם</option>
                         {allKeys.map((n, index) => (
-                            <option key={index} value={n}>
-                                {n}
-                            </option>
+                            <option key={index} value={n}>{n}</option>
                         ))}
                     </select>
-                    <select name="categoryId"
-                        value={data.categoryId}
+
+                    <select name="categoryId" value={data.categoryId}
                         onChange={(e) => setData({ ...data, categoryId: Number(e.target.value) })}>
                         <option value={0} disabled hidden>בחר קטגוריה</option>
                         {categories.map((cat) => (
-                            <option key={cat.id} value={cat.id}>
-                                {cat.name}
-                            </option>
+                            <option key={cat.id} value={cat.id}>{cat.name}</option>
                         ))}
                     </select>
                 </div>
+
+                {/* הנחיות (Points) */}
                 <div className="points">
                     <h3>שים לב חשוב מאד!</h3>
                     <div>כותרת שברצונך שתהיה מודגשת עלייך להכניס עם # בתחילה</div>
@@ -120,39 +127,45 @@ function SongController() {
                     <div>שים לב b/# הם חלק מאקורד ולכן יופיעו לפני הסלש</div>
                     <div>אנא היצמד למצב מסוים ואל תעבור מבמולים לדיאזים לטובת השיר</div>
                 </div>
-                <textarea className="songText"
-                    value={data.sourceText}
-                    onChange={(e) => setData({ ...data, sourceText: e.target.value })} >
 
-                </textarea>
+                {/* העורך האסתטי החדש */}
+                <AestheticSongEditor
+                    initialValue={data.sourceText}
+                    onUpdate={(val) => setData({ ...data, sourceText: val })}
+                    selectedScale={data.majorOrMinor}
+                />
+
+                {/* טיפים Gemini */}
                 <div className="titlle-logo">
                     <h3>טיפים לנגינת השיר מ- Gemini</h3>
                     <img width="25" height="25" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
-
                 </div>
+
                 <textarea className="tips"
                     value={data.tips}
-                    onChange={(e) => setData({ ...data, tips: e.target.value })} >
+                    onChange={(e) => setData({ ...data, tips: e.target.value })}
+                    placeholder="הטיפים של ה-AI יופיעו כאן..."
+                />
 
-                </textarea>
+                {/* כפתורים */}
                 <div className="formBtns">
-                    <button>שמור</button>
+                    <button type="submit">שמור</button>
                     <button type="button" onClick={() => { setAIScaning(true) }}>
-                        <div className="titlle-logo">
+                        <div className="titlle-logo" style={{ margin: 0, gap: '8px' }}>
                             <h4>סריקת AI</h4>
-                            <img width="25" height="25" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
+                            <img width="22" height="22" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
                         </div>
                     </button>
                 </div>
-
             </form>
-
+            {/* תצוגת הסריקה (מופיעה משמאל כשהיא פעילה) */}
+            {isAIScaning && (
+                <div className="vewChords">
+                    <AIScaning songText={data.sourceText} song={data} setTips={updateDataDirectly} />
+                </div>
+            )}
         </div>
-
-
-
-        </>
-    )
+    );
 }
 export default SongController
 
@@ -163,7 +176,7 @@ type Props = {
 }
 
 function AIScaning(props: Props) {
-    
+
     const hasFetched = useRef(false);
     const [result, setResult] = useState<GeminiSongResponse | null>(null);
     const [tranChordsFromAI, setTranChordsFromAI] = useState<Record<number, ChordDto[]> | undefined>([]);
@@ -240,7 +253,7 @@ const scanText = (text: string) => {
             }
         }
     });
-    
+
     return { wordLines, chordsLines }
 };
 

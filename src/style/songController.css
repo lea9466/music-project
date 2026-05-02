@@ -1,115 +1,181 @@
-.songText {
-    height: 600px;
-    width: 100%;
-    font-size: medium;
+:root {
+    --main-purple: #f8e8ff;
+    --accent-purple: #cc30d1;
+    --input-bg: #fdfbff;
+    --border-color: #e4b8e6;
+    --text-color: #4a104d;
 }
 
-.tips {
-    height: 200px;
-    width: 100%;
-    font-size: medium;
-}
-
-p,
-li,
-h3 {
-    direction: rtl;
-    padding: 2px;
-}
-
+/* קונטיינר ראשי */
 .formAndScan {
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: right;
-    padding: 50px;
-    gap: 20px;
-    z-index: 10;
-    height: auto;
-
-
+    /* שינוי כאן: יישור לימין של כל התוכן */
+    /* justify-content: flex-start; */
+    padding: 40px;
+    gap: 25px;
+    direction: rtl;
+    /* background-color: #fafafa; */
+    min-height: 100vh;
+    box-sizing: border-box;
+    border-radius: 20px;
 }
 
-.formBtns {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-
-}
-
+/* כרטיס הטופס */
 .addSong {
     display: flex;
     flex-direction: column;
-    align-items: end;
-    background-color: var(--elements-color);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 5%;
+    background-color: white;
+    box-shadow: 0 8px 30px rgba(204, 48, 209, 0.1);
+    border-radius: 15px;
+    padding: 35px;
     max-width: 1000px;
-    gap: 13px;
-    height: auto !important;
+    gap: 20px;
+    border: 1px solid var(--main-purple);
+    text-align: right;
 }
 
-.points {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 4px;
-    /* height: 300px; */
-
+.addSong h1 {
+    color: var(--accent-purple);
+    margin-bottom: 10px;
+    font-size: 28px;
 }
 
-.points div {
-    /* height: 2.5px; */
-    direction: rtl;
-}
-
-.vewChords {
-    width: 70%;
-    height: 100%;
-    background-color: var(--elements-color);
-    border-radius: 10px;
-    padding: 2%;
-}
-
+/* אינפוטים צבעוניים */
 .inputsDiv {
     width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 20px;
-    direction: rtl;
+    gap: 15px;
 }
 
-.addSong,
-.vewChords {
+input,
+select,
+.tips {
     flex: 1;
-    height: 100%;
-
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+    transition: all 0.2s ease;
+    text-align: right;
 }
-.titlle-logo{
+
+input:focus,
+select:focus {
+    border-color: var(--accent-purple);
+    background-color: white;
+    box-shadow: 0 0 8px rgba(204, 48, 209, 0.15);
+}
+
+/* תיבת ההנחיות (Points) */
+.points {
+    background-color: #fff9e6;
+    padding: 20px;
+    border-radius: 12px;
+    border-right: 4px solid #ffcc00;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.points h3 {
+    margin: 0 0 5px 0;
+    color:  #e1af09;
+}
+
+.points div {
+    font-size: 14px;
+    color: #555;
+}
+
+/* כפתורי פעולה */
+.formBtns {
     display: flex;
     flex-direction: row;
-    direction: rtl;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+    border: none;
+    font-size: 16px;
+}
+
+/* כפתור שמור - סגול נוכח */
+.formBtns button:first-child {
+    background-color: var(--accent-purple);
+    color: white;
+}
+
+/* כפתור AI - בהיר ונעים */
+.formBtns button:last-child {
+    background-color: #f0d6f2;
+    /* סגול בהיר מאוד */
+    color: var(--accent-purple);
+    border: 1px solid var(--accent-purple);
+}
+
+button:hover {
+    filter: brightness(1.05);
+    transform: translateY(-2px);
+}
+
+/* אזור הטיפים של Gemini */
+.titlle-logo {
+    display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
+    margin-top: 10px;
 }
-@media(max-width:1000px) {
-    .vewChords {
-        width: 100%;
-    }
 
-    .addSong {
-        width: 100% !important;
-        margin: 0;
-    }
+.tips {
+    height: 150px;
+    width: 100%;
+    border-color: #ffe0b2;
+    /* צבע מעט זהוב לטיפים */
+    background-color: #fffdf9;
+}
 
+/* תצוגת הסריקה משמאל */
+.vewChords {
+    flex: 1;
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+
+/* במצב מובייל (מסכים קטנים) */
+@media(max-width: 1000px) {
     .formAndScan {
         flex-direction: column;
-        padding: 0;
+        /* מסדר את האלמנטים אחד מתחת לשני */
+        padding: 0px;
     }
 
     .inputsDiv {
         flex-direction: column;
     }
 
+    .addSong {
+        width: 100% !important;
+    }
+
+    .vewChords {
+        width: 100% !important;
+    }
 }

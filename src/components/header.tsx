@@ -20,8 +20,16 @@ function Header() {
         <>
             <header className="header">
                 <div className="left">
-                    <button className='headeBtns' onClick={() => navigate(`${user?.name ? '/PersonalArea' : '/sign-in'}`)}>{user?.name || 'הרשמה/התחברות'}</button>
-                    {/* <button onClick={toggleTheme}>{theme}</button> */}
+                    {(user.role == 1 || user.role == 2) && (
+                        <div className="tooltip-wrapper" data-tooltip="הוספת שיר">
+                            <button
+                                onClick={() => navigate('/SongController')}
+                                className='material-symbols-outlined headeBtns'
+                            >
+                                add_2
+                            </button>
+                        </div>
+                    )}                    <button className='headeBtns' onClick={() => navigate(`${user?.name ? '/PersonalArea' : '/sign-in'}`)}>{user?.name || 'הרשמה/התחברות'}</button>
                     <button className='headeBtns' onClick={() => { dispatch(logout()); navigate('/') }}>התנתקות</button>
                 </div>
                 <div className="mainLinks">
