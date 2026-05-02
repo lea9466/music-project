@@ -51,68 +51,70 @@ function Search() {
                 <p>מצא שירים לפי שם, אמן, מילים או אקורדים</p>
             </div>
 
-            <div className="formWrap">
-                <div className="formCard">
-                    <div className="fieldsGrid">
-                        <div className="fieldGroup">
-                            <label className="fieldLabel">שם שיר</label>
-                            <input className="searchInput" type="text" placeholder="למשל: הילד הזה"
-                                onChange={onChange} value={searchObj.nameSong} name="nameSong" />
-                        </div>
-                        <div className="fieldGroup">
-                            <label className="fieldLabel">שם אמן</label>
-                            <input className="searchInput" type="text" placeholder="למשל: אברהם פריד"
-                                onChange={onChange} value={searchObj.nameArtist} name="nameArtist" />
-                        </div>
-                        <div className="fieldGroup fieldWide">
-                            <label className="fieldLabel">מילים מהשיר</label>
-                            <input className="searchInput" type="text" placeholder='למשל: "אנא בכח גדולת ימינך"'
-                                onChange={onChange} value={searchObj.wordLine} name="wordLine" />
-                        </div>
-                        <div className="fieldGroup fieldWide">
-                            <label className="fieldLabel">אקורדים (מופרדים בפסיק)</label>
-                            <input className="searchInput chordsInput" type="text" placeholder="Am, G, C, Em"
-                                onChange={onChange} value={searchObj.chordsText} name="chordsText" />
-                        </div>
-                        <div className="fieldGroup fieldWide">
-                            <div className="chordNote">
-                                פורמט: <code>A/m</code> = Am &nbsp;|&nbsp; <code>G/7</code> = G7 &nbsp;|&nbsp; סימני <code>#</code> ו-<code>b</code> מופיעים לפני ה-/
-                            </div>
+            {/* אזור 1: טופס החיפוש - שקוף */}
+            <div className="formSection">
+                <div className="fieldsGrid">
+                    <div className="fieldGroup">
+                        <label className="fieldLabel">שם שיר</label>
+                        <input className="searchInput" type="text" placeholder="למשל: הילד הזה"
+                            onChange={onChange} value={searchObj.nameSong} name="nameSong" />
+                    </div>
+                    <div className="fieldGroup">
+                        <label className="fieldLabel">שם אמן</label>
+                        <input className="searchInput" type="text" placeholder="למשל: אברהם פריד"
+                            onChange={onChange} value={searchObj.nameArtist} name="nameArtist" />
+                    </div>
+                    <div className="fieldGroup fieldWide">
+                        <label className="fieldLabel">מילים מהשיר</label>
+                        <input className="searchInput" type="text" placeholder='למשל: "אנא בכח גדולת ימינך"'
+                            onChange={onChange} value={searchObj.wordLine} name="wordLine" />
+                    </div>
+                    <div className="fieldGroup fieldWide">
+                        <label className="fieldLabel">אקורדים (מופרדים בפסיק)</label>
+                        <input className="searchInput chordsInput" type="text" placeholder="Am, G, C, Em"
+                            onChange={onChange} value={searchObj.chordsText} name="chordsText" />
+                    </div>
+                    <div className="fieldGroup fieldWide">
+                        <div className="chordNote">
+                            פורמט: <code>A/m</code> = Am &nbsp;|&nbsp; <code>G/7</code> = G7 &nbsp;|&nbsp; סימני <code>#</code> ו-<code>b</code> מופיעים לפני ה-/
                         </div>
                     </div>
+                </div>
 
-                    <div className="btnRow">
-                        <button className="btnSearch" onClick={setSearch} disabled={isLoading}>
-                            {isLoading ? <div className="spinner" /> : (
-                                <>
-                                    <svg className="searchIcon" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-                                        <circle cx="11" cy="11" r="7" />
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                                    </svg>
-                                    חפש שירים
-                                </>
-                            )}
-                        </button>
-                        <button className="btnClear"
-                            onClick={() => setData({ nameSong: '', nameArtist: '', chords: [], wordLine: '', chordsText: '' })}>
-                            נקה
-                        </button>
-                    </div>
+                <div className="btnRow">
+                    <button className="btnSearch" onClick={setSearch} disabled={isLoading}>
+                        {isLoading ? <div className="spinner" /> : (
+                            <>
+                                <svg className="searchIcon" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                                    <circle cx="11" cy="11" r="7" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                                חיפוש שירים
+                            </>
+                        )}
+                    </button>
+                    <button className="btnClear"
+                        onClick={() => setData({ nameSong: '', nameArtist: '', chords: [], wordLine: '', chordsText: '' })}>
+                        נקה
+                    </button>
                 </div>
             </div>
 
-            <div className="quickTitle">חיפושים מהירים</div>
-            <div className="quickGrid">
-                {quickSearches.map((q, i) => (
-                    <div key={i} className="quickCard"
-                        onClick={() => setData({ ...searchObj, nameSong: q.song, nameArtist: q.artist })}>
-                        <span className="quickSong">{q.song || `כל שירי ${q.artist}`}</span>
-                        <span className="quickArtist">{q.artist}</span>
-                        <span className="quickTag">{q.tag}</span>
-                    </div>
-                ))}
-            </div>
+            {/* אזור 2: דוגמאות / חיפושים מהירים - שקוף */}
+            {/* <div className="examplesSection">
+                <div className="quickTitle">חיפושים מהירים</div>
+                <div className="quickGrid">
+                    {quickSearches.map((q, i) => (
+                        <div key={i} className="quickCard"
+                            onClick={() => setData({ ...searchObj, nameSong: q.song, nameArtist: q.artist })}>
+                            <span className="quickSong">{q.song || `כל שירי ${q.artist}`}</span>
+                            <span className="quickArtist">{q.artist}</span>
+                            <span className="quickTag">{q.tag}</span>
+                        </div>
+                    ))}
+                </div>
+            </div> */}
 
             {songs.length > 0 && (
                 <div className="box">

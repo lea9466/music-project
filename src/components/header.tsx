@@ -35,7 +35,6 @@ function Header() {
                 <div className="mainLinks">
                     <NavLink to='/'>בית</NavLink>
                     <NavLink to='/categories'>קטגוריות</NavLink>
-                    <a href='#newReq'>בקשת שיר</a>
                     <NavLink to='/search'>חיפוש</NavLink>
                 </div>
                 {/* <div className="right">ימין</div> */}

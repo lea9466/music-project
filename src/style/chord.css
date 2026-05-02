@@ -116,39 +116,46 @@
 .information {
     display: flex;
     align-items: center;
-    gap: 28px;
-    padding: 12px 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    gap: 24px;
+    padding: 16px 24px;
+    background: #f8f0ff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    border: 1px solid #edf2f7;
+    margin-top: 20px;
     flex-wrap: wrap;
     direction: rtl;
-    font-family: system-ui, -apple-system, sans-serif;
+    /* כדי לוודא שמוצג מימין לשמאל בעברית */
 }
 
 .info-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    color: #4a5568;
+    font-size: 0.95rem;
 }
 
-.info-item.views,
-.info-item.likes {
-    color: #5f6368;
+.info-item strong {
+    color: #526181;
 }
 
-.info-item.likes {
-    cursor: pointer;
-    transition: color 0.2s;
+.info-item span {
+    color: #718096;
 }
 
-.info-item.liked {
-    color: #d93025;
-    /* אדום כאשר מסומן בלייק */
+/* עיצוב מיוחד עבור הצפיות - בועית בולטת ונקייה */
+.info-item.views {
+    background: #edf2f7;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .info-icon {
-    font-size: 20px;
+    color: #4a5568;
+    font-size: 20px !important;
 }
 
 .utubLink {
