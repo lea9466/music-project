@@ -30,11 +30,11 @@ function Manage() {
     const catHeaders = ['שם', 'תאור', 'מספר שירים']
     const catDisplayKeys = ['name', 'description', 'songsCount'];
 
-    const songHeaders = ['שם', 'אומן', 'תאריך הפצה', 'קטגוריה']
-    const songDisplayKeys = ['name', 'artist', 'date', 'catName'];
+    const songHeaders = ['שם', 'אומן', 'תאריך הפצה', 'קטגוריה','צפיות','לייקים']
+    const songDisplayKeys = ['name', 'artist', 'date', 'catName','viewsCount','chordLikesCount'];
 
-    const userHeaders = ['שם', 'אימייל', 'הרשאות']
-    const userDisplayKeys = ['name', 'email', 'role'];
+    const userHeaders = ['שם', 'אימייל', 'הרשאות','תאריך הצטרפות']
+    const userDisplayKeys = ['name', 'email', 'role','date'];
 
     const SRHeaders = ['בקשה', 'מצביעים', 'דרוג', 'תאריך בקשה', 'בוצע']
     const SRDisplayKeys = ['songDes', 'votesCount', 'priorityScore', 'date'];
@@ -49,9 +49,8 @@ function Manage() {
                 songs.map(s => s.catName = categories.find(c => c.id == s.categoryId)?.name)
                 const users = await getUsers()
                 const songRequests = await getAllRequests()
-                // const convertedUsers = users.map(convertUser);
                 setSongs(songs)
-                setUsers(users)
+                setUsers(users)                
                 seSongRequests(songRequests)
 
             } catch (err) {

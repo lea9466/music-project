@@ -44,3 +44,7 @@ export const searchSongs = async (sobj: searchObjDto) => {
     const response = await axios.post<SongDto[]>(`${url}/search`, sobj);
     return response.data;
 }
+export const toggleLike = async (songId:number,newIsLiked:boolean) => {
+    const response = await axios.post(`${url}/chord-likes/${songId}?isLike=${newIsLiked}`);
+    return response.data;
+}

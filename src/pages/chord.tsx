@@ -16,6 +16,7 @@ import ToggleButtons from "../components/toggleButton";
 import { toast } from "react-toastify";
 import heartFull from "../img/לב מלא.png";
 import heartEmpty from "../img/לב ריק.png";
+import ChordLikeButton from "../components/chordLikeButton";
 
 //פונקציה לניקוי לינק של יוטיוב
 const getEmbedUrl = (url: string) => {
@@ -129,10 +130,28 @@ function ChordsOfSong() {
                         allowFullScreen
                     ></iframe>
                     <div className='information'>
-                        <div>{`מבצע במקור: ${fullSong.song.artist}`}</div>
-                        <div style={{ direction: "rtl" }}>משתמש שהעלה: {fullSong.song.creatorName}</div>
+                        {/* מבצע במקור */}
+                        <div className='info-item'>
+                            <strong>מבצע במקור:</strong>
+                            <span>{fullSong.song.artist}</span>
+                        </div>
+
+                        {/* שם המשתמש שהעלה */}
+                        <div className='info-item'>
+                            <strong>משתמש שהעלה:</strong>
+                            <span>{fullSong.song.creatorName}</span>
+                        </div>
+
+                        {/* כמות צפיות */}
+                        <div className='info-item views'>
+                            <span className="material-symbols-outlined info-icon">visibility</span>
+                            <strong>צפיות: </strong>
+                            <span>{fullSong.song.viewsCount}</span>
+                        </div>
 
                     </div>
+                    <ChordLikeButton songId={fullSong.song.id || 0} initialLikesCount={fullSong.song.chordLikesCount || 0} />
+
                     <button className="like" onClick={toggleFavoriteSong}>
                         <img className="likeImg" src={heartSrc} alt="" />
                     </button>

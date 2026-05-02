@@ -7,6 +7,7 @@ export type UserDto = {
     role?: UserRole | number;
     favoriteSongs?: number[]
     newPass?: string;
+    date?:string;
 };
 
 export type UserRole = "Regular" | "Admin" | "Manager";
@@ -23,6 +24,7 @@ export const convertUser = (user: UserDto): UserDto => ({
     email: user.email,
     password: user.password,
     srcImage: user.srcImage,
+    date:user.date,
     role:
         typeof user.role === "number"
             ? roleMap[user.role] // ממפה מספר למחרוזת
@@ -44,7 +46,9 @@ export type SongDto = {
     creatorName?: string;
     tips?: string;
     catName?: string;
-    scale?:string;
+    scale?: string;
+    viewsCount?: number;
+    chordLikesCount?: number;
 
 };
 

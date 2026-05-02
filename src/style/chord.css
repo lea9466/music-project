@@ -38,7 +38,8 @@
     direction: ltr;
 
 }
-.tipsAI{
+
+.tipsAI {
     width: 100%;
     height: auto;
     direction: rtl;
@@ -114,9 +115,40 @@
 
 .information {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
+    align-items: center;
+    gap: 28px;
+    padding: 12px 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    direction: rtl;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-item.views,
+.info-item.likes {
+    color: #5f6368;
+}
+
+.info-item.likes {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.info-item.liked {
+    color: #d93025;
+    /* אדום כאשר מסומן בלייק */
+}
+
+.info-icon {
+    font-size: 20px;
 }
 
 .utubLink {
@@ -159,10 +191,12 @@
     .chordsOfSong {
         width: 100%;
     }
-    .chordsOfSong h1{
+
+    .chordsOfSong h1 {
         font-size: large;
     }
-    .wrappwr{
+
+    .wrappwr {
         padding: 2px;
         width: 100%;
     }
@@ -172,7 +206,7 @@
         height: 300px;
     }
 
-   
+
 
 }
 
