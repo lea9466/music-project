@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
-const baseURL =  'http://localhost:8080/api';
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+// const baseURL =  'http://localhost:8080/api';
 
 const axiosInstance = axios.create({
     baseURL,
