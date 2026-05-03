@@ -80,7 +80,7 @@ function SongController() {
                 style={{
                     /* שינוי כאן: הגדלנו את הרוחב ל-45% בזמן סריקה כדי שלא יהיה "חנק" */
                     width: isAIScaning ? '50%' : '100%',
-                    maxWidth: isAIScaning ? 'none' : '1000px'
+                    maxWidth: isAIScaning ? 'none' : '100%'
                 }}>
 
                 <h1>הוספה/עדכון שיר</h1>
