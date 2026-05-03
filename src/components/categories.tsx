@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../redux/store";
 import type { CategoryDto, SongDto } from "../types";
 import { getSongsByCatId } from "../services/songService";
 import '../style/categories.css';
+import { getCategories } from "../services/categoryService";
+import { setCategories } from "../redux/categoreis/categorieSlice";
 
 // --- קומפוננטת המגירה הפנימית ---
 type DrawerProps = {
@@ -72,10 +74,25 @@ function Categories() {
     // שליפת קטגוריות מה-Redux (מדלגים על הראשונה אם היא "הכל")
     const categories: CategoryDto[] = useSelector((state: RootState) => state.categories.categories).slice(1);
     const [openCategoryId, setOpenCategoryId] = useState<number | null>(null);
+    const dispatch = useDispatch();
 
     const toggleCategory = (id: number) => {
         setOpenCategoryId(openCategoryId === id ? null : id);
     };
+    useEffect(() => {
+        const loadData = async () => {
+            if (categories.length == 0) {
+                try {
+                    const data = await getCategories();
+                    dispatch(setCategories(data));
+                } catch (err) {
+                    console.error("שגיאה בקריאת הנתונים:", err);
+                }
+            }
+
+        };
+        loadData();
+    }, [dispatch, categories.length]);
 
     return (
         <div className="catDisplay1">
@@ -112,3 +129,5 @@ function Categories() {
 }
 
 export default Categories;
+
+

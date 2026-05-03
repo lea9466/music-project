@@ -13,18 +13,21 @@ import HeroSection from '../assets/HeroSection';
 function Home() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const songs = useSelector((state: RootState) => state.songs.newSongs)
+    const newSongs = useSelector((state: RootState) => state.songs.newSongs);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         setMounted(true);
         const loadData = async () => {
-            try {
-                const newSongs = await getNewSongs();
-                dispatch(setSongs({ items: newSongs }));
-            } catch (err) {
-                console.error("שגיאה בקריאת הנתונים:", err);
+            if (newSongs.length == 0) {
+                try {
+                    const newSongs = await getNewSongs();
+                    dispatch(setSongs({ items: newSongs }));
+                } catch (err) {
+                    console.error("שגיאה בקריאת הנתונים:", err);
+                }
             }
+
         };
         loadData();
     }, []);
@@ -38,15 +41,15 @@ function Home() {
     return (
         <div className='home' suppressHydrationWarning>
             {/* <div className="welcome" suppressHydrationWarning> */}
-                {/* <h1>Harmonia</h1>
+            {/* <h1>Harmonia</h1>
                 <h2>כאן תוכלו למצוא אקורדים למגוון שירים ברמות שונות ובצורה הנוחה ביותר</h2>
                 <button className="menuBtns" onClick={() => navigate('categories')}>התחילו לנגן ←</button> */}
-                {/* <SplashScreen onDone={() => setShowSplash(true)} /> */}
-                <HeroSection/>
+            {/* <SplashScreen onDone={() => setShowSplash(true)} /> */}
+            <HeroSection />
             {/* </div> */}
             <div className="content" suppressHydrationWarning>
                 <h1>אקורדים חדשים באתר</h1>
-                <ChordsDisplay songs={songs} />
+                <ChordsDisplay songs={newSongs} />
                 <h1 id="newReq">בקשות שירים מהקהילה</h1>
                 <SongRequest />
             </div>

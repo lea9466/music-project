@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../style/sideBar.css'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import { Link } from "react-router-dom";
+import { getCategories } from "../services/categoryService";
+import { setCategories } from "../redux/categoreis/categorieSlice";
 
 function SideBar() {
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [openTatLinks, setOpenTatLinks] = useState(false);
 
@@ -20,7 +23,20 @@ function SideBar() {
     const newTatLinks = TatLinks.map(cat => (
         <Link to={`/cat/${cat.id}`} onClick={() => setOpen(false)} key={cat.id}>{cat.name}</Link>
     ))
+    useEffect(() => {
+        const loadData = async () => {
+            if (categories.length === 0) {
+                try {
+                    const data = await getCategories();
+                    dispatch(setCategories(data));
+                } catch (err) {
+                    console.error("שגיאה בקריאת הנתונים:", err);
+                }
+            }
 
+        };
+        loadData();
+    }, [dispatch, categories.length]);
 
     return (
         <>
@@ -52,3 +68,4 @@ function SideBar() {
 }
 
 export default SideBar
+

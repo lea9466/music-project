@@ -15,7 +15,6 @@ import TopBanner from "./baner";
 const Layout = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state: RootState) => state.categories.categories);
-  const newSongs = useSelector((state: RootState) => state.songs.newSongs);
 
   // דוגמה למצב התחברות (אם יש לך משתנה כזה ב-Redux, אפשר להשתמש בו)
   // const user = useSelector((state: RootState) => state.auth.user);
@@ -31,28 +30,7 @@ const Layout = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const loadData = async () => {
-      if (categories.length === 0) {
-        try {
-          const data = await getCategories();
-          dispatch(setCategories(data));
-        } catch (err) {
-          console.error("שגיאה בקריאת הנתונים:", err);
-        }
-      }
-      if (newSongs.length === 0) {
-        try {
-          const newSongs: SongDto[] = await getNewSongs();
-          dispatch(setSongs({ items: newSongs }));
-        } catch (err) {
-          console.error("שגיאה בקריאת הנתונים:", err);
-        }
-      }
-    };
-
-    loadData();
-  }, [dispatch, categories.length]);
+  
 
   const handleCloseBanner = (): void => {
     setShowBanner(false);

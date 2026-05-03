@@ -34,7 +34,7 @@ function SongController() {
         userId: user.id,
         sourceText: '',
         tips: '',
-        credit:''
+        credit: ''
     });
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const types = ["Major", "Minor"];
@@ -76,7 +76,22 @@ function SongController() {
     const updateDataDirectly = (newData: Partial<SongDto>) => {
         setData(prev => ({ ...prev, ...newData }));
     };
+    
+    useEffect(() => {
+        const loadData = async () => {
+            if (categories.length === 0) {
+                try {
+                    const data = await getCategories();
+                    dispatch(setCategories(data));
+                } catch (err) {
+                    console.error("שגיאה בקריאת הנתונים:", err);
+                }
+            }
 
+        };
+
+        loadData();
+    }, [dispatch, categories.length]);
 
 
     return (
