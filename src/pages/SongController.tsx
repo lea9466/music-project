@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 function SongController() {
     const [isAIScaning, setAIScaning] = useState(false)
     const dispatch = useDispatch()
+    const [isLoading, setIsLoading] = useState(false);
     const user = useSelector((state: RootState) => state.auth.user);
     if (user.role == 0 || user.role == 'Regular')
         return <>אינך מורשה לגשת לדף זה</>
@@ -39,6 +40,7 @@ function SongController() {
     const allKeys = notes.flatMap(note => types.map(type => `${note} ${type}`));
 
     async function onSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+        setIsLoading(true)
         event.preventDefault();
         try {
             const arrs = scanText(data.sourceText)
@@ -49,12 +51,16 @@ function SongController() {
             }
             if (data.id) {
                 const upSong = await updateSong(newFullSong)
-                alert('השיר עודכן בהצלחה')
                 dispatch(setCategories(await getCategories()))
+                toast.success('השיר עודכן בהצלחה')
+                setIsLoading(false)
+
             }
             else {
                 const newSong = await addSong(newFullSong)
-                alert('השיר נשמר בהצלחה')
+                toast.success('השיר נשמר בהצלחה')
+                setIsLoading(false)
+
             }
         }
         catch (error) {
@@ -149,7 +155,13 @@ function SongController() {
 
                 {/* כפתורים */}
                 <div className="formBtns">
-                    <button type="submit">שמור</button>
+                    <button type="submit" disabled={isLoading}>
+                        {isLoading ? <div className="spinner" /> : (
+                            <>
+                                שמור
+                            </>
+                        )}
+                    </button>
                     <button type="button" onClick={() => { setAIScaning(true) }}>
                         <div className="titlle-logo" style={{ margin: 0, gap: '8px' }}>
                             <h4>סריקת AI</h4>

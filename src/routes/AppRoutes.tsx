@@ -8,6 +8,7 @@ import ChordsOfSong from '../pages/chord';
 import Categories from '../components/categories';
 import Search from '../pages/Search';
 import SongsListByCat from '../pages/SongsListByCat';
+import TermsOfService from '../pages/TermsOfService';
 // import SongsPage from '../pages/SongsPage';
 // import SongDetailsPage from '../pages/SongDetailsPage';
 
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
             {
                 path: "cat/:id",
                 element: <SongsListByCat />
+            },
+            {
+                path: "/terms",
+                element: <TermsOfService />
             },
         ],
     },

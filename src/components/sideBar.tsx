@@ -12,6 +12,7 @@ function SideBar() {
         link1: 'בית',
         link2: 'אזור אישי',
         link3: 'קטגוריות',
+        link4: 'תקנון'
     }
     const categories = useSelector((state: RootState) => state.categories.categories);
 
@@ -38,6 +39,7 @@ function SideBar() {
                 <button onClick={() => setOpenTatLinks(!openTatLinks)}>
                     {sidLinks.link3 + ' '} ▼
                 </button>
+                <Link to={'/terms'} >{sidLinks.link4}</Link>
 
                 <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`}
                     style={{ display: openTatLinks ? 'block' : 'none' }}>
