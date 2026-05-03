@@ -113,50 +113,127 @@
     /* קו תחתון מקווקו */
 }
 
-.information {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    padding: 16px 24px;
-    background: #f8f0ff;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    border: 1px solid #edf2f7;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    direction: rtl;
-    /* כדי לוודא שמוצג מימין לשמאל בעברית */
+/* הקונטיינר הראשי - שימוש ב-Grid */
+.song-details-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 פריטים בשורה במסכים רחבים */
+    gap: 16px;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(148, 163, 184, 0.1);
+    border: 1px solid #e2e8f0;
+    width: 90%;
+
 }
 
+/* עיצוב כל פריט מידע */
 .info-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: #4a5568;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.875rem;
+    height: 100%;
+    /* גובה אחיד לכל הריבועים */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+    direction: rtl;
+
+}
+
+.info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* האייקון */
+.info-item .icon {
+    font-size: 20px;
+    padding: 6px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* הטקסט בפנים */
+.info-item .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.info-item .label {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.info-item .value {
     font-size: 0.95rem;
+    font-weight: 700;
 }
 
-.info-item strong {
-    color: #526181;
+/* 1. מבצע במקור - גוון סגול */
+.artist-item {
+    background-color: #f5f3ff;
 }
 
-.info-item span {
-    color: #718096;
+.artist-item .icon {
+    background-color: #ede9fe;
+    color: #6d28d9;
 }
 
-/* עיצוב מיוחד עבור הצפיות - בועית בולטת ונקייה */
-.info-item.views {
-    background: #edf2f7;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
+.artist-item .value {
+    color: #5b21b6;
 }
 
-.info-icon {
-    color: #4a5568;
-    font-size: 20px !important;
+/* 2. קטגוריה - גוון ירוק */
+.category-item {
+    background-color: #f0fdf4;
 }
+
+.category-item .icon {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.category-item .value {
+    color: #166534;
+}
+
+/* 3. תאריך הפצה - גוון כתום/ענבר */
+.date-item {
+    background-color: #fffbeb;
+}
+
+.date-item .icon {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.date-item .value {
+    color: #92400e;
+}
+
+/* 4. צפיות - גוון כחול */
+.views-item {
+    background-color: #f0f9ff;
+}
+
+.views-item .icon {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.views-item .value {
+    color: #075985;
+}
+
+
 
 .utubLink {
     width: 70%;
@@ -194,7 +271,65 @@
     font-weight: bold;
 }
 
-@media(max-width:700px) {
+/* הקונטיינר הראשי של המידע על המשתמש */
+.creator-info-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(148, 163, 184, 0.1);
+    border: 1px solid #e2e8f0;
+    width: fit-content;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    direction: rtl;
+}
+
+.creator-info-card:hover {
+    box-shadow: 0 4px 12px rgba(148, 163, 184, 0.2);
+    transform: translateY(-1px);
+}
+
+/* עיצוב האייקון */
+.creator-icon {
+    background-color: #f3e8ff;
+    /* סגול פסטל בהיר */
+    color: #7e22ce;
+    /* סגול כהה וברור */
+    padding: 8px;
+    border-radius: 12px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* אזור הטקסט (תווית ושם המשתמש) */
+.creator-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* התווית (משתמש שהעלה) */
+.creator-label {
+    font-size: 0.75rem;
+    /* קטן יותר וקריא */
+    color: #64748b;
+    /* אפור-כחלחל */
+    font-weight: 600;
+}
+
+/* שם המשתמש */
+.creator-name {
+    font-size: 0.95rem;
+    color: #1e293b;
+    /* כהה מאוד ובולט */
+    font-weight: 700;
+}
+
+@media(max-width:1000px) {
     .chordsOfSong {
         width: 100%;
     }
@@ -207,14 +342,22 @@
         padding: 2px;
         width: 100%;
     }
+}
+
+/* התאמה למסכים בינוניים (טאבלטים) ומובייל */
+@media (max-width: 1000px) {
+    .song-details-container {
+        grid-template-columns: repeat(2, 1fr);
+        /* הופך ל-2 פריטים בשורה */
+        gap: 8px;
+        padding: 8px;
+        width: 100%;
+    }
 
     .utubLink {
         width: 100%;
         height: 300px;
     }
-
-
-
 }
 
 h3 {

@@ -16,7 +16,6 @@ function SongList(props: { song: SongDto, onClick: Function }) {
                     <div className="bold">{song.name}</div>
                 </div>
 
-                <div className="divider"></div>
 
                 <div className="artistDiv">
                     <div>מבצע בפועל:</div>
@@ -25,19 +24,32 @@ function SongList(props: { song: SongDto, onClick: Function }) {
 
                 <div className="divider"></div>
 
-                <div className="categoryName">
+                {/* <div className="categoryName">
                     <div>קטגוריה:</div>
                     <div className="bold">{categories.find(cat => song.categoryId == cat.id)?.name}</div>
-                </div>
+                </div> */}
 
-                <div className="divider"></div>
+
 
                 <div className="publishDate">
                     <div>תאריך הפצה:</div>
                     <div className="bold">{song.date}</div>
                 </div>
 
-                <div className="divider"></div>
+                <div className="song-info-container">
+                    <strong className="info-item like-item">
+                        <span className="material-symbols-outlined">
+                            thumb_up
+                        </span>
+                        {song.chordLikesCount}
+                    </strong>
+                    <strong className="info-item view-item">
+                        <span className="material-symbols-outlined info-icon">
+                            visibility
+                        </span>
+                        {song.viewsCount}
+                    </strong>
+                </div>
 
                 <button className='tochordsbtn' style={{ display: 'flex', flexDirection: 'row' }} onClick={() => onClick(onClick)}>
                     <span className="material-symbols-outlined">music_note</span>

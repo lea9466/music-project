@@ -37,10 +37,15 @@
 .songListFlex .songList .songNameDiv,
 .songListFlex .songList .artistDiv,
 .songListFlex .songList .publishDate,
-.songListFlex .songList .categoryName {
+.songListFlex .songList .categoryName,
+.songListFlex .songList .info {
     display: flex;
     flex-direction: column;
     width: 18%;
+}
+
+.songListFlex .songList .info {
+    justify-content: end;
 }
 
 .songListFlex .songList .bold {
@@ -48,6 +53,52 @@
     font-weight: bold;
     font-size: 1.2rem;
     margin-top: 4px;
+}
+
+/* הקונטיינר הראשי */
+.song-info-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #f8fafc;
+    padding: 8px 16px;
+    border-radius: 24px;
+    width: fit-content;
+    box-shadow: 0 2px 8px rgba(148, 163, 184, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+/* עיצוב פריט המידע */
+.song-info-container .info-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+}
+
+.song-info-container .info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.song-info-container .like-item {
+    background-color: #f8f2cc;
+    color: #7c7e09;
+}
+
+.song-info-container .view-item {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.material-symbols-outlined {
+    font-size: 18px;
+    vertical-align: middle;
 }
 
 .songListFlex .songList div:not(.bold):not(.divider):not(.tochordsbtn):not(.chordBtn) {
@@ -104,12 +155,13 @@
         display: none;
     }
 
+
+
     .songListFlex .tochordsbtn {
         padding: 0;
         width: 48px;
         height: 48px;
         justify-content: center;
-        /* הופך לעיגול קטן */
     }
 }
 
@@ -123,7 +175,10 @@
         padding: 0 20px;
     }
 
-    .songListFlex .songList .artistDiv ,.songListFlex .songList .categoryName{
+    .songListFlex .songList .artistDiv,
+    .songListFlex .songList .categoryName,
+    .song-info-container {
+
         display: none;
     }
 

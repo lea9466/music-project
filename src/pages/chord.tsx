@@ -4,7 +4,7 @@ import { data, useNavigate, useParams } from 'react-router-dom';
 import '../style/chord.css'
 import { useEffect, useState } from 'react';
 import { getFullSong } from '../services/songService';
-import type { FullSongDto, SongDto, UserFavoriteSong } from '../types';
+import type { CategoryDto, FullSongDto, SongDto, UserFavoriteSong } from '../types';
 import AutoScroller from '../components/autoScroller';
 import ChordsDiv from "../components/chordsDiv";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +44,7 @@ function ChordsOfSong() {
         wordLines: [],
         chordsByLine: {}
     });
-
+    const categories: CategoryDto[] = useSelector((state: RootState) => state.categories.categories)
     const [heartSrc, setheartSrc] = useState(
         user.favoriteSongs?.includes(fullSong.song.id!) ? heartFull : heartEmpty
     )
@@ -119,7 +119,47 @@ function ChordsOfSong() {
             <div className='wrappwr'>
                 <AutoScroller />
                 <div className="chordsOfSong">
+
                     <h1>{`אקורדים לשיר ${fullSong.song.name}`}</h1>
+                    <div className="song-details-container">
+                        {/* מבצע במקור */}
+                        <div className="info-item artist-item">
+                            <span className="material-symbols-outlined icon">person</span>
+                            <div className="text-content">
+                                <span className="label">מבצע במקור:</span>
+                                <span className="value">{fullSong.song.artist}</span>
+                            </div>
+                        </div>
+
+                        {/* קטגוריה */}
+                        <div className="info-item category-item">
+                            <span className="material-symbols-outlined icon">category</span>
+                            <div className="text-content">
+                                <span className="label">קטגוריה:</span>
+                                <span className="value">
+                                    {categories.find(cat => fullSong.song.categoryId == cat.id)?.name}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* תאריך הפצה */}
+                        <div className="info-item date-item">
+                            <span className="material-symbols-outlined icon">calendar_today</span>
+                            <div className="text-content">
+                                <span className="label">תאריך הפצה:</span>
+                                <span className="value">{fullSong.song.date}</span>
+                            </div>
+                        </div>
+
+                        {/* כמות צפיות */}
+                        <div className="info-item views-item">
+                            <span className="material-symbols-outlined icon">visibility</span>
+                            <div className="text-content">
+                                <span className="label">צפיות:</span>
+                                <span className="value">{fullSong.song.viewsCount}</span>
+                            </div>
+                        </div>
+                    </div>
                     <iframe className="utubLink"
                         radioGroup=""
                         src={getEmbedUrl(fullSong.song.utubLink || '')}
@@ -129,32 +169,23 @@ function ChordsOfSong() {
                         referrerPolicy="strict-origin-when-cross-origin"
                         allowFullScreen
                     ></iframe>
-                    <div className='information'>
-                        {/* מבצע במקור */}
-                        <div className='info-item'>
-                            <strong>מבצע במקור:</strong>
-                            <span>{fullSong.song.artist}</span>
-                        </div>
-
-                        {/* שם המשתמש שהעלה */}
-                        <div className='info-item'>
-                            <strong>משתמש שהעלה:</strong>
-                            <span>{fullSong.song.creatorName}</span>
-                        </div>
-
-                        {/* כמות צפיות */}
-                        <div className='info-item views'>
-                            <span className="material-symbols-outlined info-icon">visibility</span>
-                            <strong>צפיות: </strong>
-                            <span>{fullSong.song.viewsCount}</span>
-                        </div>
-
-                    </div>
+                    
                     <ChordLikeButton songId={fullSong.song.id || 0} initialLikesCount={fullSong.song.chordLikesCount || 0} />
+
+                    <div className="creator-info-card">
+                        <span className="material-symbols-outlined creator-icon">
+                            person
+                        </span>
+                        <div className="creator-details">
+                            <span className="creator-label">משתמש שהעלה:</span>
+                            <span className="creator-name">{fullSong.song.creatorName}</span>
+                        </div>
+                    </div>
 
                     <button className="like" onClick={toggleFavoriteSong}>
                         <img className="likeImg" src={heartSrc} alt="" />
                     </button>
+
                     <ChordsViewer useFlats={activeTab == '♭' ? true : false} ton={ton} chordsByLine={fullSong.chordsByLine!} />
                     <ToggleButtons btns={btns} activeTab={activeTab} onSet={setActiveTab} />
                     <ChordsDiv fullSong={fullSong} ton={ton} useFlats={activeTab == '♭' ? true : false} isFromScaning={false} />

@@ -17,23 +17,21 @@ function SongCard(props: { song: SongDto, onClick: Function }) {
                     <div>מבצע בפועל:</div>
                     <div className="bold">{song.artist}</div>
                 </div>
+
                 <div className="songNameDiv">
                     <div>שם השיר:</div>
                     <div className="bold">{song.name}</div>
                 </div>
-                <div className="divider"></div>
 
                 <div className="categoryName">
                     <div>קטגוריה:</div>
                     <div className="bold">{categories.find(cat => song.categoryId == cat.id)?.name}</div>
                 </div>
-                <div className="divider"></div>
 
                 <div className="puclishDate">
                     <div>תאריך הפצה:</div>
                     <div className="bold">{song.date}</div>
                 </div>
-                <div className="divider"></div>
 
                 <button style={{ display: 'flex', flexDirection: 'row' }} onClick={() => onClick(onClick)}>
                     <span className="material-symbols-outlined">music_note</span>
