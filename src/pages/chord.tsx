@@ -120,7 +120,7 @@ function ChordsOfSong() {
                 <AutoScroller />
                 <div className="chordsOfSong">
 
-                    <h1>{`אקורדים לשיר ${fullSong.song.name}`}</h1>
+                    <h1>{`אקורדים לשיר ${fullSong.song.name}  של ${fullSong.song.artist}` }</h1>
                     <div className="song-details-container">
                         {/* מבצע במקור */}
                         <div className="info-item artist-item">
