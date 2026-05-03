@@ -34,8 +34,8 @@ export const AestheticSongEditor: React.FC<AestheticChordEditorProps> = ({
     const [lyrics, setLyrics] = useState<string>(initialValue);
     const [scale, setScale] = useState<string>(selectedScale);
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const cursorPosRef = useRef<{ start: number; end: number } | null>(null);
 
-    // עדכון המצב הפנימי אם הפרופס משתנים מבחוץ
     useEffect(() => {
         setLyrics(initialValue);
     }, [initialValue]);
@@ -44,10 +44,21 @@ export const AestheticSongEditor: React.FC<AestheticChordEditorProps> = ({
         setScale(selectedScale);
     }, [selectedScale]);
 
+    // שחזור מיקום סמן אחרי כל רנדור
+    useEffect(() => {
+        if (cursorPosRef.current && textareaRef.current) {
+            const { start, end } = cursorPosRef.current;
+            textareaRef.current.setSelectionRange(start, end);
+            cursorPosRef.current = null;
+        }
+    }, [lyrics]);
+
     const availableRoots = ROOTS_DATA[scale] || ROOTS_DATA["C Major / A Minor"];
 
-    // פונקציה מרכזית לעדכון הטקסט ושליחה ל-Parent
-    const updateText = (newText: string) => {
+    const updateText = (newText: string, cursorStart?: number, cursorEnd?: number) => {
+        if (cursorStart !== undefined) {
+            cursorPosRef.current = { start: cursorStart, end: cursorEnd ?? cursorStart };
+        }
         setLyrics(newText);
         if (onUpdate) onUpdate(newText);
     };
@@ -59,8 +70,10 @@ export const AestheticSongEditor: React.FC<AestheticChordEditorProps> = ({
 
         setTimeout(() => {
             if (textareaRef.current) {
+                const scrollTop = textareaRef.current.scrollTop;
                 textareaRef.current.focus();
                 textareaRef.current.setSelectionRange(pos + val.length, pos + val.length);
+                textareaRef.current.scrollTop = scrollTop;
             }
         }, 0);
     };
@@ -88,6 +101,7 @@ export const AestheticSongEditor: React.FC<AestheticChordEditorProps> = ({
         const textarea = textareaRef.current;
         if (!textarea) return;
 
+        const scrollTop = textarea.scrollTop;
         const start = textarea.selectionStart;
         const textBefore = lyrics.substring(0, start);
         let newText = "";
@@ -108,15 +122,22 @@ export const AestheticSongEditor: React.FC<AestheticChordEditorProps> = ({
         setTimeout(() => {
             textarea.focus();
             textarea.setSelectionRange(newPos, newPos);
+            textarea.scrollTop = scrollTop;
         }, 0);
     };
 
     const insertHeader = () => {
         if (!textareaRef.current) return;
+        const scrollTop = textareaRef.current.scrollTop;
         const start = textareaRef.current.selectionStart;
         const newText = lyrics.substring(0, start) + "\n# " + lyrics.substring(start);
         updateText(newText);
-        setTimeout(() => textareaRef.current?.focus(), 0);
+        setTimeout(() => {
+            if (textareaRef.current) {
+                textareaRef.current.focus();
+                textareaRef.current.scrollTop = scrollTop;
+            }
+        }, 0);
     };
 
     return (
@@ -131,7 +152,11 @@ export const AestheticSongEditor: React.FC<AestheticChordEditorProps> = ({
                 <textarea
                     ref={textareaRef}
                     value={lyrics}
-                    onChange={(e) => updateText(e.target.value)}
+                    onChange={(e) => {
+                        const start = e.target.selectionStart;
+                        const end = e.target.selectionEnd;
+                        updateText(e.target.value, start, end);
+                    }}
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={onDrop}
                     className="aes-textarea"
