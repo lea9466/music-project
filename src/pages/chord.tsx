@@ -77,7 +77,13 @@ function ChordsOfSong() {
         loadSong();
     }, [id]);
     document.title = `${fullSong.song.name} - ${fullSong.song.artist} | אקורדים`;
-
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+        metaDescription.setAttribute(
+            "content",
+            `אקורדים לשיר ${fullSong.song.name} של ${fullSong.song.artist}. מילים ואקורדים מדויקים`
+        );
+    }
 
     async function toggleFavoriteSong() {
 
