@@ -35,7 +35,8 @@ const getEmbedUrl = (url: string) => {
 //הדיב הראשי שמוצגים בו פרטי השיר והאקורדים שלו - שיר שלם
 function ChordsOfSong() {
     const dispatch = useDispatch();
-    const { id } = useParams<{ id: string }>();
+    const { slug } = useParams();
+    const id = slug?.split('-').pop();
     const [ton, setTon] = useState(0)
     const user = useSelector((state: RootState) => state.auth.user);
     const token = useSelector((state: RootState) => state.auth.token);
@@ -68,12 +69,14 @@ function ChordsOfSong() {
             try {
                 const data = await getFullSong(songId);
                 setFullSong(data);
+
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);
             }
         };
         loadSong();
     }, [id]);
+    document.title = `${fullSong.song.name} - ${fullSong.song.artist} | אקורדים`;
 
 
     async function toggleFavoriteSong() {
@@ -120,7 +123,7 @@ function ChordsOfSong() {
                 <AutoScroller />
                 <div className="chordsOfSong">
 
-                    <h1>{`אקורדים לשיר ${fullSong.song.name}  של ${fullSong.song.artist}` }</h1>
+                    <h1>{`אקורדים לשיר ${fullSong.song.name}  של ${fullSong.song.artist}`}</h1>
                     <div className="song-details-container">
                         {/* מבצע במקור */}
                         <div className="info-item artist-item">
@@ -198,7 +201,7 @@ function ChordsOfSong() {
                             onClick={() => { if (ton > -12) setTon(ton - 1) }}
                             className="minus" />
                     </div>
-                    {fullSong.song.credit!='' && <div>קרדיט: {fullSong.song.credit}</div>}
+                    {fullSong.song.credit != '' && <div>קרדיט: {fullSong.song.credit}</div>}
                     <div className="tipsAI">
                         <h4>טיפים לניגון השיר מאת AI</h4>
                         <div>{fullSong.song.tips}</div>

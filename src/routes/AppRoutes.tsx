@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
                 element: <SignIn />,
             },
             {
-                path: "/PersonalArea", 
+                path: "/PersonalArea",
                 element: <PersonalArea />,
 
             },
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
                 element: <SongController />
             },
             {
-                path: "chords/:id",
+                path: "chords/:slug",
                 element: <ChordsOfSong />
             },
             {

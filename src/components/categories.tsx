@@ -7,6 +7,7 @@ import { getSongsByCatId } from "../services/songService";
 import '../style/categories.css';
 import { getCategories } from "../services/categoryService";
 import { setCategories } from "../redux/categoreis/categorieSlice";
+import { createSlug } from "../services/utils";
 
 // --- קומפוננטת המגירה הפנימית ---
 type DrawerProps = {
@@ -55,7 +56,7 @@ function CategoryDrawer({ categoryId, isOpen }: DrawerProps) {
                         </div>
                         <button
                             className="drawer-chords-btn"
-                            onClick={() => navigate(`/chords/${song.id}`)}
+                            onClick={() => navigate(`/chords/${createSlug(song)}`)}
                         >
                             <span>לאקורדים</span>
                             <span className="arrow-left">←</span>

@@ -5,6 +5,7 @@ import SongList from "./songList";
 import '../style/chordsDisplay.css'
 import type { SongDto } from "../types";
 import { useNavigate } from "react-router-dom";
+import { createSlug } from "../services/utils";
 
 
 //קומפוננטה המחזירה תצוגת שירים - כרטיסים או רשימה
@@ -15,8 +16,7 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
     const [cardsDisplay, setDisplay] = useState('list')
     const navigate = useNavigate()
     function onChordsClick(song: SongDto) {
-        
-        navigate(`/chords/${song.id}`);
+        navigate(`/chords/${createSlug(song)}`);
     }
     const cards = songs.map((s: SongDto, index: number) => <SongCard
         song={s}
