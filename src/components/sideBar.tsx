@@ -51,11 +51,11 @@ function SideBar() {
                 {/* כאן הוספתי סגירה של הסיידבר כשלוחצים על לינק פנימי - חווית משתמש טובה יותר */}
                 <Link to={'/'} onClick={() => setOpen(false)}>{sidLinks.link1}</Link>
                 <Link to={'/PersonalArea'} onClick={() => setOpen(false)}>{sidLinks.link2}</Link>
+                <Link to={'/terms'} >{sidLinks.link4}</Link>
 
                 <button onClick={() => setOpenTatLinks(!openTatLinks)}>
                     {sidLinks.link3 + ' '} ▼
                 </button>
-                <Link to={'/terms'} >{sidLinks.link4}</Link>
 
                 <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`}
                     style={{ display: openTatLinks ? 'block' : 'none' }}>

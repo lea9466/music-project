@@ -1,67 +1,75 @@
 import { Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
 import Header from "./header";
 import Footer from "./footer";
-import { getCategories } from '../services/categoryService';
-import { setCategories } from '../redux/categoreis/categorieSlice';
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
-import SideBar from "./sideBar";
-import { ToastContainer } from "react-toastify";
-import { getNewSongs } from "../services/songService";
-import { setSongs } from "../redux/songs/songSlice";
-import type { SongDto } from "../types";
+import { useEffect, useState, lazy, Suspense } from "react";
+import { useDispatch } from "react-redux";
 import TopBanner from "./baner";
+import { ToastContainer } from "react-toastify";
+
+const SideBar = lazy(() => import("./sideBar"));
+
 const Layout = () => {
   const dispatch = useDispatch();
-  const categories = useSelector((state: RootState) => state.categories.categories);
+  const navigate = useNavigate();
 
-  // דוגמה למצב התחברות (אם יש לך משתנה כזה ב-Redux, אפשר להשתמש בו)
-  // const user = useSelector((state: RootState) => state.auth.user);
+  const [showBanner, setShowBanner] = useState(true);
+  const [loadExtraUI, setLoadExtraUI] = useState(false);
 
-  // ניהול המצב של הבאנר
-  const [showBanner, setShowBanner] = useState<boolean>(true);
-  const navigate = useNavigate()
-
+  // 🔥 דחייה קלה של UI לא קריטי
   useEffect(() => {
-    const isBannerClosed = sessionStorage.getItem('isBannerClosed');
-    if (isBannerClosed) {
-      setShowBanner(false);
-    }
+    const timer = setTimeout(() => {
+      setLoadExtraUI(true);
+    }, 0); // אפשר 0–300ms לפי רצון
+
+    return () => clearTimeout(timer);
   }, []);
 
-  
+  useEffect(() => {
+    const isBannerClosed = sessionStorage.getItem("isBannerClosed");
+    if (isBannerClosed) setShowBanner(false);
+  }, []);
 
-  const handleCloseBanner = (): void => {
+  const handleCloseBanner = () => {
     setShowBanner(false);
-    sessionStorage.setItem('isBannerClosed', 'true');
+    sessionStorage.setItem("isBannerClosed", "true");
   };
 
-  const handleRegisterClick = (): void => {
-    navigate('/sign-in')
+  const handleRegisterClick = () => {
+    navigate("/sign-in");
   };
 
-  const handleLoginClick = (): void => {
-    console.log('פתח פופאפ התחברות');
-    // כאן תפתחי את מודל/פופ-אפ ההתחברות שלך
+  const handleLoginClick = () => {
+    console.log("פתח פופאפ התחברות");
   };
 
   return (
     <>
-      {/* הבאנר העליון יופיע רק אם לא סגרו אותו (וגם אפשר להוסיף תנאי אם הוא מחובר) */}
-      <TopBanner
-        isVisible={showBanner} // אפשר להוסיף כאן גם: && !user
-        onRegister={handleRegisterClick}
-        onLogin={handleLoginClick}
-        onClose={handleCloseBanner}
-      />
+      {/* 🔥 Banner נטען רק אחרי render ראשון */}
+      {loadExtraUI && (
+        <TopBanner
+          isVisible={showBanner}
+          onRegister={handleRegisterClick}
+          onLogin={handleLoginClick}
+          onClose={handleCloseBanner}
+        />
+      )}
 
       <Header />
-      <SideBar />
+
+      {/* 🔥 Sidebar נטען רק אחרי render ראשון */}
+      {loadExtraUI && (
+        <Suspense fallback={null}>
+          <SideBar />
+        </Suspense>
+      )}
+
       <main>
-        <Outlet /> {/* כאן יוצגו הדפים המשתנים */}
+        <Outlet />
       </main>
-      <ToastContainer />
+
+      {/* 🔥 גם זה לא חוסם initial render */}
+      {loadExtraUI && <ToastContainer />}
+
       <ScrollRestoration />
       <Footer />
     </>
