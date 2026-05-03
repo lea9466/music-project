@@ -169,7 +169,7 @@ function ChordsOfSong() {
                         referrerPolicy="strict-origin-when-cross-origin"
                         allowFullScreen
                     ></iframe>
-                    
+
                     <ChordLikeButton songId={fullSong.song.id || 0} initialLikesCount={fullSong.song.chordLikesCount || 0} />
 
                     <div className="creator-info-card">
@@ -198,6 +198,7 @@ function ChordsOfSong() {
                             onClick={() => { if (ton > -12) setTon(ton - 1) }}
                             className="minus" />
                     </div>
+                    {fullSong.song.credit!='' && <div>קרדיט: {fullSong.song.credit}</div>}
                     <div className="tipsAI">
                         <h4>טיפים לניגון השיר מאת AI</h4>
                         <div>{fullSong.song.tips}</div>

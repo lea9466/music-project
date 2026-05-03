@@ -33,7 +33,8 @@ function SongController() {
         categoryId: 0,
         userId: user.id,
         sourceText: '',
-        tips: ''
+        tips: '',
+        credit:''
     });
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const types = ["Major", "Minor"];
@@ -140,7 +141,7 @@ function SongController() {
                     onUpdate={(val) => setData({ ...data, sourceText: val })}
                     selectedScale={data.majorOrMinor}
                 />
-
+                <input name="credit" type="text" placeholder="קרדיט" value={data.credit} onChange={onChange} />
                 {/* טיפים Gemini */}
                 <div className="titlle-logo">
                     <h3>טיפים לנגינת השיר מ- Gemini</h3>
