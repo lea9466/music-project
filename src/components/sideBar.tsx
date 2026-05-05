@@ -58,7 +58,7 @@ function SideBar() {
                 </button>
 
                 <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`}
-                    style={{ display: openTatLinks ? 'block' : 'none' }}>
+                    >
                     {/* גם כאן כדאי להוסיף onClick לסגירת הסיידבר הראשי כשבוחרים קטגוריה */}
                     {newTatLinks}
                 </div>

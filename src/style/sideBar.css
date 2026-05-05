@@ -73,15 +73,19 @@
     /* הופעת הפס ב-Hover */
 }
 
+/* הוסיפי ל-CSS */
 .divOfTatLinks {
     width: 100%;
-    display: flex;
+    display: none; /* ← ברירת מחדל: מוסתר */
     flex-direction: column;
     align-items: flex-start;
-    /* מדרגה לתתי-לינקים שתיראה ברור */
     padding-right: 20px;
     background: rgba(255, 255, 255, 0.2);
     border-right: 1px solid rgba(240, 98, 146, 0.1);
+}
+
+.divOfTatLinks.show {
+    display: flex; /* ← מוצג רק כשיש class */
 }
 
 .sidebar-btn {
