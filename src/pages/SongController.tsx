@@ -11,7 +11,7 @@ import { setCategories } from "../redux/categoreis/categorieSlice";
 import { getCategories } from "../services/categoryService";
 import { AestheticSongEditor } from "../components/aestheticSongEditor";
 import { toast } from "react-toastify";
-import guideVideo from '../assets/בקלות.mp4'; // שנה לנתיב האמיתי
+import guideVideo from '../assets/guide-video.mp4'; // שנה לנתיב האמיתי
 
 function SongController() {
     const [isAIScaning, setAIScaning] = useState(false);
