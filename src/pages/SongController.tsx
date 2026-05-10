@@ -14,14 +14,15 @@ import { toast } from "react-toastify";
 
 function SongController() {
     const [isAIScaning, setAIScaning] = useState(false);
-    const [isVideoModalOpen, setIsVideoModalOpen] = useState(false); // State למודל הסרטון
+    const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null); // Ref לנגן הוידאו
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const user = useSelector((state: RootState) => state.auth.user);
 
     const categories = useSelector((state: RootState) => state.categories.categories);
     const location = useLocation();
-
+    
     const [data, setData] = useState<SongDto>(location.state || {
         name: '',
         artist: '',
@@ -34,6 +35,13 @@ function SongController() {
         tips: '',
         credit: ''
     });
+
+    // פונקציה לקביעת מהירות הניגון ל-1.5
+    const onVideoLoad = () => {
+        if (videoRef.current) {
+            videoRef.current.playbackRate = 1.5;
+        }
+    };
 
     if (user.role == 0 || user.role == 'Regular')
         return <>אינך מורשה לגשת לדף זה</>;
@@ -103,23 +111,21 @@ function SongController() {
 
                 {/* כפתור המדריך */}
                 <div style={{ marginBottom: '20px' }}>
-                    <button
-                        type="button"
-                        className="demo-button"
+                    <button 
+                        type="button" 
+                        className="demo-button" 
                         onClick={() => setIsVideoModalOpen(true)}
                     >
-                        🎥 צפה במדריך להוספה נכונה
+                        🎥 צפה במדריך להוספה (1.5x)
                     </button>
                 </div>
 
-                {/* שורה 1: שם, אמן, קישור */}
                 <div className="inputsDiv">
                     <input name="name" type="text" placeholder="שם שיר" value={data.name} onChange={onChange} />
                     <input name="artist" type="text" placeholder="אומן/מבצע" value={data.artist} onChange={onChange} />
                     <input name="utubLink" type="text" placeholder="קישור ליוטיוב" value={data.utubLink} onChange={onChange} />
                 </div>
 
-                {/* שורה 2: שפה, סולם, קטגוריה */}
                 <div className="inputsDiv">
                     <select value={data.language} onChange={(e) => setData({ ...data, language: e.target.value })}>
                         <option value='' disabled hidden>בחר שפה</option>
@@ -144,33 +150,32 @@ function SongController() {
                     </select>
                 </div>
 
-                {/* מודל הסרטון */}
+                {/* מודל הסרטון שלך */}
                 {isVideoModalOpen && (
                     <div className="modal-overlay" onClick={() => setIsVideoModalOpen(false)}>
                         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                             <button type="button" className="close-button" onClick={() => setIsVideoModalOpen(false)}>&times;</button>
                             <div className="video-container">
-                                <iframe
-                                    width="100%"
-                                    height="315"
-                                    src="src/img/בקלות.mp4"
-                                    title="סרטון הדגמה"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                ></iframe>
+                                <video 
+                                    ref={videoRef}
+                                    controls 
+                                    autoPlay 
+                                    onCanPlay={onVideoLoad}
+                                    style={{ width: '100%', borderRadius: '8px' }}
+                                >
+                                    <source src="src/img/בקלות.mp4" type="video/mp4" />
+                                    הדפדפן שלך לא תומך בנגן הוידאו.
+                                </video>
                             </div>
                         </div>
                     </div>
                 )}
 
-                {/* הנחיות */}
                 <div className="points">
                     <h3>שים לב חשוב מאד!</h3>
                     <div>כותרת שברצונך שתהיה מודגשת עלייך להכניס עם # בתחילה</div>
                     <div>שורה שהיא מילים של שיר הכנס בצורה רגילה</div>
                     <div>אקורד עלייך להכניס בפורמט כזה: לדוגמא [A]</div>
-                    <div>אם ברצונך להכניס אקורד עם תוספת עלייך להכניסו כך: [A/m7]</div>
                 </div>
 
                 <AestheticSongEditor
@@ -178,9 +183,9 @@ function SongController() {
                     onUpdate={(val) => setData({ ...data, sourceText: val })}
                     selectedScale={data.majorOrMinor}
                 />
-
+                
                 <input name="credit" type="text" placeholder="קרדיט" value={data.credit} onChange={onChange} />
-
+                
                 <div className="titlle-logo">
                     <h3>טיפים לנגינת השיר מ- Gemini</h3>
                     <img width="25" height="25" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
@@ -214,7 +219,7 @@ function SongController() {
     );
 }
 
-// פונקציות העזר נשארות מחוץ לקומפוננטה הראשית לביצועים טובים יותר
+// פונקציות העזר נשמרו ללא שינוי
 const scanText = (text: string) => {
     const lines = text.split('\n');
     let index = 0;
@@ -252,7 +257,7 @@ function makeChords(line: string, lineNumber: number) {
             chords.push({
                 name: ch,
                 indexInLine: count,
-                spaces: start,
+                spaces: start, 
                 lineNumber: lineNumber,
                 adding: adding
             });
@@ -272,7 +277,6 @@ function transformChordsToRecord(chords: ChordDto[]): Record<number, ChordDto[]>
     }, {} as Record<number, ChordDto[]>);
 }
 
-// קומפוננטת AIScaning
 function AIScaning(props: { songText: string, song: SongDto, setTips: Function }) {
     const hasFetched = useRef(false);
     const [result, setResult] = useState<GeminiSongResponse | null>(null);
@@ -305,7 +309,6 @@ function AIScaning(props: { songText: string, song: SongDto, setTips: Function }
     }, [newFullSongToServer]);
 
     if (!result) return <div className="loading-container"><p>מנתח את השיר ב-AI...</p></div>;
-
     return <ChordsDiv fullSong={newFullSongToFront} isFromScaning={true} chordsFromAI={tranChordsFromAI} />;
 }
 
