@@ -11,6 +11,7 @@ import { setCategories } from "../redux/categoreis/categorieSlice";
 import { getCategories } from "../services/categoryService";
 import { AestheticSongEditor } from "../components/aestheticSongEditor";
 import { toast } from "react-toastify";
+import guideVideo from '../assets/בקלות.mp4'; // שנה לנתיב האמיתי
 
 function SongController() {
     const [isAIScaning, setAIScaning] = useState(false);
@@ -22,7 +23,7 @@ function SongController() {
 
     const categories = useSelector((state: RootState) => state.categories.categories);
     const location = useLocation();
-    
+
     const [data, setData] = useState<SongDto>(location.state || {
         name: '',
         artist: '',
@@ -111,9 +112,9 @@ function SongController() {
 
                 {/* כפתור המדריך */}
                 <div style={{ marginBottom: '20px' }}>
-                    <button 
-                        type="button" 
-                        className="demo-button" 
+                    <button
+                        type="button"
+                        className="demo-button"
                         onClick={() => setIsVideoModalOpen(true)}
                     >
                         🎥 צפה במדריך להוספה (1.5x)
@@ -156,14 +157,14 @@ function SongController() {
                         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                             <button type="button" className="close-button" onClick={() => setIsVideoModalOpen(false)}>&times;</button>
                             <div className="video-container">
-                                <video 
+                                <video
                                     ref={videoRef}
-                                    controls 
-                                    autoPlay 
+                                    controls
+                                    autoPlay
                                     onCanPlay={onVideoLoad}
                                     style={{ width: '100%', borderRadius: '8px' }}
                                 >
-                                    <source src="src/img/בקלות.mp4" type="video/mp4" />
+                                    <source src={guideVideo} type="video/mp4" />
                                     הדפדפן שלך לא תומך בנגן הוידאו.
                                 </video>
                             </div>
@@ -183,9 +184,9 @@ function SongController() {
                     onUpdate={(val) => setData({ ...data, sourceText: val })}
                     selectedScale={data.majorOrMinor}
                 />
-                
+
                 <input name="credit" type="text" placeholder="קרדיט" value={data.credit} onChange={onChange} />
-                
+
                 <div className="titlle-logo">
                     <h3>טיפים לנגינת השיר מ- Gemini</h3>
                     <img width="25" height="25" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
@@ -257,7 +258,7 @@ function makeChords(line: string, lineNumber: number) {
             chords.push({
                 name: ch,
                 indexInLine: count,
-                spaces: start, 
+                spaces: start,
                 lineNumber: lineNumber,
                 adding: adding
             });
