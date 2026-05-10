@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import type { ChordDto, FullSongDto, GeminiSongResponse, SongDto, WordLineDto } from "../types";
-import '../style/songController.css'
+import '../style/songController.css';
 import { addSong, updateSong } from "../services/songService";
 import ChordsDiv from "../components/chordsDiv";
 import { AIScan } from "../services/AIService";
@@ -12,18 +12,16 @@ import { getCategories } from "../services/categoryService";
 import { AestheticSongEditor } from "../components/aestheticSongEditor";
 import { toast } from "react-toastify";
 
-
-
-//דף הוספה ועדכון של אקורדים לשיר
 function SongController() {
-    const [isAIScaning, setAIScaning] = useState(false)
-    const dispatch = useDispatch()
+    const [isAIScaning, setAIScaning] = useState(false);
+    const [isVideoModalOpen, setIsVideoModalOpen] = useState(false); // State למודל הסרטון
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const user = useSelector((state: RootState) => state.auth.user);
-    if (user.role == 0 || user.role == 'Regular')
-        return <>אינך מורשה לגשת לדף זה</>
+
     const categories = useSelector((state: RootState) => state.categories.categories);
     const location = useLocation();
+
     const [data, setData] = useState<SongDto>(location.state || {
         name: '',
         artist: '',
@@ -36,76 +34,83 @@ function SongController() {
         tips: '',
         credit: ''
     });
+
+    if (user.role == 0 || user.role == 'Regular')
+        return <>אינך מורשה לגשת לדף זה</>;
+
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const types = ["Major", "Minor"];
     const allKeys = notes.flatMap(note => types.map(type => `${note} ${type}`));
 
-    async function onSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-        setIsLoading(true)
+    async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+        setIsLoading(true);
         event.preventDefault();
         try {
-            const arrs = scanText(data.sourceText)
-            const newFullSong: FullSongDto = { song: data, wordLines: arrs.wordLines, chords: arrs.chordsLines }
-            if (data.name == '' || data.artist == '' || data.language == '' || data.categoryId == 0 || data.sourceText == '') {
+            const arrs = scanText(data.sourceText);
+            const newFullSong: FullSongDto = { song: data, wordLines: arrs.wordLines, chords: arrs.chordsLines };
+            if (data.name === '' || data.artist === '' || data.language === '' || data.categoryId === 0 || data.sourceText === '') {
                 toast.error("חסר פרטים");
-                return
+                setIsLoading(false);
+                return;
             }
             if (data.id) {
-                const upSong = await updateSong(newFullSong)
-                dispatch(setCategories(await getCategories()))
-                toast.success('השיר עודכן בהצלחה')
-                setIsLoading(false)
-
+                await updateSong(newFullSong);
+                dispatch(setCategories(await getCategories()));
+                toast.success('השיר עודכן בהצלחה');
+            } else {
+                await addSong(newFullSong);
+                toast.success('השיר נשמר בהצלחה');
             }
-            else {
-                const newSong = await addSong(newFullSong)
-                toast.success('השיר נשמר בהצלחה')
-                setIsLoading(false)
-
-            }
-        }
-        catch (error) {
+        } catch (error) {
             console.error(error);
+        } finally {
+            setIsLoading(false);
         }
-    };
+    }
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target
-        setData({ ...data, [name]: value })
-    }
+        const { name, value } = event.target;
+        setData({ ...data, [name]: value });
+    };
+
     const updateDataDirectly = (newData: Partial<SongDto>) => {
         setData(prev => ({ ...prev, ...newData }));
     };
-    
+
     useEffect(() => {
         const loadData = async () => {
             if (categories.length === 0) {
                 try {
-                    const data = await getCategories();
-                    dispatch(setCategories(data));
+                    const categoryData = await getCategories();
+                    dispatch(setCategories(categoryData));
                 } catch (err) {
                     console.error("שגיאה בקריאת הנתונים:", err);
                 }
             }
-
         };
-
         loadData();
     }, [dispatch, categories.length]);
 
-
     return (
         <div className="formAndScan">
-
-
             <form onSubmit={onSubmit} autoComplete="off" className="addSong"
                 style={{
-                    /* שינוי כאן: הגדלנו את הרוחב ל-45% בזמן סריקה כדי שלא יהיה "חנק" */
                     width: isAIScaning ? '50%' : '100%',
                     maxWidth: isAIScaning ? 'none' : '100%'
                 }}>
 
                 <h1>הוספה/עדכון שיר</h1>
+
+                {/* כפתור המדריך */}
+                <div style={{ marginBottom: '20px' }}>
+                    <button
+                        type="button"
+                        className="demo-button"
+                        onClick={() => setIsVideoModalOpen(true)}
+                    >
+                        🎥 צפה במדריך להוספה נכונה
+                    </button>
+                </div>
 
                 {/* שורה 1: שם, אמן, קישור */}
                 <div className="inputsDiv">
@@ -139,25 +144,43 @@ function SongController() {
                     </select>
                 </div>
 
-                {/* הנחיות (Points) */}
+                {/* מודל הסרטון */}
+                {isVideoModalOpen && (
+                    <div className="modal-overlay" onClick={() => setIsVideoModalOpen(false)}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <button type="button" className="close-button" onClick={() => setIsVideoModalOpen(false)}>&times;</button>
+                            <div className="video-container">
+                                <iframe
+                                    width="100%"
+                                    height="315"
+                                    src="src/img/בקלות.mp4"
+                                    title="סרטון הדגמה"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* הנחיות */}
                 <div className="points">
                     <h3>שים לב חשוב מאד!</h3>
                     <div>כותרת שברצונך שתהיה מודגשת עלייך להכניס עם # בתחילה</div>
                     <div>שורה שהיא מילים של שיר הכנס בצורה רגילה</div>
                     <div>אקורד עלייך להכניס בפורמט כזה: לדוגמא [A]</div>
                     <div>אם ברצונך להכניס אקורד עם תוספת עלייך להכניסו כך: [A/m7]</div>
-                    <div>שים לב b/# הם חלק מאקורד ולכן יופיעו לפני הסלש</div>
-                    <div>אנא היצמד למצב מסוים ואל תעבור מבמולים לדיאזים לטובת השיר</div>
                 </div>
 
-                {/* העורך האסתטי החדש */}
                 <AestheticSongEditor
                     initialValue={data.sourceText}
                     onUpdate={(val) => setData({ ...data, sourceText: val })}
                     selectedScale={data.majorOrMinor}
                 />
+
                 <input name="credit" type="text" placeholder="קרדיט" value={data.credit} onChange={onChange} />
-                {/* טיפים Gemini */}
+
                 <div className="titlle-logo">
                     <h3>טיפים לנגינת השיר מ- Gemini</h3>
                     <img width="25" height="25" src="https://img.icons8.com/3d-fluency/94/gemini-ai.png" alt="gemini-ai" />
@@ -169,14 +192,9 @@ function SongController() {
                     placeholder="הטיפים של ה-AI יופיעו כאן..."
                 />
 
-                {/* כפתורים */}
                 <div className="formBtns">
                     <button type="submit" disabled={isLoading}>
-                        {isLoading ? <div className="spinner" /> : (
-                            <>
-                                שמור
-                            </>
-                        )}
+                        {isLoading ? <div className="spinner" /> : <>שמור</>}
                     </button>
                     <button type="button" onClick={() => { setAIScaning(true) }}>
                         <div className="titlle-logo" style={{ margin: 0, gap: '8px' }}>
@@ -186,7 +204,7 @@ function SongController() {
                     </button>
                 </div>
             </form>
-            {/* תצוגת הסריקה (מופיעה משמאל כשהיא פעילה) */}
+
             {isAIScaning && (
                 <div className="vewChords">
                     <AIScaning songText={data.sourceText} song={data} setTips={updateDataDirectly} />
@@ -195,34 +213,77 @@ function SongController() {
         </div>
     );
 }
-export default SongController
 
-type Props = {
-    songText: string,
-    song: SongDto,
-    setTips: Function;
+// פונקציות העזר נשארות מחוץ לקומפוננטה הראשית לביצועים טובים יותר
+const scanText = (text: string) => {
+    const lines = text.split('\n');
+    let index = 0;
+    const wordLines: WordLineDto[] = [];
+    let chordsLines: ChordDto[] = [];
+    lines.forEach((line) => {
+        if (!line.includes('[') && line !== '') {
+            index++;
+            wordLines.push({ lineNumber: index, text: line });
+        } else if (line !== '') {
+            index++;
+            const arr = makeChords(line, index);
+            chordsLines = [...chordsLines, ...arr];
+        }
+    });
+    return { wordLines, chordsLines };
+};
+
+function makeChords(line: string, lineNumber: number) {
+    const chords: ChordDto[] = [];
+    let end = 0;
+    let count = 0;
+    for (let i = 0; i < line.length; i++) {
+        if (line[i] === '[') {
+            count++;
+            const start = i;
+            end = line.indexOf(']', start);
+            let ch = line.slice(start + 1, end);
+            let adding = '';
+            if (ch.includes('/')) {
+                const parts = ch.split('/');
+                ch = parts[0];
+                adding = parts[1];
+            }
+            chords.push({
+                name: ch,
+                indexInLine: count,
+                spaces: start,
+                lineNumber: lineNumber,
+                adding: adding
+            });
+            i = end;
+        }
+    }
+    return chords;
 }
 
-function AIScaning(props: Props) {
+function transformChordsToRecord(chords: ChordDto[]): Record<number, ChordDto[]> {
+    return chords.reduce((acc, chord) => {
+        const lineNum = chord.lineNumber;
+        if (!acc[lineNum]) acc[lineNum] = [];
+        acc[lineNum].push(chord);
+        acc[lineNum].sort((a, b) => a.indexInLine - b.indexInLine);
+        return acc;
+    }, {} as Record<number, ChordDto[]>);
+}
 
+// קומפוננטת AIScaning
+function AIScaning(props: { songText: string, song: SongDto, setTips: Function }) {
     const hasFetched = useRef(false);
     const [result, setResult] = useState<GeminiSongResponse | null>(null);
-    const [tranChordsFromAI, setTranChordsFromAI] = useState<Record<number, ChordDto[]> | undefined>([]);
+    const [tranChordsFromAI, setTranChordsFromAI] = useState<Record<number, ChordDto[]> | undefined>({});
+
     const { newFullSongToFront, newFullSongToServer } = useMemo(() => {
         const arrs = scanText(props.songText);
         const chordsByLine = transformChordsToRecord(arrs.chordsLines);
-
         return {
-            newFullSongToFront: {
-                song: props.song,
-                wordLines: arrs.wordLines,
-                chordsByLine: chordsByLine
-            },
-            newFullSongToServer: {
-                song: props.song,
-                wordLines: arrs.wordLines,
-                chords: arrs.chordsLines
-            }
+            newFullSongToFront: { song: props.song, wordLines: arrs.wordLines, chordsByLine },
+            newFullSongToServer: { song: props.song, wordLines: arrs.wordLines, chords: arrs.chordsLines }
         };
     }, [props.songText, props.song]);
 
@@ -234,98 +295,18 @@ function AIScaning(props: Props) {
                 const message = await AIScan(newFullSongToServer);
                 setResult(message);
                 props.setTips({ tips: message.musicalRecommendations });
-                let transChords = transformChordsToRecord(message.chords || [])
-                setTranChordsFromAI(transChords)
+                setTranChordsFromAI(transformChordsToRecord(message.chords || []));
             } catch (err) {
-                console.error("שגיאה בקריאת הנתונים:", err);
+                console.error(err);
                 hasFetched.current = false;
             }
         };
-
         loadAI();
     }, [newFullSongToServer]);
 
-    // 3. תצוגת טעינה
-    if (!result) {
-        return (
-            <div className="loading-container">
-                <p>מנתח את השיר ומבצע אופטימיזציה ב-AI...</p>
-            </div>
-        );
-    }
+    if (!result) return <div className="loading-container"><p>מנתח את השיר ב-AI...</p></div>;
 
-    return (
-        <>
-            <ChordsDiv fullSong={newFullSongToFront} isFromScaning={true} chordsFromAI={tranChordsFromAI} />
-        </>
-    );
+    return <ChordsDiv fullSong={newFullSongToFront} isFromScaning={true} chordsFromAI={tranChordsFromAI} />;
 }
 
-const scanText = (text: string) => {
-    const lines = text.split('\n');
-    let index = 0;
-    const wordLines: WordLineDto[] = []
-    let chordsLines: ChordDto[] = []
-    lines.forEach((line) => {
-
-        if (!line.includes('[') && line != '') {
-            index++
-            const wordLine: WordLineDto = { lineNumber: index, text: line }
-            wordLines.push(wordLine)
-        }
-        else {
-            if (line != '') {
-                index++
-                const arr: ChordDto[] = makeChords(line, index)
-                chordsLines = [...chordsLines, ...arr]
-            }
-        }
-    });
-
-    return { wordLines, chordsLines }
-};
-
-function makeChords(line: string, lineNumber: number) {
-    const chordsLines: ChordDto[] = []
-    let spaces = 0
-    let count = 0
-    let end = 0
-    let adding = ''
-    for (let index = 0; index < line.length; index++) {
-        if (line[index] == '[') {
-            spaces = index - end
-            count++
-            end = line.indexOf(']', index + 1)
-            let ch = line.slice(index + 1, end)
-            if (ch.indexOf('/') != -1) {
-                let supperd = ch.split('/');
-                ch = supperd[0]
-                adding = supperd[1]
-            }
-            const chord: ChordDto = { name: ch, indexInLine: count, spaces: spaces, lineNumber: lineNumber, adding: adding }
-            chordsLines.push(chord)
-            index = end
-            adding = ''
-        }
-    }
-    return chordsLines
-}
-function transformChordsToRecord(chords: ChordDto[]): Record<number, ChordDto[]> {
-    return chords.reduce((acc, chord) => {
-        const lineNum = chord.lineNumber;
-
-        // אם השורה עדיין לא קיימת בתוך האובייקט, ניצור לה מערך ריק
-        if (!acc[lineNum]) {
-            acc[lineNum] = [];
-        }
-
-        // נוסיף את האקורד למערך של השורה המתאימה
-        acc[lineNum].push(chord);
-
-        // נמיין את האקורדים בתוך השורה לפי Spaces (המיקום שלהם בשורה)
-        // כך שהם יופיעו לפי הסדר משמאל לימין (או ימין לשמאל)
-        acc[lineNum].sort((a, b) => a.indexInLine - b.indexInLine);
-        return acc;
-    }, {} as Record<number, ChordDto[]>);
-};
-
+export default SongController;
