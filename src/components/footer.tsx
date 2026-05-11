@@ -4,23 +4,7 @@ import '../style/footer.css'
 // import DropDown from './dropDown'
 
 function Footer() {
-    const links = ['מעצבים', 'מתכנתים', 'מבשלים']
-    const nweLinks = links.map(link => (
-        <a href="">{link}</a>
-    ))
-
-    // return (
-    //     <div className="footer">
-    //         <div className="rightFooter">
-    //             <h3>לינקים חשובים</h3>
-    //             {nweLinks}
-    //         </div>
-    //         {/* <DropDown/> */}
-    //         <div className="leftFooter">
-    //             <ConnecteionForm />
-    //         </div>
-    //     </div>
-    // )
+   
     return (
         <div className="footer">כל הזכויות שמורות ©</div>
     )

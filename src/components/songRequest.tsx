@@ -92,9 +92,7 @@ function SongRequest() {
             </div>
 
             <div className="requests-masonry-container">
-                {requests.length === 0 ? (
-                    <p className="no-requests">אין בקשות כרגע...</p>
-                ) : (
+                {Array.isArray(requests) && requests.length > 0 ? (
                     requests.map((req, index) => (
                         <div
                             key={req.id}
@@ -125,13 +123,16 @@ function SongRequest() {
                                 ) : (
                                     <>
                                         <span className="status-done">✅ בוצע</span>
-                                        <Link to={`/chords/${createSlug({ name: "", artist:'',id: req.songLink } as SongDto)}`} >לאקרודים</Link>
+                                        <Link to={`/chords/${createSlug({ name: "", artist: '', id: req.songLink } as SongDto)}`} >לאקרודים</Link>
                                     </>
-
                                 )}
                             </div>
                         </div>
                     ))
+                ) : loading ? (
+                    <div className="loader">טוען בקשות...</div>
+                ) : (
+                    <p className="no-requests">אין בקשות כרגע...</p>
                 )}
             </div>
         </div>

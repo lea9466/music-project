@@ -9,15 +9,17 @@ import { createSlug } from "../services/utils";
 
 
 //קומפוננטה המחזירה תצוגת שירים - כרטיסים או רשימה
-function ChordsDisplay(props: { songs: SongDto[] }) {
-    const songs = props.songs;
-    if (songs.length == 0)
+function ChordsDisplay(props: { songs?: SongDto[] }) {
+    const songs = Array.isArray(props.songs) ? props.songs : [];
+    if (songs.length === 0)
         return <>אין נתונים להצגה</>
+
     const [cardsDisplay, setDisplay] = useState('list')
     const navigate = useNavigate()
     function onChordsClick(song: SongDto) {
         navigate(`/chords/${createSlug(song)}`);
     }
+
     const cards = songs.map((s: SongDto, index: number) => <SongCard
         song={s}
         onClick={() => onChordsClick(s)}
@@ -30,7 +32,6 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
         key={index}
     />)
 
-
     return (
         <>
             <div className="display">
@@ -39,7 +40,6 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
                         className={`material-symbols-outlined ${cardsDisplay === 'list' ? 'active' : ''}`} onClick={() => setDisplay('list')}
                         title="תצוגת רשימה"
                     >
-                        {/* <img src="../src/img/format_list_bulleted_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="רשימה" /> */}
                         list
                     </button>
 
@@ -47,19 +47,14 @@ function ChordsDisplay(props: { songs: SongDto[] }) {
                         className={`material-symbols-outlined ${cardsDisplay === 'cards' ? 'active' : ''}`} onClick={() => setDisplay('cards')}
                         title="תצוגת כרטיסים"
                     >
-                        {/* <img src="../src/img/dashboard_24dp_CC30D1A7_FILL0_wght400_GRAD0_opsz24.svg" alt="כרטיסים" /> */}
                         dashboard
                     </button>
                 </div>
-                <div className={`${cardsDisplay == 'cards' ? 'songListGrid' : 'songListFlex'}`}>
-                    {cardsDisplay == 'cards' ? cards : list}
+                <div className={`${cardsDisplay === 'cards' ? 'songListGrid' : 'songListFlex'}`}>
+                    {cardsDisplay === 'cards' ? cards : list}
                 </div>
             </div>
-
         </>
-
     );
-
-
 }
 export default ChordsDisplay

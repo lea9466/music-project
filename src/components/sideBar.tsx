@@ -19,13 +19,15 @@ function SideBar() {
     }
     const categories = useSelector((state: RootState) => state.categories.categories);
 
-    const TatLinks = categories.map(c => { return c }).slice(1)
+    // בדיקה שמגנה על .map
+    const TatLinks = Array.isArray(categories) ? categories.slice(1) : [];
     const newTatLinks = TatLinks.map(cat => (
         <Link to={`/cat/${cat.id}`} onClick={() => setOpen(false)} key={cat.id}>{cat.name}</Link>
     ))
+
     useEffect(() => {
         const loadData = async () => {
-            if (categories.length === 0) {
+            if (!Array.isArray(categories) || categories.length === 0) {
                 try {
                     const data = await getCategories();
                     dispatch(setCategories(data));
@@ -33,14 +35,12 @@ function SideBar() {
                     console.error("שגיאה בקריאת הנתונים:", err);
                 }
             }
-
         };
         loadData();
     }, [dispatch, categories.length]);
 
     return (
         <>
-            {/* ה-Overlay: מופיע רק כשהסיידבר פתוח */}
             {open && <div className="sidebar-overlay" onClick={() => setOpen(false)}></div>}
 
             <button className="sidebar-btn" onClick={() => setOpen(!open)}>
@@ -48,7 +48,6 @@ function SideBar() {
             </button>
 
             <div className={`sidebar ${open ? "open" : ""}`}>
-                {/* כאן הוספתי סגירה של הסיידבר כשלוחצים על לינק פנימי - חווית משתמש טובה יותר */}
                 <Link to={'/'} onClick={() => setOpen(false)}>{sidLinks.link1}</Link>
                 <Link to={'/PersonalArea'} onClick={() => setOpen(false)}>{sidLinks.link2}</Link>
                 <Link to={'/terms'} >{sidLinks.link4}</Link>
@@ -57,15 +56,12 @@ function SideBar() {
                     {sidLinks.link3 + ' '} ▼
                 </button>
 
-                <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`}
-                    >
-                    {/* גם כאן כדאי להוסיף onClick לסגירת הסיידבר הראשי כשבוחרים קטגוריה */}
+                <div className={`divOfTatLinks ${openTatLinks ? "show" : ""}`}>
                     {newTatLinks}
                 </div>
             </div>
         </>
     )
 }
-
 export default SideBar
 

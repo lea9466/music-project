@@ -5,7 +5,7 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import TopBanner from "./baner";
 import { ToastContainer } from "react-toastify";
-
+import ErrorBoundary from "./ErrorBoundary";
 const SideBar = lazy(() => import("./sideBar"));
 
 const Layout = () => {
@@ -17,10 +17,7 @@ const Layout = () => {
 
   // 🔥 דחייה קלה של UI לא קריטי
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoadExtraUI(true);
-    }, 0); // אפשר 0–300ms לפי רצון
-
+    const timer = setTimeout(() => setLoadExtraUI(true), 0);
     return () => clearTimeout(timer);
   }, []);
 
@@ -34,13 +31,8 @@ const Layout = () => {
     sessionStorage.setItem("isBannerClosed", "true");
   };
 
-  const handleRegisterClick = () => {
-    navigate("/sign-in");
-  };
-
-  const handleLoginClick = () => {
-    console.log("פתח פופאפ התחברות");
-  };
+  const handleRegisterClick = () => navigate("/sign-in");
+  const handleLoginClick = () => console.log("פתח פופאפ התחברות");
 
   return (
     <>
@@ -56,18 +48,20 @@ const Layout = () => {
 
       <Header />
 
-      {/* 🔥 Sidebar נטען רק אחרי render ראשון */}
+      {/* 🔥 Sidebar ב־lazy עם loader קטן */}
       {loadExtraUI && (
-        <Suspense fallback={null}>
+        <Suspense fallback={<div className="loader">טוען תפריט...</div>}>
           <SideBar />
         </Suspense>
       )}
 
       <main>
-        <Outlet />
+        {/* 🔥 ErrorBoundary כדי שכל שגיאה לא תקרוס את האתר */}
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </main>
 
-      {/* 🔥 גם זה לא חוסם initial render */}
       {loadExtraUI && <ToastContainer />}
 
       <ScrollRestoration />
