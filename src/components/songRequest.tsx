@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { type ApiResponse, type SongRequestDto } from "../types";
+import { type ApiResponse, type SongDto, type SongRequestDto } from "../types";
 import { getAllRequests, addSongRequest } from "../services/songRequestService";
 import { ToggleVote } from "../services/songRequestVoteService";
 import '../style/SongRequest.css';
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { createSlug } from "../services/utils";
 
 const spanOptions = [1, 1, 2, 1, 2, 1, 1, 2];
 
@@ -27,6 +29,7 @@ function SongRequest() {
         try {
             setLoading(true);
             const data = await getAllRequests();
+            console.log(SongRequest);
             setRequests(data);
         } catch (err) {
             console.error(err);
@@ -101,7 +104,7 @@ function SongRequest() {
                             }}
                         >
                             <div className="request-header">
-                                <span className="creator-name">מאת: <strong>{req.creatorName || 'אנונימי'}</strong></span>
+                                <span className="creator-name">מאת: {req.creatorName || 'אנונימי'}</span>
                                 <span className="votes-count">🔥 {req.votesCount || 0}</span>
                             </div>
 
@@ -120,7 +123,11 @@ function SongRequest() {
                                         {req.isVotedByMe ? "ביטול" : "גם אני רוצה"}
                                     </button>
                                 ) : (
-                                    <span className="status-done">✅ בוצע</span>
+                                    <>
+                                        <span className="status-done">✅ בוצע</span>
+                                        <Link to={`/chords/${createSlug({ name: "", artist:'',id: req.songLink } as SongDto)}`} >לאקרודים</Link>
+                                    </>
+
                                 )}
                             </div>
                         </div>

@@ -1,0 +1,131 @@
+/* רקע המודל */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* כהה מעט יותר כדי להבליט את המודל */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+/* גוף המודל */
+.modal {
+    background: white;
+    width: 500px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    direction: rtl; /* התאמה לעברית */
+}
+
+/* כותרת */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.close-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #aaa;
+    transition: 0.2s;
+}
+
+.close-icon:hover {
+    color: #666;
+}
+
+/* גוף המודל - סידור האלמנטים */
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start; /* יישור לימין בתצוגת RTL */
+}
+
+.request-info {
+    width: 100%;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border-right: 4px solid #6b5cff; /* פס סגול דקורטיבי */
+}
+
+.request-info label {
+    font-weight: bold;
+    color: #6b5cff;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* עיצוב ה-Select */
+.modal-body select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    background-color: white;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.modal-body select:focus {
+    border-color: #6b5cff;
+}
+
+/* כפתורים */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.modal-footer button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+/* כפתור ביטול */
+.btn-secondary {
+    background: #f0f0f0;
+    color: #666;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background: #e5e5e5;
+}
+
+/* הכפתור הסגול שלך */
+.add {
+    background: #6b5cff;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(107, 92, 255, 0.3);
+}
+
+.add:hover {
+    background: #5648e5;
+    transform: translateY(-1px);
+}

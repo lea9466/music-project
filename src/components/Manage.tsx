@@ -13,6 +13,7 @@ import { deleteCategoryFromStore } from "../redux/categoreis/categorieSlice";
 import { fillSongRequest, getAllRequests } from "../services/songRequestService";
 import SetUserRole from "./setUserRole";
 import { toast } from "react-toastify";
+import IDidSong from "./iDidSong";
 
 
 //קומפוננטת ניהול מידע
@@ -21,7 +22,9 @@ function Manage() {
     const dispatch = useDispatch()
     const [openWindow, setOpenWindow] = useState(false);
     const [openWindowOfUser, setOpenWindowOfUser] = useState(false);
+    const [openWindowOSongReq, setOpenWindowOfSongReq] = useState(false);
     const [cat, setCat] = useState<CategoryDto>({ name: '', description: '', songsCount: 0 });
+    const [songReq, setsongReq] = useState<SongRequestDto>({ songDes: '' });
     const [userEdit, setUserEdit] = useState<UserDto>({ name: '', email: '' });
 
     const user = useSelector((state: RootState) => state.auth.user);
@@ -30,18 +33,18 @@ function Manage() {
     const catHeaders = ['שם', 'תאור', 'מספר שירים']
     const catDisplayKeys = ['name', 'description', 'songsCount'];
 
-    const songHeaders = ['שם', 'אומן', 'תאריך הפצה', 'קטגוריה','צפיות','לייקים']
-    const songDisplayKeys = ['name', 'artist', 'date', 'catName','viewsCount','chordLikesCount'];
+    const songHeaders = ['שם', 'אומן', 'תאריך הפצה', 'קטגוריה', 'צפיות', 'לייקים']
+    const songDisplayKeys = ['name', 'artist', 'date', 'catName', 'viewsCount', 'chordLikesCount'];
 
-    const userHeaders = ['שם', 'אימייל', 'הרשאות','תאריך הצטרפות']
-    const userDisplayKeys = ['name', 'email', 'role','date'];
+    const userHeaders = ['שם', 'אימייל', 'הרשאות', 'תאריך הצטרפות']
+    const userDisplayKeys = ['name', 'email', 'role', 'date'];
 
     const SRHeaders = ['בקשה', 'מצביעים', 'דרוג', 'תאריך בקשה', 'בוצע']
     const SRDisplayKeys = ['songDes', 'votesCount', 'priorityScore', 'date'];
 
     const [songs, setSongs] = useState<SongDto[]>([])
     const [users, setUsers] = useState<UserDto[]>([])
-    const [songRequests, seSongRequests] = useState<SongRequestDto[]>([])
+    const [songRequests, setSongRequests] = useState<SongRequestDto[]>([])
     useEffect(() => {
         const loadData = async () => {
             try {
@@ -50,8 +53,8 @@ function Manage() {
                 const users = await getUsers()
                 const songRequests = await getAllRequests()
                 setSongs(songs)
-                setUsers(users)                
-                seSongRequests(songRequests)
+                setUsers(users)
+                setSongRequests(songRequests)
 
             } catch (err) {
                 console.error("שגיאה בקריאת הנתונים:", err);
@@ -115,21 +118,10 @@ function Manage() {
         if (success)
             toast.success("Done!");
     }
-    
+
     async function onEditSongReq(item: SongRequestDto) {
-        item.isFulfilled = true
-        item.fulfillerId = user.id
-        item.fulfillerName = user.name
-        const message = 'שים לב לחיצה כאן מהווה אישור לכך שמילאת את בקשת המשתמש והעלת את השיר המבוקש';
-        const confirmed = window.confirm(message);
-        if (!confirmed) {
-            return;
-        }
-        const success = await fillSongRequest(item)
-        if (success) {
-            toast.success("Done!");
-            seSongRequests(songRequests.filter(s => s.id != item.id))
-        }
+        setsongReq(item)
+        setOpenWindowOfSongReq(true)
 
     }
     function onAddCat() {
@@ -150,6 +142,8 @@ function Manage() {
             {activeTab == 'folded_hands' && <GenericTable elements={songRequests} displayKeys={SRDisplayKeys as (keyof SongRequestDto)[]} onDelete={() => { }} onEdit={(item: SongRequestDto) => onEditSongReq(item)} tableHeaders={SRHeaders} showAction={false} />}
             {openWindow && <AddCategory setOpen={setOpenWindow} editCat={cat} />}
             {openWindowOfUser && <SetUserRole setOpen={setOpenWindowOfUser} user={userEdit} users={users} />}
+            {openWindowOSongReq && <IDidSong setOpen={setOpenWindowOfSongReq} mySongs={songs} songRequests={songRequests} setSongRequests={setSongRequests} SongRequest={songReq} />}
+
         </>
 
     );

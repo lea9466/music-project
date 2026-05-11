@@ -35,10 +35,10 @@ export const convertUser = (user: UserDto): UserDto => ({
 export type SongDto = {
     id?: number;
     name: string;
-    artist: string;
-    categoryId: number;
+    artist?: string;
+    categoryId?: number;
     utubLink?: string;
-    language: string;
+    language?: string;
     majorOrMinor: string;
     date?: string;
     userId?: number;
@@ -105,6 +105,7 @@ export type SongRequestDto = {
     fulfillerName?: string
     date?: string;
     isVotedByMe?: boolean;
+    songLink?:number;
 }
 export type ApiResponse = {
     message: string;
