@@ -1,19 +1,19 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { type UserDto } from '../../types';
 
-const savedUser = typeof window !== 'undefined' ? localStorage.getItem("user") : null;
-
+const savedUser = localStorage.getItem("user");
 interface AuthState {
     user: UserDto;
     token: string | null;
     isAdmin: boolean;
 }
-
 const initialState: AuthState = {
     user: savedUser ? JSON.parse(savedUser) : { name: '', email: '', id: 0, favoriteSongs: [], role: 0 },
-    token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
+    token: localStorage.getItem('token'),
     isAdmin: false
 };
+
+
 
 const authSlice = createSlice({
     name: 'auth',
