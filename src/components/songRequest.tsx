@@ -16,7 +16,7 @@ function SongRequest() {
     const [requests, setRequests] = useState<SongRequestDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [newRequestDes, setNewRequestDes] = useState<string>("");
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+    const [isMobile, setIsMobile] = useState(false); // ← תמיד false בהתחלה
     const token = useSelector((state: RootState) => state.auth.token);
 
     useEffect(() => {
