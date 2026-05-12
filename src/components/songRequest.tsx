@@ -16,11 +16,12 @@ function SongRequest() {
     const [requests, setRequests] = useState<SongRequestDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [newRequestDes, setNewRequestDes] = useState<string>("");
-    const [isMobile, setIsMobile] = useState(false); // ← תמיד false בהתחלה
+    const [isMobile, setIsMobile] = useState(false);
     const token = useSelector((state: RootState) => state.auth.token);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 500);
+        handleResize(); // ← הפעלה מיידית!
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -29,7 +30,7 @@ function SongRequest() {
         try {
             setLoading(true);
             const data = await getAllRequests();
-            console.log(SongRequest);
+            console.log(data); // ← תיקון: data ולא SongRequest
             setRequests(data);
         } catch (err) {
             console.error(err);
@@ -41,6 +42,22 @@ function SongRequest() {
     useEffect(() => {
         loadRequests();
     }, []);
+
+    if (loading) return <div className="loader">טוען בקשות...</div>;
+    const handleVote = async (id: number) => {
+        try {
+            const response: ApiResponse = await ToggleVote(id);
+            setRequests(prev => prev.map(req =>
+                req.id === id ? {
+                    ...req,
+                    isVotedByMe: response.status,
+                    votesCount: response.status ? (req.votesCount || 0) + 1 : (req.votesCount || 0) - 1
+                } : req
+            ));
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const handleAddRequest = async () => {
         if (!token) {
@@ -57,24 +74,6 @@ function SongRequest() {
             console.error(err);
         }
     };
-
-    const handleVote = async (id: number) => {
-        try {
-            const response: ApiResponse = await ToggleVote(id);
-            setRequests(prev => prev.map(req =>
-                req.id === id ? {
-                    ...req,
-                    isVotedByMe: response.status,
-                    votesCount: response.status ? (req.votesCount || 0) + 1 : (req.votesCount || 0) - 1
-                } : req
-            ));
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    if (loading) return <div className="loader">טוען בקשות...</div>;
-
     return (
         <div className="page-wrapper" dir="rtl">
             <div className="add-request-section">
@@ -92,7 +91,7 @@ function SongRequest() {
             </div>
 
             <div className="requests-masonry-container">
-                {Array.isArray(requests) && requests.length > 0 ? (
+                {requests.length > 0 ? (
                     requests.map((req, index) => (
                         <div
                             key={req.id}
@@ -105,14 +104,11 @@ function SongRequest() {
                                 <span className="creator-name">מאת: {req.creatorName || 'אנונימי'}</span>
                                 <span className="votes-count">🔥 {req.votesCount || 0}</span>
                             </div>
-
                             <div className="request-body">{req.songDes}</div>
-
                             <div className="request-footer">
                                 <span className="created-at">
                                     {req.date ? new Date(req.date).toLocaleDateString('he-IL') : ''}
                                 </span>
-
                                 {!req.isFulfilled ? (
                                     <button
                                         className={req.isVotedByMe ? "vote-button active" : "vote-button"}
@@ -123,14 +119,12 @@ function SongRequest() {
                                 ) : (
                                     <>
                                         <span className="status-done">✅ בוצע</span>
-                                        <Link to={`/chords/${createSlug({ name: "", artist: '', id: req.songLink } as SongDto)}`} >לאקרודים</Link>
+                                        <Link to={`/chords/${createSlug({ name: "", artist: '', id: req.songLink } as SongDto)}`}>לאקרודים</Link>
                                     </>
                                 )}
                             </div>
                         </div>
                     ))
-                ) : loading ? (
-                    <div className="loader">טוען בקשות...</div>
                 ) : (
                     <p className="no-requests">אין בקשות כרגע...</p>
                 )}
