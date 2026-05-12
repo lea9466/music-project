@@ -46,7 +46,7 @@ const Layout = () => {
         />
       )}
 
-      <Header />
+      {/* <Header /> */}
 
       {/* 🔥 Sidebar ב־lazy עם loader קטן */}
       {loadExtraUI && (
