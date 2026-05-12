@@ -34,7 +34,7 @@ function Home() {
                 <h1>אקורדים חדשים באתר</h1>
                 <ChordsDisplay songs={newSongs} />
                 <h1 id="newReq">בקשות שירים מהקהילה</h1>
-                {/* <SongRequest /> */}
+                <SongRequest />
             </div>
         </div>
     );
