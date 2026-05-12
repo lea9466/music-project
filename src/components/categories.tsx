@@ -20,6 +20,7 @@ function CategoryDrawer({ categoryId, isOpen }: DrawerProps) {
     const [songs, setSongs] = useState<SongDto[]>([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+console.log('קטגוריות נטענו');
 
     useEffect(() => {
         const fetchSongs = async () => {

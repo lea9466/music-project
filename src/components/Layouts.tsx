@@ -46,12 +46,12 @@ const Layout = () => {
         />
       )}
 
-      {/* <Header /> */}
+      <Header />
 
       {/* 🔥 Sidebar ב־lazy עם loader קטן */}
       {loadExtraUI && (
         <Suspense fallback={<div className="loader">טוען תפריט...</div>}>
-          {/* <SideBar /> */}
+          <SideBar />
         </Suspense>
       )}
 

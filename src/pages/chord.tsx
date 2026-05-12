@@ -37,6 +37,8 @@ function ChordsOfSong() {
     const dispatch = useDispatch();
     const { slug } = useParams();
     const id = slug?.split('-').pop();
+    console.log(id);
+    
     const [ton, setTon] = useState(0)
     const user = useSelector((state: RootState) => state.auth.user);
     const token = useSelector((state: RootState) => state.auth.token);
