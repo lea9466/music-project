@@ -1,8 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { type UserDto } from '../../types'; // ודאי שהנתיב נכון
-import { useNavigate } from 'react-router-dom';
+import { type UserDto } from '../../types';
 
-const savedUser = localStorage.getItem("user");
+const savedUser = typeof window !== 'undefined' ? localStorage.getItem("user") : null;
 
 interface AuthState {
     user: UserDto;
@@ -12,7 +11,7 @@ interface AuthState {
 
 const initialState: AuthState = {
     user: savedUser ? JSON.parse(savedUser) : { name: '', email: '', id: 0, favoriteSongs: [], role: 0 },
-    token: localStorage.getItem('token'),
+    token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
     isAdmin: false
 };
 
@@ -26,16 +25,11 @@ const authSlice = createSlice({
             localStorage.removeItem('token');
             localStorage.removeItem("user");
         },
-        // עדכון כאן: מקבלים אובייקט שמכיל גם user וגם token
         loginSuccess: (state, action: PayloadAction<{ user: UserDto, token: string }>) => {
             const { user, token } = action.payload;
-
             state.user = user;
             state.token = token;
-
             if (!state.user.favoriteSongs) state.user.favoriteSongs = [];
-
-            // שמירה בזיכרון של הדפדפן
             localStorage.setItem("user", JSON.stringify(user));
             localStorage.setItem("token", token);
         },
@@ -53,18 +47,13 @@ const authSlice = createSlice({
             }
         },
         updateUser: (state, action: PayloadAction<Partial<UserDto>>) => {
-            // 1. יצירת אובייקט חדש שממזג את המצב הקיים עם הנתונים החדשים
-            // אנחנו מסננים ערכי undefined כדי שלא ידריסו נתונים קיימים בטעות
             const updatedData = Object.fromEntries(
                 Object.entries(action.payload).filter(([_, v]) => v !== undefined)
             );
-
             state.user = {
                 ...state.user,
                 ...updatedData
             };
-
-            // 2. עדכון ה-LocalStorage עם האובייקט המעודכן
             localStorage.setItem("user", JSON.stringify(state.user));
         },
     }
