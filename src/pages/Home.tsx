@@ -29,12 +29,12 @@ function Home() {
 
     return (
         <div className='home'>
-            <HeroSection />
+            {/* <HeroSection /> */}
             <div className="content">
                 <h1>אקורדים חדשים באתר</h1>
-                <ChordsDisplay songs={newSongs} />
+                {/* <ChordsDisplay songs={newSongs} /> */}
                 <h1 id="newReq">בקשות שירים מהקהילה</h1>
-                <SongRequest />
+                {/* <SongRequest /> */}
             </div>
         </div>
     );
