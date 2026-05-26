@@ -12,6 +12,7 @@ Auto-Scroll: פונקציונליות ייעודית לנגנים המאפשרת
 עיצוב רספונסיבי: התאמה מלאה לכל סוגי המסכים (Mobile & Desktop).
 
 🛠 טכנולוגיות (Tech Stack)
+
 Frontend: React, TypeScript, Vite, SASS/SCSS.
 
 Backend: ASP.NET Core, Entity Framework Core, REST API.
