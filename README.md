@@ -1,15 +1,6 @@
 מערכת ניהול אקורדים לשירים - Full Stack Project
 אפליקציית Web לניהול והצגת אקורדים לשירים בזמן אמת, עם דגש על חווית משתמש (UX) גבוהה ועיצוב מדויק (Pixel-perfect).
 
-🚀 לינקים (Links)
-- **אתר פעיל (Live Demo):** [music-project-snowy-five.vercel.app](https://music-project-snowy-five.vercel.app)
-משתמש דמו לניהול (Admin Access):
-
-> [!IMPORTANT]
-> **Admin Access for Reviewers:**
-> - **Email:** `admin@demo.com`
-> - **Password:** `Admin123!`
-
 ✨ פיצ'רים עיקריים (Features)
 אזור ניהול (Admin Panel): מערכת הרשאות מלאה הכוללת טבלאות גנריות לביצוע פעולות CRUD (הוספה, עריכה, מחיקה) על שירים וקטגוריות.
 
